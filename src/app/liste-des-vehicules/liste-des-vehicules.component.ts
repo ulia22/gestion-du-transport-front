@@ -10,12 +10,16 @@ import { VehiculeService } from '../shared/service/vehicule.service';
 })
 export class ListeDesVehiculesComponent implements OnInit {
 
+  
   closeResult: string;
   vehicule: Vehicule[]
+  categories : string[]
 
   constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { }
 
   ngOnInit() {
+    this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l
+      console.log(this.categories[3])} )
   }
 
   open(content) {
@@ -46,6 +50,8 @@ export class ListeDesVehiculesComponent implements OnInit {
         this.vehiculeService.sauvegarder(voiture).subscribe(voiture =>{
         
           this.vehicule.push(voiture)
+
+        
              
         })
         

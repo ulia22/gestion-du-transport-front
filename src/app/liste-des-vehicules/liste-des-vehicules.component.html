@@ -102,18 +102,10 @@
                     <label for="">catégorie</label>
                   </div>
                   <div >
-                      <select name="select" #categorie required>
-                          <option ></option>
-                          <option id="MU">Micro-urbaines</option>
-                          <option id="Mc">Mini-citadines</option>
-                          <option id="CP">Citadines polyvalentes</option>
-                          <option id="C">Compactes </option>
-                          <option id="BTS">Berlines Taille S </option>
-                          <option id="BTM">Berlines Taille M </option>
-                          <option id="BTL">Berlines Taille L </option>
-                          <option id="SUV">SUV </option>
-                          <option id="TT">Tout-terrains </option>
-                          <option id="PU">Pick-up </option>
+                      <select class="form-control" name="select" #categorie requir>
+                          <option *ngFor="let categorie of categories " >
+                           {{categorie}}
+                          </option>
                       </select>
                   </div>
                 </div>
