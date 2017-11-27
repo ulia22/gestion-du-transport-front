@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
+  public rolesUser:string
+
   constructor() { }
 
   ngOnInit() {
+    this.rolesUser = "collaborateur"
+    //this.rolesUser = "administrateur"
+    //this.rolesUser = "chauffeur"
   }
 
 }

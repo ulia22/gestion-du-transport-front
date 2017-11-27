@@ -1,23 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
-    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-    Navbar</a>
+    <img src="http://www.dta-ingenierie.fr/wp-content/uploads/2017/10/LOGO-DTA-vectorise%CC%81.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    Gestion des transports</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+  <div class="collapse navbar-collapse" id="navbarNav" [ngSwitch]="rolesUser">
+    <ul class="navbar-nav" *ngSwitchCase="'collaborateur'">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/collaborateur/reservations/" routerLinkActive="active">Vos réservations</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" routerLink="/collaborateur/annonces/" routerLinkActive="active">Vos annonces</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" routerLink="/collaborateur/statistiques" routerLinkActive="active">Statistiques</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" *ngSwitchCase="'administrateur'">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin/vehicules/" routerLinkActive="active">Véhicules</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link" routerLink="/admin/chauffeurs/" routerLinkActive="active">Chauffeurs</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav" *ngSwitchCase="'chauffeur'">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="chauffeur/occupation" routerLinkActive="active">Occupation</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="chauffeur/planning" routerLinkActive="active">Planning</a>
       </li>
     </ul>
   </div>
