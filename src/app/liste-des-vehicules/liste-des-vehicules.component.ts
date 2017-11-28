@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Vehicule } from '../shared/domain/vehicule' 
 import { VehiculeService } from '../shared/service/vehicule.service';
+import { Marque } from '../shared/domain/marque';
+import { Modele } from '../shared/domain/modele';
 
 @Component({
   selector: 'app-liste-des-vehicules',
@@ -12,14 +14,19 @@ export class ListeDesVehiculesComponent implements OnInit {
 
   
   closeResult: string;
-  vehicule: Vehicule[]
+  vehicules: Vehicule[]
   categories : string[]
 
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { }
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { 
+
+    
+  }
 
   ngOnInit() {
-    this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l
-      console.log(this.categories[3])} )
+    this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l } )
+    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v 
+      console.log("toto")
+    console.log(this.vehicules)} )
   }
 
   open(content) {
@@ -40,16 +47,16 @@ export class ListeDesVehiculesComponent implements OnInit {
     }
   }
 
-  add(immatricule:HTMLInputElement, marque: HTMLInputElement,modele:HTMLInputElement 
+  add(immatriculation:HTMLInputElement, marque: HTMLInputElement , modele:HTMLInputElement
     , categorie:HTMLInputElement , nbp:HTMLInputElement,photo:HTMLInputElement){
-    
-        console.log("mode ajout")
+
        
-        const voiture = new  Vehicule( immatricule.value ,marque.value ,modele.value ,categorie.value ,nbp.value ,photo.value);
-       
-        this.vehiculeService.sauvegarder(voiture).subscribe(voiture =>{
+        const voiture = new  Vehicule( immatriculation.value ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
+    //  const marques =  new  Marque(marque.value );
+      //  const model = new Modele(categorie.value,modele.value,marque.value)
+        this.vehiculeService.sauvegarder(voiture).then(vehicule =>{
         
-          this.vehicule.push(voiture)
+          this.vehicules.push(vehicule)
 
         
              

@@ -1,14 +1,13 @@
 export class Vehicule {
     
-        
-        constructor( public immatricule:string,
-             public marque:string ,
-             public modele:string,
-             public categorie:string,
-             public nbp:string,
-             public photo:string){
-    
-            
-        }
+        constructor( public immatriculation:string,
+            public marque:string ,
+            public nbp:string,
+            public photo:string,
+            public categorie:string,
+            public modele:string){
+   
+           
+       }
     
     }
