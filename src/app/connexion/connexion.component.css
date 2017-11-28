@@ -16,3 +16,13 @@ button{
 form{
   margin-top: 10em;
 }
+.modal-body img
+{
+  width : 100%;
+  height : auto;
+}
+.img-container{
+  width : 100px;
+  height : 100px;
+  margin : auto;
+}

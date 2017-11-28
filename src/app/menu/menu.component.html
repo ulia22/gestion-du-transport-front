@@ -6,7 +6,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav" [ngSwitch]="rolesUser">
-    <ul class="navbar-nav" *ngSwitchCase="'collaborateur'">
+    <ul class="navbar-nav" *ngSwitchCase="'COLLABORATEUR'">
       <li class="nav-item">
         <a class="nav-link" routerLink="/collaborateur/reservations/" routerLinkActive="active">Vos réservations</a>
       </li>
@@ -17,7 +17,7 @@
         <a class="nav-link" routerLink="/collaborateur/statistiques" routerLinkActive="active">Statistiques</a>
       </li>
     </ul>
-    <ul class="navbar-nav" *ngSwitchCase="'administrateur'">
+    <ul class="navbar-nav" *ngSwitchCase="'ADMINISTRATEUR'">
       <li class="nav-item">
         <a class="nav-link" routerLink="/admin/vehicules/" routerLinkActive="active">Véhicules</a>
       </li>
@@ -25,7 +25,7 @@
         <a class="nav-link" routerLink="/admin/chauffeurs/" routerLinkActive="active">Chauffeurs</a>
       </li>
     </ul>
-    <ul class="navbar-nav" *ngSwitchCase="'chauffeur'">
+    <ul class="navbar-nav" *ngSwitchCase="'CHAUFFEUR'">
       <li class="nav-item">
         <a class="nav-link" routerLink="chauffeur/occupation" routerLinkActive="active">Occupation</a>
       </li>
