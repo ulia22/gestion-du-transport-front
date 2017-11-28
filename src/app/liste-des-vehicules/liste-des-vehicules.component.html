@@ -17,7 +17,7 @@
            <label for="">Immatriculation</label>
           </div>
           <div>
-            <input type="text" id="immatriculation" name="immatriculation">
+            <input type="text" id="immatriculation" name="immatriculation" (keyup)="onKeyUpImmatriculation($event)">
           </div>
         </div>
         <div class="row" >
@@ -25,7 +25,7 @@
           <label for="">Marque</label>
         </div>
         <div>
-          <input type="text" id="marque" name="marque">
+          <input type="text" id="marque" name="marque" (keyup)="onKeyUpMarque($event)">
         </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-    <div *ngFor="let vehicule of vehicules ">
+    <div *ngFor="let vehicule of (vehicules|immatriculation|marque) ">
       <div class="row col-4">
           <div class="card">
             <div class="container">
@@ -82,7 +82,7 @@
                     <label for="">Immatriculation</label>
                   </div>
                   <div>
-                    <input type="text" #immatriculation name="immatriculation" required>
+                    <input type="text" #immatriculation name="immatriculation" (keyup)="onKeyUpMarque(ajouter)" required >
                   </div>
                 </div>
                 <div class="row ">
@@ -132,7 +132,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuller</button>
-            <button type="button" class="btn btn-outline-primary" (click)="add(immatriculation , marque, modele  , categorie , nbp , photo)" >Ajouter</button>
+            <button type="button" class="btn btn-outline-primary disabled" (click)="add(immatriculation , marque, modele  , categorie , nbp , photo)" #ajouter>Ajouter</button>
           </div>
         </ng-template>
         

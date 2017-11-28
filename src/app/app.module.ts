@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { ListeDesVehiculesComponent} from './liste-des-vehicules/liste-des-vehicules.component'
 import { VehiculeService } from './shared/service/vehicule.service';
+import { ImmatriculationPipe } from './shared/pipe/immatriculation.pipe';
+import { MarquePipe } from './shared/pipe/marque.pipe';
 
 const appRoutes: Routes = [
 { path: 'app', component: AppComponent }, // /page1 affiche le composant A
@@ -19,7 +21,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     MenuComponent,
-    ListeDesVehiculesComponent
+    ListeDesVehiculesComponent,
+    ImmatriculationPipe,
+    MarquePipe
 
   ],
   imports: [

@@ -16,6 +16,8 @@ export class ListeDesVehiculesComponent implements OnInit {
   closeResult: string;
   vehicules: Vehicule[]
   categories : string[]
+  immatriculation:string=""
+  marque:string=""
 
   constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { 
 
@@ -66,6 +68,19 @@ export class ListeDesVehiculesComponent implements OnInit {
 
         return false
     
-      }
+  }
+
+  onKeyUpImmatriculation($event){
+    this.immatriculation=$event.target.value
+  }
+
+  onKeyUpMarque($event){
+    this.marque=$event.target.value
+  }
+
+  onKeyUpButton($button){
+    console.log("enter")
+    $button.prop('enable',true)
+  }
 
 }
