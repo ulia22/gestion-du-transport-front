@@ -5,17 +5,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
+import {ListeDesVehiculesComponent} from "./liste-des-vehicules/liste-des-vehicules.component";
+import { ListeDesReservationsVehiculesComponent } from './liste-des-reservations-vehicules/liste-des-reservations-vehicules.component';
 
 const appRoutes: Routes = [
-{ path: 'app', component: AppComponent }, // /page1 affiche le composant A
-{ path: '**', redirectTo: 'app'} // redirige vers la route page1 par défaut
+{ path: 'app', component: ListeDesReservationsVehiculesComponent }, // /page1 affiche le composant A
+{ path: '**', redirectTo: 'app'}, // redirige vers la route page1 par défaut
+//{path:'collaborateur.',component:ListeDesReservationsVehiculesComponent}
 ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    ListeDesVehiculesComponent,
+    ListeDesReservationsVehiculesComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

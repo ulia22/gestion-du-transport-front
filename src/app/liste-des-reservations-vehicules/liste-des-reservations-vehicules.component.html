@@ -1,0 +1,30 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-7 ">
+      <h1>Vos réservations </h1>
+    </div>
+    <div class="col-2 offset-4">
+        <button type="button" class="btn btn-primary" >Réserver un transport</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <p>
+        <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          Toggle
+        </button>
+    </p>
+  </div>
+
+  <div id="collapseExample" [ngbCollapse]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        You can collapse this card by clicking Toggle
+      </div>
+    </div>
+  </div>
+
+
+</div>
