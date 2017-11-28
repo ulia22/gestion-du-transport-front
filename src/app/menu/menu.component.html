@@ -10,7 +10,7 @@
   </button>
 
   <div class="navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent" [ngSwitch]="rolesUser">
-    <ul class="navbar-nav mr-auto" *ngSwitchCase="'collaborateur'">
+    <ul class="navbar-nav mr-auto" *ngSwitchCase="'COLLABORATEUR'">
       <li class="nav-item">
         <a class="nav-link" routerLink="/collaborateur/reservations/" routerLinkActive="active" (click)="navbarCollapsed = true">Vos réservations</a>
       </li>
@@ -24,7 +24,7 @@
         <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto" *ngSwitchCase="'administrateur'">
+    <ul class="navbar-nav mr-auto" *ngSwitchCase="'ADMINISTRATEUR'">
       <li class="nav-item">
         <a class="nav-link" routerLink="/admin/vehicules/" routerLinkActive="active" (click)="navbarCollapsed = true">Véhicules</a>
       </li>
@@ -35,7 +35,7 @@
         <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto" *ngSwitchCase="'chauffeur'">
+    <ul class="navbar-nav mr-auto" *ngSwitchCase="'CHAUFFEUR'">
       <li class="nav-item">
         <a class="nav-link" routerLink="chauffeur/occupation" routerLinkActive="active" (click)="navbarCollapsed = true">Occupations</a>
       </li>
