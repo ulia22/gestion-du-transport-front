@@ -28,7 +28,6 @@ export class ConnexionComponent implements OnInit {
       this.open(this.content)
     },
     err =>{
-      console.error(err)
       this.errorMessage = err.error.message
       setTimeout(()=>this.errorMessage = null, 3000)
     })
