@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListeDesReservationsVehiculesComponent implements OnInit {
 
+  public isCollapsed = false;
+  public isCollapsed1 = false;
+  
+  
   constructor() { }
 
   ngOnInit() {

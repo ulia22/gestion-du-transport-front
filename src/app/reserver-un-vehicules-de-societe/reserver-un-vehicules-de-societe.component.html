@@ -1,0 +1,160 @@
+
+<div class="container">
+    <div class="row">
+      <div class="col-7 ">
+        <h1>Réserver un véhicule </h1>
+      </div>
+      
+    </div>
+  <br>
+    <div class="row">
+     
+          <button type="button" class="btn btn-outline-primary col-12" style="text-align:left"  (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            Covoiturage
+          </button>
+     
+      <div class="card col-12">
+          <div class="container">
+            <div class="col-12">
+              <div id="collapseExample" [ngbCollapse]="isCollapsed">
+                <label>Réservations en cours</label>
+                <div class="container">
+                <div class="card">
+                  <div class="card-body">
+                      <table class="table">
+                          <thead class="thead-default">
+                            <tr>
+                              <th>Date / heure début</th>
+                              <th>Date / heure fin</th>
+                              <th>Immatriculation</th>
+                              <th>Marque</th>
+                              <th>Modèle</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                              <td>1</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                              <td>1</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>Larry</td>
+                              <td>the Bird</td>
+                              <td>@twitter</td>
+                              <td>1</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="container">
+              <div class="col-12">
+                  <div id="collapseExample" [ngbCollapse]="isCollapsed">
+                  <label>Historique </label>
+                    <div class="container">
+                      <div class="card">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead class="thead-default">
+                                  <tr>
+                                    <th>Date / heure début</th>
+                                    <th>Date / heure fin</th>
+                                    <th>Immatriculation</th>
+                                    <th>Marque</th>
+                                    <th>Modèle</th></tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>1</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>1</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>@twitter</td>
+                                    <td>1</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+  </div>
+  
+  <div class="row">
+   
+        <button type="button" class="btn btn-outline-primary col-12" style="text-align:left" (click)="isCollapsed1 = !isCollapsed1"
+                [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
+          Véhicule de société
+        </button>
+  
+  <div class="card col-12">
+    <div class="container">
+  
+
+      <div class="col-12">
+        <div id="collapseExample" [ngbCollapse]="isCollapsed1">
+        <div class="row">
+            <label>Date / heure de réservation</label>
+        </div>
+         <!-- -->
+        
+         <form class="form-inline">
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                  <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <ngb-timepicker [(ngModel)]="time"
+          [hourStep]="hourStep" [minuteStep]="minuteStep" ></ngb-timepicker>
+      
+          
+        
+          
+    
+    <!-- -->
+        </div>
+      </div>
+     
+
+      </div>
+    </div>
+  </div>
+
