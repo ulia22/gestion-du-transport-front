@@ -14,7 +14,11 @@ export class MarquePipe implements PipeTransform {
     return value.filter(c => c.marque.toUpperCase().startsWith(args))
 =======
   transform(value: any, args?: any): any {
+<<<<<<< HEAD
     return null;
+>>>>>>> Gerer_les_véhicules
+=======
+    return value.filter(c => c.marque.startsWith(args))
 >>>>>>> Gerer_les_véhicules
   }
 
