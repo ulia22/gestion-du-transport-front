@@ -1,0 +1,94 @@
+<app-menu></app-menu>
+<a routerLink="/collaborateur/annonces/">Retour à la liste</a>
+<h1>Publier une annonce</h1>
+<div>
+    <div class="btn btn-outline-primary col-12 text-left" (click)="isCollapsedItineraire = !isCollapsedItineraire" [attr.aria-expanded]="!isCollapsedItineraire"
+        aria-controls="collapseItineraire">
+        Itinéraire
+    </div>
+    <div id="collapseItineraire" [ngbCollapse]="isCollapsedItineraire">
+        <form class="offset-2 mt-2">
+            <div class="form-group row">
+                <label for="inputAddrDepart" class="col-sm-2 col-form-label">Adresse de départ</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputAddrDepart" placeholder="Adresse de départ" #AddrDepart>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputAddrDestination" class="col-sm-2 col-form-label">Adresse de destination</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputAddrDestination" placeholder="Adresse de destination" #AddrDestination>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputDuree" class="col-sm-2 col-form-label">Durée de trajet</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" id="inputDuree" disabled="true" value="20" #Duree>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputDistance" class="col-sm-2 col-form-label">Distance</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" id="inputDistance" disabled="true" value="2" #Distance>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="btn btn-outline-primary col-12 text-left" (click)="isCollapsedVehicule = !isCollapsedVehicule" [attr.aria-expanded]="!isCollapsedVehicule"
+        aria-controls="collapseVehicule">
+        Véhicule
+    </div>
+    <div id="collapseVehicule" [ngbCollapse]="isCollapsedVehicule">
+        <form class="offset-2 mt-2">
+            <div class="form-group row">
+                <label for="inputImmatriculation" class="col-sm-2 col-form-label">Immatriculation</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputImmatriculation" placeholder="Immatriculation" #Immatriculation>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputMarque" class="col-sm-2 col-form-label">Marque</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputMarque" placeholder="Marque" #Marque>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputModele" class="col-sm-2 col-form-label">Modèle</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputModele" placeholder="Modèle" #Modele>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputNbPlace" class="col-sm-2 col-form-label">Nombre de place</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" id="inputNbPlace" min="1" max="20" placeholder="Nombre de place" #NbPlace>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="btn btn-outline-primary col-12 text-left" (click)="isCollapsedDate = !isCollapsedDate" [attr.aria-expanded]="!isCollapsedDate"
+        aria-controls="collapseDate">
+        Date et horaire
+    </div>
+    <div id="collapseDate" [ngbCollapse]="isCollapsedDate">
+        <form class="offset-2 mt-2">
+            <div class="form-group row">
+                <label for="inputDate" class="col-sm-2 col-form-label">Date et horaire</label>
+                <div class="col-sm-5">
+                    <input type="date" class="form-control" id="inputDate" placeholder="Date" #Date>
+                </div>
+                <div>
+                    <select class="custom-select" #Heure>
+                        <option *ngFor="let heure of heures" [value]="heure">{{heure}}</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="custom-select" #Minute>
+                        <option *ngFor="let minute of minutes" [value]="minute">{{minute}}</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <button type="button" class="btn btn-primary float-right col-2" (click)="add(AddrDepart, AddrDestination, Duree, Distance, Immatriculation, Marque, Modele, NbPlace, Date, Heure, Minute)">Publier</button>
+</div>
