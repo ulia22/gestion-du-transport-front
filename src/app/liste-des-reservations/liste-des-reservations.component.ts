@@ -21,6 +21,9 @@ export class ListeDesReservationsComponent implements OnInit {
   public currentPageHistorique:number;
   public previousPageHistorique:number;
 
+  //Boolean collapse
+  public isCollapsedListeReservation:boolean;
+
   constructor(private reservationService:ReservationService) {
     this.nbHistoriqueDisplayed = 4
     this.currentPageHistorique = 1;
@@ -61,6 +64,7 @@ export class ListeDesReservationsComponent implements OnInit {
       }
       return false
     })
+    .reverse()
     this.totalItemsHistorique = this.listeReservationsAnnoncesHistoriquesJSON.length
     this.changerDisplayHistorique();
   }

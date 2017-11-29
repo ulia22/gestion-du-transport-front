@@ -46,7 +46,8 @@ const appRoutes: Routes = [
     ConnexionComponent,
     ListeDesVehiculesComponent,
     ListeDesReservationsComponent,
-    JsontoDatePipe
+    JsontoDatePipe,
+    CreeAnnonceComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
