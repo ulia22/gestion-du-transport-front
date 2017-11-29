@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReservationService } from '../shared/service/reservation.service'
 import { JsontoDatePipe } from '../shared/pipe/jsonto-date.pipe'
 import { SlicePipe } from '@angular/common';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-liste-des-reservations',
@@ -9,6 +10,8 @@ import { SlicePipe } from '@angular/common';
   styleUrls: ['./liste-des-reservations.component.css']
 })
 export class ListeDesReservationsComponent implements OnInit {
+
+  @ViewChild('content') content;
 
   public listeReservationsJSON:any[] = []
   public listeReservationsAnnoncesCourrantesJSON:any[] = []
@@ -24,7 +27,10 @@ export class ListeDesReservationsComponent implements OnInit {
   //Boolean collapse
   public isCollapsedListeReservation:boolean;
 
-  constructor(private reservationService:ReservationService) {
+  //Détail courrant la reservation Covoiturage
+  public detailCourant:any = null;
+
+  constructor(private reservationService:ReservationService, private modalService: NgbModal) {
     this.nbHistoriqueDisplayed = 4
     this.currentPageHistorique = 1;
     this.previousPageHistorique = 1;
@@ -34,7 +40,6 @@ export class ListeDesReservationsComponent implements OnInit {
     this.reservationService.getListeReservations(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
     .subscribe(
       resp=>{
-
         this.listeReservationsJSON = resp
         this.setListeCourrantEtHistorique()
       },
@@ -50,7 +55,7 @@ export class ListeDesReservationsComponent implements OnInit {
       let value = r.dateDepart
       let d = new JsontoDatePipe().transform(value)
       if(d.getTime() > Date.now()){
-          console.log("Bouh"+r.dateDepart)
+        console.log("Bouh"+r.dateDepart)
         return true
       }
       return false
@@ -71,11 +76,22 @@ export class ListeDesReservationsComponent implements OnInit {
 
   loadHistorique(page:number){
     if (page !== this.previousPageHistorique) {
-          this.previousPageHistorique = page;
-          this.changerDisplayHistorique();
-        }
+      this.previousPageHistorique = page;
+      this.changerDisplayHistorique();
+    }
   }
   changerDisplayHistorique() {
     this.listeResAnnOnDisplay = new SlicePipe().transform(this.listeReservationsAnnoncesHistoriquesJSON, (this.currentPageHistorique-1) * this.nbHistoriqueDisplayed, this.currentPageHistorique * this.nbHistoriqueDisplayed)
+  }
+
+  openModalDetail(line){
+      this.detailCourant = line;
+    this.modalService.open(this.content).result.then((result) => {
+    }, (reason) => {
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    return ""
   }
 }
