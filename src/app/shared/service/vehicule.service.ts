@@ -6,6 +6,7 @@ import {Observable, Observer} from 'rxjs'
 import { Subject } from 'rxjs/';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { environment } from '../../../environments/environment';
+import { Modele } from '../domain/modele';
 
 
 const httpOptions = {
@@ -22,24 +23,30 @@ export class VehiculeService {
 
  constructor(private http:HttpClient) { }
 
+ refresh():void{
+   this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
+   .subscribe(col => this.vehicules.next(col))
+ }
+
+ getListCtegorie(){
+   this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}  
+ )
+   return this.categories  
+ }
 
  getListVehicule(){
-   console.log("grominer")
-   this.http.get<Vehicule[]>(`http://localhost:8080/vehicules`).toPromise().then(l => {this.vehicules.next(l)}
+   this.refresh()
+   return this.vehicules.asObservable();
+ /* this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
+    this.vehicules.next(l)}
  )
-   return this.vehicules
+   return this.vehicules*/
  }
 
  sauvegarder(newVehicule:Vehicule) {
    
-
-    return this.http.post<Vehicule>("http://localhost:8080" + '/vehicules',newVehicule,httpOptions).toPromise().then(v =>
-     {
-
-       
-       return v
-     
-     })
+     this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).toPromise().then(v=>this.newVehicule.next(v))
+    return this.newVehicule
  }
 
 }

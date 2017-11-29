@@ -1,3 +1,10 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+
+
 <div class="container">
   <div class="row">
     <h2>Véhicules</h2>
@@ -10,7 +17,7 @@
            <label for="">Immatriculation</label>
           </div>
           <div>
-            <input type="text" id="immatriculation" name="immatriculation">
+            <input type="text" id="immatriculation" name="immatriculation" (keyup)="onKeyUpImmatriculation($event)">
           </div>
         </div>
         <div class="row" >
@@ -18,26 +25,120 @@
           <label for="">Marque</label>
         </div>
         <div>
-          <input type="text" id="marque" name="marque">
+          <input type="text" id="marque" name="marque" (keyup)="onKeyUpMarque($event)">
         </div>
         </div>
       </div>
-      <div class="row ">
-        <div class="card " style="width: 25em; height: 35rem">
-          <img src="http://img-31.ccm2.net/WbDXKddvRIGyt5AcEOKifFkyDbQ=/1240x/smart/57269bd606214b8ab85457d9945e5c12/ccmcms-hugo/10598266.jpg" alt="">
-       
-        <div class="card-body" style="text-align:center">
-          <div>
-            <label for="">IMMATRICULATION</label>
-          </div>
-          <div>
-            <label for="">marque - modele</label>
-           </div>
-           <div>
-            <label for="">catégorie</label>
-           </div>
-          </div>
+    </div>
+      <div class="row">
+        <div class="col-2 offset-10"> 
+          <button type="button" class="btn btn-primary "  (click)="open(content)">Ajouter un véhicules</button>
         </div>
       </div>
-  </div>
+
+    <div *ngFor="let vehicule of (vehicules|immatriculation|marque) ">
+      <div class="row col-4">
+          <div class="card">
+            <div class="container">
+              <div class="row">
+                      <a routerLink="" RouterLinkActive="active-link">
+                        <img class="img-responsive mx-auto d-block round" src="{{vehicule.photo}}" alt="" height="355rem" width="340rem"> 
+                      </a>
+              </div>
+            </div>
+            <div class="card-body" style="text-align:center">
+                <div>
+                  <label for="">{{vehicule.immatriculation}}</label>
+                </div>
+                <div>
+                  <label for="">{{vehicule.marque}} - {{vehicule.modele}}</label>
+                </div>
+                <div>
+                  <label for="">{{vehicule.categorie}}</label>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
 </div>
+
+
+
+
+
+
+
+      <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Véhicules</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="row ">
+                  <div class="col-4" style="text-align:right">
+                    <label for="">Immatriculation</label>
+                  </div>
+                  <div>
+                    <input type="text" #immatriculation name="immatriculation" (keyup)="onKeyUpMarque(ajouter)" required >
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-4" style="text-align:right">
+                    <label for="">Marque</label>
+                  </div>
+                  <div>
+                    <input type="text" #marque name="marque" required>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-4" style="text-align:right">
+                    <label for="">Modèle</label>
+                  </div>
+                  <div>
+                    <input type="text" #modele name="modele" required>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-4" style="text-align:right">
+                    <label for="">catégorie</label>
+                  </div>
+                  <div >
+                      <select class="form-control col-8" name="select" #categorie requir>
+                          <option *ngFor="let categorie of categories " >
+                           {{categorie}}
+                          </option>
+                      </select>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-4" style="text-align:right">
+                    <label for="">Nombre de place</label>
+                  </div>
+                  <div>
+                    <input type="number" #nbp name="nbp" required>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-4" style="text-align:right">
+                    <label for="">Photo</label>
+                  </div>
+                  <div>
+                    <input type="text" #photo name="photo" required>
+                  </div>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuller</button>
+            <button type="button" class="btn btn-outline-primary disabled" (click)="add(immatriculation , marque, modele  , categorie , nbp , photo)" #ajouter>Ajouter</button>
+          </div>
+        </ng-template>
+        
+        
+        
+        
+
+
+
