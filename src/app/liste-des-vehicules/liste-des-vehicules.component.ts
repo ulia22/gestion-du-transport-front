@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {Vehicule } from '../shared/domain/vehicule' 
 import { VehiculeService } from '../shared/service/vehicule.service';
-import { Marque } from '../shared/domain/marque';
 import { Modele } from '../shared/domain/modele';
 
 @Component({
@@ -16,8 +15,19 @@ export class ListeDesVehiculesComponent implements OnInit {
   closeResult: string;
   vehicules: Vehicule[]
   categories : string[]
-  immatriculation:string=""
-  marque:string=""
+  stringImmatriculation:string=""
+  stringMarque:string=""
+
+  
+  valideImmatriculation1=false
+  valideImmatriculation2=false
+  valideImmatriculation3=false
+
+  valideMarque=false
+  validePhoto=false
+  valideModele=false
+  valideNbp=false
+
 
   constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { 
 
@@ -35,7 +45,8 @@ export class ListeDesVehiculesComponent implements OnInit {
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)
+      }`;
     });
   }
 
@@ -49,16 +60,17 @@ export class ListeDesVehiculesComponent implements OnInit {
     }
   }
 
-  add(immatriculation:HTMLInputElement, marque: HTMLInputElement , modele:HTMLInputElement
-    , categorie:HTMLInputElement , nbp:HTMLInputElement,photo:HTMLInputElement){
+  add(immatriculation1:HTMLInputElement,immatriculation2:HTMLInputElement,immatriculation3:HTMLInputElement, marque: HTMLInputElement , modele:HTMLInputElement
+    , categorie:HTMLInputElement , nbp:HTMLInputElement,photo:HTMLInputElement ){
 
-       
-        const voiture = new  Vehicule( immatriculation.value ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
+      let immatriculation = immatriculation1.value +"-" + immatriculation2.value +"-"+ immatriculation3.value
+      console.log(immatriculation)
+        const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
     //  const marques =  new  Marque(marque.value );
       //  const model = new Modele(categorie.value,modele.value,marque.value)
-        this.vehiculeService.sauvegarder(voiture).then(vehicule =>{
-        
+        this.vehiculeService.sauvegarder(voiture).subscribe(vehicule =>{
           this.vehicules.push(vehicule)
+  
 
         
              
@@ -71,16 +83,47 @@ export class ListeDesVehiculesComponent implements OnInit {
   }
 
   onKeyUpImmatriculation($event){
-    this.immatriculation=$event.target.value
+    this.stringImmatriculation=$event.target.value
   }
 
   onKeyUpMarque($event){
-    this.marque=$event.target.value
+    this.stringMarque=$event.target.value
   }
 
-  onKeyUpButton($button){
-    console.log("enter")
-    $button.prop('enable',true)
+
+  onBoolPhoto($event){
+    if($event.target.value!="")
+      this.validePhoto=true
+  }
+
+  onBoolMarque($event){
+    if($event.target.value!="")
+      this.valideMarque=true
+  }
+
+  onBoolImmatriculation1($event){
+    if($event.target.value!="" && $event.target.value.length >=2)
+      this.valideImmatriculation1=true
+  }
+
+  onBoolImmatriculation2($event){
+    if($event.target.value!="" && $event.target.value >= 100)
+      this.valideImmatriculation2=true
+  }
+
+  onBoolImmatriculation3($event){
+    if($event.target.value!="" && $event.target.value.length >=2)
+      this.valideImmatriculation3=true
+  }
+
+  onBoolModele($event){
+    if($event.target.value!="")
+      this.valideModele=true
+  }
+
+  onBoolNbp($event){
+    if($event.target.value!="")
+      this.valideNbp=true
   }
 
 }

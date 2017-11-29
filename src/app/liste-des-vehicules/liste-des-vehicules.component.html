@@ -1,7 +1,3 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 
 
@@ -35,10 +31,12 @@
           <button type="button" class="btn btn-primary "  (click)="open(content)">Ajouter un véhicules</button>
         </div>
       </div>
-
-    <div *ngFor="let vehicule of (vehicules|immatriculation|marque) ">
-      <div class="row col-4">
-          <div class="card">
+      <br>
+      <div class="row">
+    <div *ngFor="let vehicule of ((vehicules|marque:stringMarque)|immatriculation:stringImmatriculation) ">
+     
+          <div class="card ">
+              <div class="card-block">
             <div class="container">
               <div class="row">
                       <a routerLink="" RouterLinkActive="active-link">
@@ -57,9 +55,10 @@
                   <label for="">{{vehicule.categorie}}</label>
                 </div>
             </div>
+          </div>
         </div>
-      </div>
-    </div>
+  </div>
+</div>
 
 </div>
 
@@ -68,7 +67,7 @@
 
 
 
-
+<form name="myForm" ng-submit="foo()" novalidate>
       <ng-template #content let-c="close" let-d="dismiss">
           <div class="modal-header">
             <h4 class="modal-title">Véhicules</h4>
@@ -77,64 +76,77 @@
             </button>
           </div>
           <div class="modal-body">
-              <div class="row ">
+                <div class="row ">
                   <div class="col-4" style="text-align:right">
                     <label for="">Immatriculation</label>
                   </div>
-                  <div>
-                    <input type="text" #immatriculation name="immatriculation" (keyup)="onKeyUpMarque(ajouter)" required >
+                  <div class="col-6">
+                    <input class="col-3" type="text" #immatriculation1 name="immatriculation1" (keyup)="onBoolImmatriculation1($event)" required maxlength="2"> -
+                    <input class="col-4" type="number" #immatriculation2 name="immatriculation2" (keyup)="onBoolImmatriculation2($event)" required maxlength="3"> -
+                    <input class="col-3" type="text" #immatriculation3 name="immatriculation3" (keyup)="onBoolImmatriculation3($event)" required maxlength="2">
                   </div>
                 </div>
                 <div class="row ">
                   <div class="col-4" style="text-align:right">
                     <label for="">Marque</label>
                   </div>
-                  <div>
-                    <input type="text" #marque name="marque" required>
+                  <div class="col-6">
+                    <input type="text" #marque name="marque" required (keyup)="onBoolMarque($event)">
+                    
                   </div>
                 </div>
                 <div class="row ">
                   <div class="col-4" style="text-align:right">
                     <label for="">Modèle</label>
                   </div>
-                  <div>
-                    <input type="text" #modele name="modele" required>
+                  <div class="col-6">
+                    <input type="text" #modele name="modele" required (keyup)="onBoolModele($event)">
+                    
                   </div>
                 </div>
                 <div class="row ">
                   <div class="col-4" style="text-align:right">
                     <label for="">catégorie</label>
                   </div>
-                  <div >
-                      <select class="form-control col-8" name="select" #categorie requir>
+                  <div class="col-6" >
+                      <select class="col-11" name="select" #categorie requir>
                           <option *ngFor="let categorie of categories " >
                            {{categorie}}
                           </option>
                       </select>
+                      
                   </div>
                 </div>
                 <div class="row ">
                   <div class="col-4" style="text-align:right">
                     <label for="">Nombre de place</label>
                   </div>
-                  <div>
-                    <input type="number" #nbp name="nbp" required>
+                  <div class="col-8">
+                    <input type="number" #nbp name="nbp" required (keyup)="onBoolNbp($event)">
                   </div>
                 </div>
                 <div class="row ">
                   <div class="col-4" style="text-align:right">
                     <label for="">Photo</label>
                   </div>
-                  <div>
-                    <input type="text" #photo name="photo" required>
+                  <div class="col-6">
+                    <input type="text" #photo name="photo" required (keyup)="onBoolPhoto($event)">
+                    
                   </div>
                 </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuller</button>
-            <button type="button" class="btn btn-outline-primary disabled" (click)="add(immatriculation , marque, modele  , categorie , nbp , photo)" #ajouter>Ajouter</button>
+            <button type="button" class="btn btn-outline-primary" (click)="add(immatriculation1,immatriculation2,immatriculation3 , marque, modele  , categorie , nbp , photo)"
+            [disabled]="!( valideImmatriculation1 && valideImmatriculation2 && valideImmatriculation3
+             && valideMarque && validePhoto && valideModele && valideNbp)" (click)="c('Close click')">Ajouter</button>
           </div>
         </ng-template>
+      </form>
+
+
+
+      
         
         
         
