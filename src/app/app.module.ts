@@ -10,7 +10,8 @@ import { MenuComponent } from './menu/menu.component';
 import {ListeDesVehiculesComponent} from "./liste-des-vehicules/liste-des-vehicules.component";
 import { ListeDesReservationsVehiculesComponent } from './liste-des-reservations-vehicules/liste-des-reservations-vehicules.component';
 import { ReserverUnVehiculesDeSocieteComponent } from './reserver-un-vehicules-de-societe/reserver-un-vehicules-de-societe.component';
-
+import { VehiculeService } from './shared/service/vehicule.service';
+import { HttpClientModule } from '@angular/common/http';
 const appRoutes: Routes = [
 { path: 'app', component: ReserverUnVehiculesDeSocieteComponent }, // /page1 affiche le composant A
 { path: '**', redirectTo: 'app'}, // redirige vers la route page1 par défaut
@@ -29,9 +30,10 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(appRoutes),
     NgbModule.forRoot(),
+    HttpClientModule,
     BrowserModule, FormsModule, ReactiveFormsModule, JsonpModule,
   ],
-  providers: [],
+  providers: [VehiculeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

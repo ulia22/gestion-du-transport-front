@@ -16,67 +16,67 @@
      
       <div class="card col-12">
           <div class="container">
-            <div class="col-12">
-              <div id="collapseExample" [ngbCollapse]="isCollapsed">
-                <label>Réservations en cours</label>
-                <div class="container">
-                <div class="card">
-                  <div class="card-body">
-                      <table class="table">
-                          <thead class="thead-default">
-                            <tr>
-                              <th>Date / heure début</th>
-                              <th>Date / heure fin</th>
-                              <th>Immatriculation</th>
-                              <th>Marque</th>
-                              <th>Modèle</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                              <td>1</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                              <td>1</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                              <td>1</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
+           
             <div class="container">
               <div class="col-12">
                   <div id="collapseExample" [ngbCollapse]="isCollapsed">
-                  <label>Historique </label>
+
+                    <div class="row">
+                      <label for=""><b>Critères</b></label>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-2" style="text-align:right">
+                          <label>Adresse de départ* :</label>
+                      </div>
+                      <div class="col-3">
+                          <input type="text" id="adresseDepart" name="adresseDepart">
+                      </div>
+                      <div class="col-3" style="text-align:right">
+                          <label>Adresse de destination :</label>
+                      </div>
+                      <div class="col-2">
+                          <input type="text" id="destination" name="destination">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-2" style="text-align:right">
+                            <label>Date de départ :</label>
+                        </div>
+                         <!--Calendar -->
+                        <div class="col-2">
+                        <form class="form-inline">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <input class="form-control" placeholder="yyyy-mm-dd"
+                                    name="dp" [(ngModel)]="datePickerDepart" ngbDatepicker #dateDepart="ngbDatepicker">
+                              <button class="input-group-addon" (click)="dateDepart.toggle()" type="button">
+                                <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        </div>
+                        <!-- fin calendar -->
+                    </div>
+                  
+                  <!-- tableau covoiturage -->
+                  <label><b> Covoiturage </b></label>
                     <div class="container">
                       <div class="card">
                         <div class="card-body">
                             <table class="table">
                                 <thead class="thead-default">
                                   <tr>
-                                    <th>Date / heure début</th>
-                                    <th>Date / heure fin</th>
-                                    <th>Immatriculation</th>
-                                    <th>Marque</th>
-                                    <th>Modèle</th></tr>
+                                    <th>Date / heure </th>
+                                    <th>Départ</th>
+                                    <th>Destination</th>
+                                    <th>Véhicule</th>
+                                    <th>chauffeur</th>
+                                    <th>Place disponibles</th>
+                                    <th></th>
+                                  </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
@@ -85,6 +85,8 @@
                                     <td>Otto</td>
                                     <td>@mdo</td>
                                     <td>1</td>
+                                    <td>2</td>
+                                    <td><button>test</button></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">2</th>
@@ -92,6 +94,8 @@
                                     <td>Thornton</td>
                                     <td>@fat</td>
                                     <td>1</td>
+                                    <td>2</td>
+                                    <td><button>test</button></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">3</th>
@@ -99,12 +103,15 @@
                                     <td>the Bird</td>
                                     <td>@twitter</td>
                                     <td>1</td>
+                                    <td>2</td>
+                                    <td><button>test</button></td>
                                   </tr>
                                 </tbody>
                               </table>
                           </div>
                         </div>
                       </div>
+                      <!-- fin tableau covoiturage -->
                     </div>
                   </div>
               </div>
@@ -125,36 +132,148 @@
 
       <div class="col-12">
         <div id="collapseExample" [ngbCollapse]="isCollapsed1">
+          <div class="row">
+              <label ><b>Date / heure de réservation</b></label>
+          </div>
         <div class="row">
-            <label>Date / heure de réservation</label>
-        </div>
-         <!-- -->
-        
+           
+         <!--Calendar -->
          <form class="form-inline">
             <div class="form-group">
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                <button class="input-group-addon" (click)="d.toggle()" type="button">
-                  <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                       name="dp" [(ngModel)]="datePickerReservation"  ngbDatepicker #dtreservation="ngbDatepicker">
+                <button class="input-group-addon" (click)="dtreservation.toggle()" type="button">
+                  <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                 </button>
               </div>
             </div>
           </form>
+          <div class="col-1"></div>
+      <!--time -->
+          <ngb-timepicker [(ngModel)]="timeReserve"
+          [hourStep]="hourStepReserve" [minuteStep]="minuteStepReserve" ></ngb-timepicker>
+       <!-- -->
+        </div>
 
-          <ngb-timepicker [(ngModel)]="time"
-          [hourStep]="hourStep" [minuteStep]="minuteStep" ></ngb-timepicker>
-      
-          
-        
-          
+        <div class="row">
+
+        </div>
+
+
+        <div class="row">
+            <label><b> Date / heure de retour </b></label>        
+        </div>
+
+        <div class="row">
+         
+          <!--Calendar -->
+          <form class="form-inline">
+             <div class="form-group">
+               <div class="input-group">
+                 <input class="form-control" placeholder="yyyy-mm-dd"
+                        name="dp" [(ngModel)]="datePickerRetour" ngbDatepicker #dtretour="ngbDatepicker">
+                 <button class="input-group-addon" (click)="dtretour.toggle()" type="button">
+                   <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                 </button>
+               </div>
+             </div>
+           </form>
+           <div class="col-1"></div>
+       <!--time -->
+           <ngb-timepicker [(ngModel)]="timeRetour"
+           [hourStep]="hourStepRetour" [minuteStep]="minuteStepRetour" ></ngb-timepicker>
+        <!-- -->
     
-    <!-- -->
+         </div>
+
+         <br>
+        
+  
+        <!-- Carrousel -->
+      <div class="container">
+        <ngb-carousel>
+          <div ngfor="let vehicule of vehicules">
+            <ng-template ngbSlide>
+              <img src="{{vehicule.photo}}" alt="Random first slide">
+              <div class="carousel-caption">
+                  <h3>{{vehicule.immatriculation}}</h3>
+                  <p> {{vehicule.marque}} - {{vehicule.model}}</p>
+                  <p> {{vehicule.categorie}}</p>
+                  <button (click)="open(content)">réserver </button>
+              </div>
+            </ng-template>
+          </div>
+            
+          </ngb-carousel>
+        </div>
+        <br> <br>
+        <!--fin carrousel -->
+      
         </div>
       </div>
-     
-
+    
       </div>
     </div>
   </div>
 
+  <!-- Modal -->
+
+  <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Réservation d'un véhicule</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-6" style="text-align:right">
+                <label>Date/heure de réservation :</label>
+            </div>
+            <div class="col-6">
+                <label>{{dtretour}}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="text-align:right">
+                <label>Date/heure retour :</label>
+            </div>
+            <div class="col-6">
+                <label>toto</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="text-align:right">
+                <label>Immatriculation :</label>
+            </div>
+            <div class="col-6">
+                <label>01244</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="text-align:right">
+                <label>Marque :</label>
+            </div>
+            <div class="col-6">
+                <label>jap</label>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-6" style="text-align:right">
+                <label>Modèle :</label>
+            </div>
+            <div class="col-6">
+                <label>2008</label>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuler</button>
+        <button type="button" class="btn btn-outline-primary" >Confirmer</button>
+      </div>
+    </ng-template>
+    
+    
+    
+    
