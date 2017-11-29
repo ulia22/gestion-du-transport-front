@@ -1,0 +1,45 @@
+<app-menu></app-menu>
+<div>
+  <h1>Vos réservations</h1>
+  <button type="button" class="btn btn-primary float-right">Réserver un transport</button>
+  <h5>Réservations en cours</h5>
+  <table class="table table-striped">
+    <thead>
+      <th>Date / heure de départ</th>
+      <th>Départ</th>
+      <th>Destination</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let line of listeReservationsAnnoncesCourrantesJSON">
+        <td>{{line.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</td>
+        <td>{{line.addrDepart}}</td>
+        <td>{{line.addrArrivee}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5>Historique</h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      <th>Date / heure de départ</th>
+      <th>Départ</th>
+      <th>Destination</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let line of listeResAnnOnDisplay">
+          <td>{{line.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</td>
+          <td>{{line.addrDepart}}</td>
+          <td>{{line.addrArrivee}}</td>
+          <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="listeReservationsAnnoncesHistoriquesJSON.length > nbHistoriqueDisplayed">
+    <ngb-pagination [collectionSize]="totalItemsHistorique" [(page)]="currentPageHistorique" [pageSize]="nbHistoriqueDisplayed" (pageChange)="loadHistorique($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  </div>
+</div>
