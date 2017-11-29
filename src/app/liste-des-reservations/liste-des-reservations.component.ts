@@ -31,6 +31,7 @@ export class ListeDesReservationsComponent implements OnInit {
     this.reservationService.getListeReservations(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
     .subscribe(
       resp=>{
+
         this.listeReservationsJSON = resp
         this.setListeCourrantEtHistorique()
       },
@@ -46,6 +47,7 @@ export class ListeDesReservationsComponent implements OnInit {
       let value = r.dateDepart
       let d = new JsontoDatePipe().transform(value)
       if(d.getTime() > Date.now()){
+          console.log("Bouh"+r.dateDepart)
         return true
       }
       return false
