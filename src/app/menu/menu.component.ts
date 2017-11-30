@@ -13,9 +13,6 @@ export class MenuComponent implements OnInit {
   constructor( private userRolesService:UserRolesService) { }
 
   ngOnInit() {
-    this.rolesUser = this.userRolesService.sessionRole
-    //this.rolesUser = "administrateur"
-    //this.rolesUser = "chauffeur"
+    this.rolesUser = localStorage.getItem('role')
   }
-
 }
