@@ -10,8 +10,8 @@ import { Modele } from '../domain/modele';
 
 
 const httpOptions = {
- headers: new HttpHeaders({ 'Content-Type': 'application/json' })
- };
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class VehiculeService {
@@ -23,33 +23,31 @@ export class VehiculeService {
 
   constructor(private http:HttpClient) { }
 
-  refresh():void{
-
-    this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
-    .subscribe(col => {this.vehicules.next(col)
-    console.log("yata")})
-  }
 
   getListCtegorie(){
     this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}
   )
-    return this.categories
-  }
+  return this.categories
+}
 
-  getListVehicule():Observable<Vehicule[]>{
-    this.refresh()
-    return this.vehicules.asObservable();
-  }
+getListVehicule():Observable<Vehicule[]>{
+  this.refresh()
+  return this.vehicules.asObservable();
+}
 
-  sauvegarder(newVehicule:Vehicule): Subject<Vehicule[]> {
+refresh():void{
+  this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
+  .subscribe(col => this.vehicules.next(col))
+}
 
-      const vehiculeCreatedObservable : Observable<Vehicule> = this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions)
+sauvegarder(newVehicule:Vehicule):void {
+  const vehiculeCreatedObservable : Observable<Vehicule> = this.http.post<Vehicule>(environment.apiUrl + '/vehicules', newVehicule,httpOptions)
 
-      vehiculeCreatedObservable.subscribe(v=> {
-        const tabVehicule:Vehicule[] = this.vehicules.getValue()
-        tabVehicule.push(v)
-        this.vehicules.next(tabVehicule)
-      })
-     return this.vehicules;
-  }
+  vehiculeCreatedObservable.subscribe(v=> {
+    const tabVehicule:Vehicule[] = this.vehicules.getValue()
+    tabVehicule.push(v)
+    this.vehicules.next(tabVehicule)
+  })
+//  return this.vehicules;
+}
 }

@@ -58,8 +58,6 @@
   </div>
 </div>
 
-
-<!-- Modal -->
 <form name="myForm" ng-submit="foo()" novalidate>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -73,14 +71,10 @@
         <div class="col-4" style="text-align:right">
           <label for="">Immatriculation</label>
         </div>
-        <div class="col-2">
-          <input class="form-control col-10"   type="text" #immatriculation1 name="immatriculation1" (keyup)="onBoolImmatriculation1($event)" required maxlength="2">
-        </div> -
-        <div class="col-2">
-          <input class="form-control col-12" type="number" #immatriculation2 name="immatriculation2" (keyup)="onBoolImmatriculation2($event)" required maxlength="3">
-        </div> -
-        <div class="col-2">
-          <input class="form-control col-10" type="text" #immatriculation3 name="immatriculation3" (keyup)="onBoolImmatriculation3($event)" required maxlength="2">
+        <div class="col-6">
+          <input class="col-3" type="text" #immatriculation1 name="immatriculation1" (keyup)="onBoolImmatriculation1($event)" required maxlength="2"> -
+          <input class="col-4" type="number" #immatriculation2 name="immatriculation2" (keyup)="onBoolImmatriculation2($event)" required maxlength="3"> -
+          <input class="col-3" type="text" #immatriculation3 name="immatriculation3" (keyup)="onBoolImmatriculation3($event)" required maxlength="2">
         </div>
       </div>
       <div class="row ">
@@ -88,7 +82,7 @@
           <label for="">Marque</label>
         </div>
         <div class="col-6">
-          <input type="text" class="form-control" #marque name="marque" required (keyup)="onBoolMarque($event)">
+          <input type="text" #marque name="marque" required (keyup)="onBoolMarque($event)">
 
         </div>
       </div>
@@ -97,7 +91,7 @@
           <label for="">Modèle</label>
         </div>
         <div class="col-6">
-          <input type="text" class="form-control" #modele name="modele" required (keyup)="onBoolModele($event)">
+          <input type="text" #modele name="modele" required (keyup)="onBoolModele($event)">
 
         </div>
       </div>
@@ -106,7 +100,7 @@
           <label for="">catégorie</label>
         </div>
         <div class="col-6" >
-          <select class="form-control col-12" name="select" #categorie requir>
+          <select class="col-11" name="select" #categorie requir>
             <option *ngFor="let categorie of categories " >
               {{categorie}}
             </option>
@@ -118,8 +112,8 @@
         <div class="col-4" style="text-align:right">
           <label for="">Nombre de place</label>
         </div>
-        <div class="col-6">
-          <input type="number" class="form-control" #nbp name="nbp" required (keyup)="onBoolNbp($event)">
+        <div class="col-8">
+          <input type="number" #nbp name="nbp" required (keyup)="onBoolNbp($event)">
         </div>
       </div>
       <div class="row ">
@@ -127,7 +121,7 @@
           <label for="">Photo</label>
         </div>
         <div class="col-6">
-          <input type="text" class="form-control" #photo name="photo" required (keyup)="onBoolPhoto($event)">
+          <input type="text" #photo name="photo" required (keyup)="onBoolPhoto($event)">
 
         </div>
       </div>
@@ -136,7 +130,7 @@
       <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuller</button>
       <button type="button" class="btn btn-outline-primary" (click)="add(immatriculation1,immatriculation2,immatriculation3 , marque, modele  , categorie , nbp , photo)"
       [disabled]="!( valideImmatriculation1 && valideImmatriculation2 && valideImmatriculation3
-      && valideMarque && validePhoto && valideModele && valideNbp)" (click)="c('Close click')">Ajouter</button>
+      && valideMarque && validePhoto && valideModele && valideNbp)"(click)="c('Close click')" >Ajouter</button>
     </div>
   </ng-template>
 </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input } from '@angular/core';
 import { bootstrap } from 'bootstrap';
 import {NgbTimeStruct ,NgbModal, ModalDismissReasons, NgbTypeaheadConfig} from '@ng-bootstrap/ng-bootstrap';
 import { AnnonceCovoiturageService } from '../shared/service//annonce-covoiturage.service'
@@ -10,6 +10,8 @@ import { JsontoDatePipe } from '../shared/pipe/jsonto-date.pipe';
 
 import {VehiculeService} from "../shared/service/vehicule.service"
 import {Vehicule} from "../shared/domain/vehicule"
+import { Reservation } from '../shared/domain/reservation';
+import { ReservationService } from '../shared/service/reservation.service';
 
 const address = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado']
 @Component({
@@ -40,15 +42,32 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   public isCollapsed = true;
   public isCollapsed1 = false;
 
+  stringImmatriculation =""
+  stringMarque=""
+  stringModele=""
+
   closeResult: string;
 
-  public vehicules:Vehicule[]
+  @Input()  vehicules:Vehicule[]
   public annonces:any[]
   public annoncesOnDisplay:any[]
 
-
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService, config: NgbTypeaheadConfig, public annoncesCovoitService:AnnonceCovoiturageService) {
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService , config: NgbTypeaheadConfig, public reservationService:ReservationService, public annoncesCovoitService:AnnonceCovoiturageService) {
     config.showHint = true;
+  }
+
+  open(content , immatriculation , marque , modele) {
+    this.modalService.open(content).result.then((result) => {
+      ;
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      ;
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+    this.stringImmatriculation = immatriculation;
+    this.stringMarque = marque;
+    this.stringModele = modele;
   }
 
   search = (text$: Observable<string>) => {
@@ -64,14 +83,21 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
       this.annoncesCovoitService.getListAnnoncesCovoiturage(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne).subscribe(l=>this.annonces = l)
     }
 
-    open(content) {
-      this.modalService.open(content).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }
-    openReservCovoit(content2){
+  add(dateReservationDay,dateReservationMonth, dateReservationYear ,timeReserveHour ,timeReserveMinute,
+    dateRetourDay,dateRetourMonth,dateRetourYear,timeRetourHour,timeRetourMinute,
+    dateReservation,dateRetour,immatriculation,marque,modele){
+
+     const depart = null ; //dateReservationDay+ "/" + dateReservationMonth + "/" + dateReservationYear ;
+
+     const retour =null; // dateRetourDay+ "/" + dateRetourMonth + "/" + dateRetourYear;
+    console.log(immatriculation +"toto")
+    const reservation = new Reservation( marque ,immatriculation,modele ,depart, retour);
+
+    this.reservationService.sauvegarde(reservation)
+
+  }
+
+    openReservCovoit(content2, annonce){
       console.log("Bouh"+JSON.stringify(annonce))
       this.annonceSelected = annonce
       this.modalService.open(content2)
