@@ -4,6 +4,7 @@ import { AnnonceCovoiturageService } from '../shared/service/annonce-covoiturage
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
 import { Router } from '@angular/router'
 import * as moment  from 'moment'
+import { Personne } from '../shared/domain/personne';
 
 @Component({
   selector: 'app-cree-annonce',
@@ -37,7 +38,8 @@ export class CreeAnnonceComponent implements OnInit {
     dateDeDepart.setHours(parseInt(heure.value))
     dateDeDepart.setMinutes(parseInt(minute.value))
     if (addrDepart.value && addrDestination.value && duree.value && distance.value && immatriculation.value && marque.value && modele.value && nbPlace.value && date.value && heure.value && minute.value) {
-      this.annonceServ.saveAnnonce(new Annonce(addrDepart.value, addrDestination.value, parseInt(duree.value), parseInt(distance.value), immatriculation.value, marque.value, modele.value, parseInt(nbPlace.value), dateDeDepart))
+      let id = JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne
+      this.annonceServ.saveAnnonce(new Annonce(addrDepart.value, addrDestination.value, parseInt(duree.value), parseInt(distance.value), immatriculation.value, marque.value, modele.value, parseInt(nbPlace.value), dateDeDepart, new Personne(parseInt(id))))
       this.router.navigateByUrl("collaborateur/annonces")
     }
     return false
