@@ -67,10 +67,7 @@ export class ListeDesVehiculesComponent implements OnInit {
         const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
     //  const marques =  new  Marque(marque.value );
       //  const model = new Modele(categorie.value,modele.value,marque.value)
-<<<<<<< HEAD
-    
-=======
->>>>>>> c00efbdf2d8ba6c30a35a086412dc8eabf9ca3e4
+
         this.vehiculeService.sauvegarder(voiture)
         return false
 
