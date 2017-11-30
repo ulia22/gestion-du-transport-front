@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRolesService } from '../shared/service/user-roles.service'
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {Vehicule } from '../shared/domain/vehicule'
+import {Vehicule } from '../shared/domain/vehicule' 
 import { VehiculeService } from '../shared/service/vehicule.service';
 import { Modele } from '../shared/domain/modele';
 
@@ -12,14 +12,14 @@ import { Modele } from '../shared/domain/modele';
 })
 export class ListeDesVehiculesComponent implements OnInit {
 
-
+  
   closeResult: string;
   vehicules: Vehicule[]
   categories : string[]
   stringImmatriculation:string=""
   stringMarque:string=""
 
-
+  
   valideImmatriculation1=false
   valideImmatriculation2=false
   valideImmatriculation3=false
@@ -30,16 +30,17 @@ export class ListeDesVehiculesComponent implements OnInit {
   valideNbp=false
 
 
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) {
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { 
 
-
+    
   }
 
   ngOnInit() {
     this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l } )
-    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v
+    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v 
       console.log("toto")
     console.log(this.vehicules)} )
+    
   }
 
   open(content) {
@@ -67,20 +68,14 @@ export class ListeDesVehiculesComponent implements OnInit {
       let immatriculation = immatriculation1.value +"-" + immatriculation2.value +"-"+ immatriculation3.value
       console.log(immatriculation)
         const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
-    //  const marques =  new  Marque(marque.value );
-      //  const model = new Modele(categorie.value,modele.value,marque.value)
-        this.vehiculeService.sauvegarder(voiture).subscribe(vehicule =>{
-          this.vehicules.push(vehicule)
 
-
-
-
-        })
-
-
-
+        this.vehiculeService.sauvegarder(voiture).then(l=>
+        l.subscribe(l=>this.vehicules=l)
+        )
+        
+       
         return false
-
+    
   }
 
   onKeyUpImmatriculation($event){
