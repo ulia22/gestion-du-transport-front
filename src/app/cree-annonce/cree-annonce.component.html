@@ -75,17 +75,17 @@
         <form class="offset-2 mt-2">
             <div class="form-group row">
                 <label for="inputDate" class="col-sm-2 col-form-label">Date et horaire</label>
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <input type="date" class="form-control" id="inputDate" placeholder="Date" #Date (keyup)="testRempli($event)" (change)="testRempli($event)">
-                    <p class="text-danger" *ngIf="rempliDate == false">La date ne peut être antérieur à aujourd'hui</p>                    
+                    <p class="text-danger" *ngIf="rempliDate == false">La date ne peut être antérieur à aujourd'hui</p>
                 </div>
                 <div>
                     <select class="custom-select" #Heure>
-                        <option *ngFor="let heure of heures" [value]="heure">{{heure}}</option>
+                        <option *ngFor="let heure of heures" [value]="heure">à {{heure}} h</option>
                     </select>
                 </div>
                 <div>
-                    <select class="custom-select" #Minute>
+                    <select class="custom-select ml-1" #Minute>
                         <option *ngFor="let minute of minutes" [value]="minute">{{minute}}</option>
                     </select>
                 </div>
@@ -97,22 +97,44 @@
 
 <ng-template #content let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title">Confirmation de votre proposition</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+        <h4 class="modal-title">Confirmation de votre proposition</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body offset-1">
-      <div class="row"><p class="col-6">Départ : </p><label id="ModalAddrDepart">{{AddrDepart.value}}</label></div>
-      <div class="row"><p class="col-6">Destination : </p><label id="ModalAddrDepart">{{AddrDestination.value}}</label></div>
-      <div class="row"><p class="col-6">Immatriculation : </p><label id="ModalAddrDepart">{{Immatriculation.value}}</label></div>
-      <div class="row"><p class="col-6">Marque : </p><label id="ModalAddrDepart">{{Marque.value}}</label></div>
-      <div class="row"><p class="col-6">Modèle : </p><label id="ModalAddrDepart">{{Modele.value}}</label></div>
-      <div class="row"><p class="col-6">Nb. places disponibles : </p><label id="ModalAddrDepart">{{NbPlace.value}}</label></div>
-      <div class="row"><p class="col-6">Date/heure </p><label id="ModalAddrDepart">Le {{Date.value}} à {{Heure.value}} h {{Minute.value}}</label></div>
-      
+        <div class="row">
+            <p class="col-6">Départ : </p>
+            <label id="ModalAddrDepart">{{AddrDepart.value}}</label>
+        </div>
+        <div class="row">
+            <p class="col-6">Destination : </p>
+            <label id="ModalAddrDepart">{{AddrDestination.value}}</label>
+        </div>
+        <div class="row">
+            <p class="col-6">Immatriculation : </p>
+            <label id="ModalAddrDepart">{{Immatriculation.value}}</label>
+        </div>
+        <div class="row">
+            <p class="col-6">Marque : </p>
+            <label id="ModalAddrDepart">{{Marque.value}}</label>
+        </div>
+        <div class="row">
+            <p class="col-6">Modèle : </p>
+            <label id="ModalAddrDepart">{{Modele.value}}</label>
+        </div>
+        <div class="row">
+            <p class="col-6">Nb. places disponibles : </p>
+            <label id="ModalAddrDepart">{{NbPlace.value}}</label>
+        </div>
+        <div class="row">
+            <p class="col-6">Date/heure </p>
+            <label id="ModalAddrDepart">Le {{Date.value}} à {{Heure.value}} h {{Minute.value}}</label>
+        </div>
+
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="add(AddrDepart, AddrDestination, Duree, Distance, Immatriculation, Marque, Modele, NbPlace, Date, Heure, Minute)" (click)="d()">Confirmer</button>
+        <button type="button" class="btn btn-primary" (click)="add(AddrDepart, AddrDestination, Duree, Distance, Immatriculation, Marque, Modele, NbPlace, Date, Heure, Minute)"
+            (click)="d()">Confirmer</button>
     </div>
-  </ng-template>
+</ng-template>
