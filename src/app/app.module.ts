@@ -45,10 +45,10 @@ const appRoutes: Routes = [
 { path: '**', redirectTo: 'app'} // redirige vers la route app par défaut
 ];
 
-
 @NgModule({
   declarations: [
     AppComponent,
+    ListeDesVehiculesComponent,
     MenuComponent,
     ListeAnnonceComponent,
     ConnexionComponent,

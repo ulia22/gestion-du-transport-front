@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input } from '@angular/core';
 import {NgbTimeStruct ,NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { bootstrap } from 'bootstrap';
 import {VehiculeService} from "../shared/service/vehicule.service"
 import {Vehicule} from "../shared/domain/vehicule"
+import { Reservation } from '../shared/domain/reservation';
+import { ReservationService } from '../shared/service/reservation.service';
 
 @Component({
   selector: 'app-reserver-un-vehicules-de-societe',
@@ -26,27 +28,39 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   public isCollapsed = true;
   public isCollapsed1 = false;
 
+  stringImmatriculation =""
+  stringMarque=""
+  stringModele=""
+
   closeResult: string;
 
-  public vehicules:Vehicule[]
+  @Input()  vehicules:Vehicule[]
   
   
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService) { 
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService , public reservationService:ReservationService) { 
     
   }
 
   ngOnInit() {
-    this.vehiculeService.getListVehicule().subscribe(l=>{this.vehicules=l})
-    console.log("toto");
-    console.log(this.vehicules[0]);
+    this.vehiculeService.getListVehicule().subscribe(v=>{ console.log('titi') ; console.log(v[0]) ;this.vehicules= v; console.log(this.vehicules[0]) } )
+    console.log("toto")
+    console.log(this.vehicules[0])
   }
 
-  open(content) {
+  open(content , immatriculation , marque , modele) {
     this.modalService.open(content).result.then((result) => {
+      ;
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
+      ;
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+console.log(immatriculation)
+console.log(immatriculation.value)
+
+    this.stringImmatriculation = immatriculation;
+    this.stringMarque = marque;
+    this.stringModele = modele;
   }
 
   private getDismissReason(reason: any): string {
@@ -57,6 +71,19 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
+  }
+  add(dateReservationDay,dateReservationMonth, dateReservationYear ,timeReserveHour ,timeReserveMinute,  
+    dateRetourDay,dateRetourMonth,dateRetourYear,timeRetourHour,timeRetourMinute,
+    dateReservation,dateRetour,immatriculation,marque,modele){
+
+     const depart = null ; //dateReservationDay+ "/" + dateReservationMonth + "/" + dateReservationYear ;
+    
+     const retour =null; // dateRetourDay+ "/" + dateRetourMonth + "/" + dateRetourYear;
+    console.log(immatriculation +"toto")
+    const reservation = new Reservation( marque ,immatriculation,modele ,depart, retour);
+
+    this.reservationService.sauvegarde(reservation)
+
   }
 
   

@@ -142,7 +142,7 @@
             <div class="form-group">
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp" [(ngModel)]="datePickerReservation"  ngbDatepicker #dtreservation="ngbDatepicker">
+                       name="dp" [(ngModel)]="datePickerReservation" #reservation ngbDatepicker #dtreservation="ngbDatepicker">
                 <button class="input-group-addon" (click)="dtreservation.toggle()" type="button">
                   <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                 </button>
@@ -193,18 +193,15 @@
         <!-- Carrousel -->
       <div class="container">
         <ngb-carousel>
-          <div ngfor="let vehicule of vehicules">
-            <ng-template ngbSlide>
-              <img src="{{vehicule.photo}}" alt="Random first slide">
+            <ng-template ngbSlide *ngFor="let vehicule of vehicules"> 
+              <img src="{{vehicule.photo}}"  class="rounded mx-auto d-block" alt="Photo du collegue" height="500rem" width="600rem" alt="Random first slide">
               <div class="carousel-caption">
-                  <h3>{{vehicule.immatriculation}}</h3>
-                  <p> {{vehicule.marque}} - {{vehicule.model}}</p>
-                  <p> {{vehicule.categorie}}</p>
-                  <button (click)="open(content)">réserver </button>
+                  <h3 #immatriculation>{{vehicule.immatriculation}}</h3>
+                  <p #marque> {{vehicule.marque}} az</p> - <p #modele> {{vehicule.modele}}er</p>
+                  <p #categorie> {{vehicule.categorie}}</p>
+                  <button (click)="open(content , vehicule.immatriculation , vehicule.marque ,vehicule.modele )">réserver </button>
               </div>
             </ng-template>
-          </div>
-            
           </ngb-carousel>
         </div>
         <br> <br>
@@ -232,7 +229,7 @@
                 <label>Date/heure de réservation :</label>
             </div>
             <div class="col-6">
-                <label>{{dtretour}}</label>
+                <label #modalDateDepart>{{ datePickerReservation.day}}/{{datePickerReservation.month}}/{{datePickerReservation.year}} {{timeReserve.hour}}h{{timeReserve.minute}}</label>
             </div>
         </div>
         <div class="row">
@@ -240,7 +237,7 @@
                 <label>Date/heure retour :</label>
             </div>
             <div class="col-6">
-                <label>toto</label>
+                <label #modalDateRetour>{{ datePickerRetour.day}}/{{datePickerRetour.month}}/{{datePickerRetour.year}} {{timeRetour.hour}}h{{timeRetour.minute}}</label>
             </div>
         </div>
         <div class="row">
@@ -248,7 +245,7 @@
                 <label>Immatriculation :</label>
             </div>
             <div class="col-6">
-                <label>01244</label>
+                <label #modalImmatriculation>{{stringImmatriculation}}</label>
             </div>
         </div>
         <div class="row">
@@ -256,7 +253,7 @@
                 <label>Marque :</label>
             </div>
             <div class="col-6">
-                <label>jap</label>
+                <label #modalMarque>{{stringMarque}}</label>
             </div>
         </div>
          <div class="row">
@@ -264,13 +261,16 @@
                 <label>Modèle :</label>
             </div>
             <div class="col-6">
-                <label>2008</label>
+                <label #modalModel>{{stringModele}}</label>
             </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuler</button>
-        <button type="button" class="btn btn-outline-primary" >Confirmer</button>
+        <button type="button" class="btn btn-outline-primary" (click)="add(
+           datePickerReservation.day,datePickerReservation.month, datePickerReservation.year ,timeReserve.hour ,timeReserve.minute ,
+           datePickerRetour.day,datePickerRetour.month,datePickerRetour.year,timeRetour.hour,timeRetour.minute
+        ,stringImmatriculation ,stringMarque ,stringModele)" (click)="c('Close click')">Confirmer</button>
       </div>
     </ng-template>
     

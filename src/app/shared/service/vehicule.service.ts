@@ -16,40 +16,39 @@ const httpOptions = {
 @Injectable()
 export class VehiculeService {
 
-  newVehicule : Subject<Vehicule> = new BehaviorSubject(new Vehicule("","","","","",""))
-  vehicules:Subject<Vehicule[]>=new BehaviorSubject([])
-  categories:Subject<string[]> = new BehaviorSubject([])
-  vehicule : Vehicule[]
+ vehicules:BehaviorSubject<Vehicule[]>=new BehaviorSubject([])
+ categories:Subject<string[]> = new BehaviorSubject([])
+ vehicule : Vehicule[]
 
-  constructor(private http:HttpClient) { }
+ constructor(private http:HttpClient) { }
 
-  getListCtegorie(){
-    this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {
-      this.categories.next(l)}   
-  )
-    return this.categories   
-  }
+ refresh():void{
+   this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
+   .subscribe(col => this.vehicules.next(col))
+ }
 
-  getListVehicule(){
-    this.http.get<Vehicule[]>(environment.apiUrl + '/vehicules',httpOptions).toPromise().then(l=>{this.vehicule=l
-                                        this.vehicules.next(l)
-    });
- 
-    return this.vehicules
-  }
+ getListCtegorie(){
+   this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}  
+ )
+   return this.categories  
+ }
 
-  sauvegarder(newVehicule:Vehicule){
-    
-      this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).
-      toPromise().then(v=>{
-                       this.vehicule.push(v)
-                       this.vehicules.next(this.vehicule)
-                       
-                      }
-                       
-      ) 
-      return this.vehicules
-      
-  }
+ getListVehicule():Observable<Vehicule[]>{
+   this.refresh()
+   return this.vehicules.asObservable();
+ /* this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
+    this.vehicules.next(l)}
+ )
+   return this.vehicules*/
+ }
+
+ sauvegarder(newVehicule:Vehicule):void {
+   
+     this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).subscribe(v=>{
+       const tabVehicule= this.vehicules.getValue()
+       tabVehicule.push(v)
+       this.vehicules.next(tabVehicule)
+    })
+ }
 
 }

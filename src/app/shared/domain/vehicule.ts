@@ -5,5 +5,9 @@ export class Vehicule {
             public nbp:string,
             public photo:string,
             public categorie:string,
-            public modele:string){}
+            public modele:string){
+  
+          
+       }
+    
 }

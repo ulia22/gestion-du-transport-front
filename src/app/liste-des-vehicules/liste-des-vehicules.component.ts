@@ -12,6 +12,10 @@ import { Modele } from '../shared/domain/modele';
 })
 export class ListeDesVehiculesComponent implements OnInit {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5bd9f93357c5672e634da304ee2ed9977afe8cd6
   
   closeResult: string;
   vehicules: Vehicule[]
@@ -67,6 +71,7 @@ export class ListeDesVehiculesComponent implements OnInit {
     , categorie:HTMLInputElement , nbp:HTMLInputElement,photo:HTMLInputElement ){
 
       let immatriculation = immatriculation1.value +"-" + immatriculation2.value +"-"+ immatriculation3.value
+<<<<<<< HEAD
       const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
 
       this.vehiculeService.sauvegarder(voiture).next(
@@ -75,6 +80,18 @@ export class ListeDesVehiculesComponent implements OnInit {
         
        
       return false 
+=======
+      console.log(immatriculation)
+        const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
+    //  const marques =  new  Marque(marque.value );
+      //  const model = new Modele(categorie.value,modele.value,marque.value)
+
+    
+        this.vehiculeService.sauvegarder(voiture)
+  
+        return false
+
+>>>>>>> 5bd9f93357c5672e634da304ee2ed9977afe8cd6
   }
 
   onKeyUpImmatriculation($event){
