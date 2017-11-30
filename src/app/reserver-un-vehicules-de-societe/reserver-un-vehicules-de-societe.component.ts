@@ -72,9 +72,15 @@ console.log(immatriculation.value)
       return  `with: ${reason}`;
     }
   }
-  add(dateReservation,dateRetour,immatriculation,marque,modele){
+  add(dateReservationDay,dateReservationMonth, dateReservationYear ,timeReserveHour ,timeReserveMinute,  
+    dateRetourDay,dateRetourMonth,dateRetourYear,timeRetourHour,timeRetourMinute,
+    dateReservation,dateRetour,immatriculation,marque,modele){
 
-    const reservation = new Reservation( marque ,immatriculation,modele ,dateReservation, dateRetour);
+     const depart = null ; //dateReservationDay+ "/" + dateReservationMonth + "/" + dateReservationYear ;
+    
+     const retour =null; // dateRetourDay+ "/" + dateRetourMonth + "/" + dateRetourYear;
+    console.log(immatriculation +"toto")
+    const reservation = new Reservation( marque ,immatriculation,modele ,depart, retour);
 
     this.reservationService.sauvegarde(reservation)
 

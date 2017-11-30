@@ -267,7 +267,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuler</button>
-        <button type="button" class="btn btn-outline-primary" (click)="add(modalDateDepart,modalImmatriculation,modalImmatriculation ,modalMarque ,modalModel)" >Confirmer</button>
+        <button type="button" class="btn btn-outline-primary" (click)="add(
+           datePickerReservation.day,datePickerReservation.month, datePickerReservation.year ,timeReserve.hour ,timeReserve.minute ,
+           datePickerRetour.day,datePickerRetour.month,datePickerRetour.year,timeRetour.hour,timeRetour.minute
+        ,stringImmatriculation ,stringMarque ,stringModele)" (click)="c('Close click')">Confirmer</button>
       </div>
     </ng-template>
     
