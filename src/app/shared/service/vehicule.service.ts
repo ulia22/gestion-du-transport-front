@@ -15,41 +15,6 @@ const httpOptions = {
 
 @Injectable()
 export class VehiculeService {
-
-<<<<<<< HEAD
- newVehicule : Subject<Vehicule> = new BehaviorSubject(new Vehicule("","","","","",""))
- vehicules:Subject<Vehicule[]>=new BehaviorSubject([])
- categories:Subject<string[]> = new BehaviorSubject([])
- vehicule : Vehicule[]
-
- constructor(private http:HttpClient) { }
-
- refresh():void{
-   this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
-   .subscribe(col => this.vehicules.next(col))
- }
-
- getListCtegorie(){
-   this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}  
- )
-   return this.categories  
- }
-
- getListVehicule(){
-   this.refresh()
-   return this.vehicules.asObservable();
- /* this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
-    this.vehicules.next(l)}
- )
-   return this.vehicules*/
- }
-
- sauvegarder(newVehicule:Vehicule) {
-   
-     this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).toPromise().then(v=>this.newVehicule.next(v))
-    return this.newVehicule
- }
-=======
   newVehicule : Subject<Vehicule> = new BehaviorSubject(new Vehicule("","","","","",""))
   vehicules:Subject<Vehicule[]>=new BehaviorSubject([])
   categories:Subject<string[]> = new BehaviorSubject([])
@@ -63,25 +28,23 @@ export class VehiculeService {
   }
 
   getListCtegorie(){
-    this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}   
+    this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}
   )
-    return this.categories   
+    return this.categories
   }
 
   getListVehicule(){
     this.refresh()
     return this.vehicules.asObservable();
   /* this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
-     this.vehicules.next(l)} 
+     this.vehicules.next(l)}
   )
     return this.vehicules*/
   }
 
   sauvegarder(newVehicule:Vehicule) {
-    
+
       this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).toPromise().then(v=>this.newVehicule.next(v))
      return this.newVehicule
   }
->>>>>>> Gerer_les_véhicules
-
 }
