@@ -3,7 +3,7 @@ import { Annonce } from '../shared/domain/annonce';
 import { AnnonceCovoiturageService } from '../shared/service/annonce-covoiturage.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
 import { Router } from '@angular/router'
-import * as moment  from 'moment'
+import * as moment  from 'momment'
 import { Personne } from '../shared/domain/personne';
 
 @Component({
