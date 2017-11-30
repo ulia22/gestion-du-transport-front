@@ -1,71 +1,69 @@
+<<<<<<< HEAD
 
 <app-menu></app-menu>
 
+=======
+<app-menu></app-menu>
+>>>>>>> 9326fb5c0592021d47fe64ae96f356cdefe5088a
 <div class="container">
   <div class="row">
     <h2>Véhicules</h2>
   </div>
   <div class="row">
     <label for="">Filtre</label>
-      <div class="container">
-        <div class="row ">
-          <div class="col-2" style="text-align:right">
-           <label for="">Immatriculation</label>
-          </div>
-          <div>
-            <input type="text" id="immatriculation" name="immatriculation" (keyup)="onKeyUpImmatriculation($event)">
-          </div>
+    <div class="container">
+      <div class="row ">
+        <div class="col-2" style="text-align:right">
+          <label for="">Immatriculation</label>
         </div>
-        <div class="row" >
-            <div class="col-2" style="text-align:right">
+        <div>
+          <input type="text" id="immatriculation" name="immatriculation" (keyup)="onKeyUpImmatriculation($event)">
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-2" style="text-align:right">
           <label for="">Marque</label>
         </div>
         <div>
           <input type="text" id="marque" name="marque" (keyup)="onKeyUpMarque($event)">
         </div>
-        </div>
       </div>
     </div>
-      <div class="row">
-        <div class="col-2 offset-10"> 
-          <button type="button" class="btn btn-primary "  (click)="open(content)">Ajouter un véhicules</button>
-        </div>
-      </div>
-      <br>
-      <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-2 offset-10">
+      <button type="button" class="btn btn-primary "  (click)="open(content)">Ajouter un véhicules</button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
     <div *ngFor="let vehicule of ((vehicules|marque:stringMarque)|immatriculation:stringImmatriculation) ">
-     
-          <div class="card ">
-              <div class="card-block">
-            <div class="container">
-              <div class="row">
-                      <a routerLink="" RouterLinkActive="active-link">
-                        <img class="img-responsive mx-auto d-block round" src="{{vehicule.photo}}" alt="" height="355rem" width="340rem"> 
-                      </a>
-              </div>
+
+      <div class="card ">
+        <div class="card-block">
+          <div class="container">
+            <div class="row">
+              <a routerLink="" RouterLinkActive="active-link">
+                <img class="img-responsive mx-auto d-block round" src="{{vehicule.photo}}" alt="" height="355rem" width="340rem">
+              </a>
             </div>
-            <div class="card-body" style="text-align:center">
-                <div>
-                  <label for="">{{vehicule.immatriculation}}</label>
-                </div>
-                <div>
-                  <label for="">{{vehicule.marque}} - {{vehicule.modele}}</label>
-                </div>
-                <div>
-                  <label for="">{{vehicule.categorie}}</label>
-                </div>
+          </div>
+          <div class="card-body" style="text-align:center">
+            <div>
+              <label for="">{{vehicule.immatriculation}}</label>
+            </div>
+            <div>
+              <label for="">{{vehicule.marque}} - {{vehicule.modele}}</label>
+            </div>
+            <div>
+              <label for="">{{vehicule.categorie}}</label>
             </div>
           </div>
         </div>
+      </div>
+    </div>
   </div>
 </div>
-
-</div>
-
-
-
-
-
 
 <form name="myForm" ng-submit="foo()" novalidate>
       <ng-template #content let-c="close" let-d="dismiss">

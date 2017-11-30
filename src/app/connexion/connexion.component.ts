@@ -56,6 +56,8 @@ export class ConnexionComponent implements OnInit {
 
   private setUserRoles(role:string):void{
     this.userRolesService.sessionRole = role;
+    localStorage.setItem('personneEtAccount',JSON.stringify(this.objectJSONUser))
+    localStorage.setItem('role',this.userRolesService.sessionRole)
     if(role == 'COLLABORATEUR'){
       this.router.navigateByUrl('collaborateur/reservations')
     }else if(role == 'ADMINISTRATEUR'){

@@ -1,5 +1,5 @@
 export class Vehicule {
-    
+
         constructor( public immatriculation:string,
             public marque:string ,
             public nbp:string,

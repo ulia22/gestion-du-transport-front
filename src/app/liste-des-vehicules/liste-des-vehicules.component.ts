@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRolesService } from '../shared/service/user-roles.service'
-
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {Vehicule } from '../shared/domain/vehicule' 
+import {Vehicule } from '../shared/domain/vehicule'
 import { VehiculeService } from '../shared/service/vehicule.service';
 import { Modele } from '../shared/domain/modele';
-
 
 @Component({
   selector: 'app-liste-des-vehicules',
@@ -22,7 +20,7 @@ export class ListeDesVehiculesComponent implements OnInit {
   stringImmatriculation:string=""
   stringMarque:string=""
 
-  
+
   valideImmatriculation1=false
   valideImmatriculation2=false
   valideImmatriculation3=false
@@ -33,14 +31,14 @@ export class ListeDesVehiculesComponent implements OnInit {
   valideNbp=false
 
 
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { 
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) {
 
-    
+
   }
 
   ngOnInit() {
     this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l } )
-    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v 
+    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v
       console.log("toto")
     console.log(this.vehicules)} )
   }
@@ -77,7 +75,7 @@ export class ListeDesVehiculesComponent implements OnInit {
         this.vehiculeService.sauvegarder(voiture)
   
         return false
-    
+
   }
 
   onKeyUpImmatriculation($event){
