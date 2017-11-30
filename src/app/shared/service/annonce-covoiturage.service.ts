@@ -17,6 +17,11 @@ export class AnnonceCovoiturageService {
 
   constructor(private http:HttpClient) { }
 
+  listeMesAnnonces(id):Observable<Annonce[]>{
+    this.http.get<Annonce[]>(`${environment.apiUrl}/annoncesCovoiturages/mesAnnonces?personneId=`+id, httpOptions).subscribe(annonceTab => this.mesAnnoncesSubject.next(annonceTab))
+    return this.mesAnnoncesSubject.asObservable()
+  }
+
  saveAnnonce(newAnnonce:Annonce):void{
   this.http.post<Annonce>(`${environment.apiUrl}/annoncesCovoiturages/creer`,newAnnonce, httpOptions).subscribe(annonce => {
   const annonceTab =this.mesAnnoncesSubject.getValue()
