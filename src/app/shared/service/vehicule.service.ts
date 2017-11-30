@@ -24,8 +24,10 @@ export class VehiculeService {
   constructor(private http:HttpClient) { }
 
   refresh():void{
+    
     this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
-    .subscribe(col => this.vehicules.next(col))
+    .subscribe(col => {this.vehicules.next(col)
+    console.log("yata")})
   }
 
   getListCtegorie(){
@@ -37,19 +39,18 @@ export class VehiculeService {
   getListVehicule():Observable<Vehicule[]>{
     this.refresh()
     return this.vehicules.asObservable();
-  /* this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
-     this.vehicules.next(l)} 
-  )
-    return this.vehicules*/
   }
 
-  sauvegarder(newVehicule:Vehicule):void {
-      this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).subscribe(v=> {
+  sauvegarder(newVehicule:Vehicule): Subject<Vehicule[]> {
+    
+      const vehiculeCreatedObservable : Observable<Vehicule> = this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions)
+
+      vehiculeCreatedObservable.subscribe(v=> {
         const tabVehicule:Vehicule[] = this.vehicules.getValue()
         tabVehicule.push(v)
-        this.vehicules.next(tabVehicule)})
-      
-     
+        this.vehicules.next(tabVehicule)
+      })
+     return this.vehicules;
   }
 
 }
