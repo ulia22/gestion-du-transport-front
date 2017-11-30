@@ -91,6 +91,6 @@ export class ListeDesReservationsComponent implements OnInit {
   }
 
   reserverTransport(){
-    this.router.navigateByUrl('/collaborateur/propositions/creer')
+    this.router.navigateByUrl('/collaborateur/reservations/creer')
   }
 }

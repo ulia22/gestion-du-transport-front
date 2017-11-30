@@ -78,7 +78,7 @@ export class CreeAnnonceComponent implements OnInit {
       } else{
         this.rempliDate=false
       }
-      
+
     }
     if (this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true){
       this.allRempli=true
@@ -86,5 +86,5 @@ export class CreeAnnonceComponent implements OnInit {
       this.allRempli=false
     }
   }
-  
+
 }
