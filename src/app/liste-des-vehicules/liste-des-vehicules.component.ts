@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { UserRolesService } from '../shared/service/user-roles.service'
-=======
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {Vehicule } from '../shared/domain/vehicule' 
+import {Vehicule } from '../shared/domain/vehicule'
 import { VehiculeService } from '../shared/service/vehicule.service';
 import { Modele } from '../shared/domain/modele';
->>>>>>> reserver-un-vehiclues-de-societe
 
 @Component({
   selector: 'app-liste-des-vehicules',
@@ -15,14 +12,14 @@ import { Modele } from '../shared/domain/modele';
 })
 export class ListeDesVehiculesComponent implements OnInit {
 
-  
+
   closeResult: string;
   vehicules: Vehicule[]
   categories : string[]
   stringImmatriculation:string=""
   stringMarque:string=""
 
-  
+
   valideImmatriculation1=false
   valideImmatriculation2=false
   valideImmatriculation3=false
@@ -33,14 +30,14 @@ export class ListeDesVehiculesComponent implements OnInit {
   valideNbp=false
 
 
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) { 
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService ) {
 
-    
+
   }
 
   ngOnInit() {
     this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l } )
-    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v 
+    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v
       console.log("toto")
     console.log(this.vehicules)} )
   }
@@ -74,16 +71,16 @@ export class ListeDesVehiculesComponent implements OnInit {
       //  const model = new Modele(categorie.value,modele.value,marque.value)
         this.vehiculeService.sauvegarder(voiture).subscribe(vehicule =>{
           this.vehicules.push(vehicule)
-  
 
-        
-             
+
+
+
         })
-        
-       
+
+
 
         return false
-    
+
   }
 
   onKeyUpImmatriculation($event){
