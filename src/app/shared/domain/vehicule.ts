@@ -6,16 +6,8 @@ export class Vehicule {
             public photo:string,
             public categorie:string,
             public modele:string){
-<<<<<<< HEAD
   
           
        }
     
 }
-=======
-   
-           
-       }
-    
-    }
->>>>>>> Gerer_les_véhicules

@@ -25,11 +25,12 @@ import { ReserverUnVehiculesDeSocieteComponent } from './reserver-un-vehicules-d
 import { VehiculeService } from './shared/service/vehicule.service';
 import { ImmatriculationPipe } from './shared/pipe/immatriculation.pipe';
 import { MarquePipe } from './shared/pipe/marque.pipe';
+import { ReservationService } from './shared/service/reservation.service';
 
 const appRoutes: Routes = [
 //Application
 { path: 'app', component: AppComponent },
-{ path: 'collaborateur/reservations', component: AppComponent },
+{ path: 'collaborateur/reservations', component: ReserverUnVehiculesDeSocieteComponent },
 { path: 'collaborateur/annonces', component: ListeAnnonceComponent },
 { path: 'collaborateur/annonces/creer', component: CreeAnnonceComponent},
 { path: 'collaborateur/statistiques', component: AppComponent },
@@ -63,7 +64,7 @@ const appRoutes: Routes = [
     BrowserModule,FormsModule, ReactiveFormsModule, JsonpModule,
     HttpClientModule
   ],
-  providers: [ConnexionService, UserRolesService, AnnonceCovoiturageService ,VehiculeService],
+  providers: [ConnexionService, UserRolesService, AnnonceCovoiturageService ,VehiculeService ,ReservationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
