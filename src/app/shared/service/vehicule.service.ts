@@ -16,8 +16,8 @@ const httpOptions = {
 @Injectable()
 export class VehiculeService {
 
-  newVehicule : Subject<Vehicule> = new BehaviorSubject(new Vehicule("","","","","",""))
-  vehicules:Subject<Vehicule[]>=new BehaviorSubject([])
+  newVehicule : Subject<Vehicule> = new BehaviorSubject(null)
+  vehicules:BehaviorSubject<Vehicule[]>=new BehaviorSubject([])
   categories:Subject<string[]> = new BehaviorSubject([])
   vehicule : Vehicule[]
 
@@ -34,7 +34,7 @@ export class VehiculeService {
     return this.categories   
   }
 
-  getListVehicule(){
+  getListVehicule():Observable<Vehicule[]>{
     this.refresh()
     return this.vehicules.asObservable();
   /* this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
@@ -43,10 +43,13 @@ export class VehiculeService {
     return this.vehicules*/
   }
 
-  sauvegarder(newVehicule:Vehicule) {
-    
-      this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).toPromise().then(v=>this.newVehicule.next(v))
-     return this.newVehicule
+  sauvegarder(newVehicule:Vehicule):void {
+      this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).subscribe(v=> {
+        const tabVehicule:Vehicule[] = this.vehicules.getValue()
+        tabVehicule.push(v)
+        this.vehicules.next(tabVehicule)})
+      
+     
   }
 
 }
