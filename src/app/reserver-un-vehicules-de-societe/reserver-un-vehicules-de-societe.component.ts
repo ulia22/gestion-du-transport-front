@@ -1,15 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbTimeStruct ,NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { bootstrap } from 'bootstrap';
+import {NgbTimeStruct ,NgbModal, ModalDismissReasons, NgbTypeaheadConfig} from '@ng-bootstrap/ng-bootstrap';
+import { AnnonceCovoiturageService } from '../shared/service//annonce-covoiturage.service'
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import { JsontoDatePipe } from '../shared/pipe/jsonto-date.pipe';
+
 import {VehiculeService} from "../shared/service/vehicule.service"
 import {Vehicule} from "../shared/domain/vehicule"
 
+const address = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado']
 @Component({
   selector: 'app-reserver-un-vehicules-de-societe',
   templateUrl: './reserver-un-vehicules-de-societe.component.html',
-  styleUrls: ['./reserver-un-vehicules-de-societe.component.css']
+  styleUrls: ['./reserver-un-vehicules-de-societe.component.css'],
+  providers:[NgbTypeaheadConfig]
 })
 export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
+
+  //Partie reserver Covoiturage
+  public model: any;
+  public annonceSelected:any = null;
+  //*********************///
 
   datePickerReservation;
   datePickerRetour;
@@ -29,36 +43,65 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   closeResult: string;
 
   public vehicules:Vehicule[]
-  
-  
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService) { 
-    
+  public annonces:any[]
+  public annoncesOnDisplay:any[]
+
+
+  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService, config: NgbTypeaheadConfig, public annoncesCovoitService:AnnonceCovoiturageService) {
+    config.showHint = true;
   }
 
-  ngOnInit() {
-    this.vehiculeService.getListVehicule().subscribe(l=>{this.vehicules=l})
-    console.log("toto");
-    console.log(this.vehicules[0]);
-  }
+  search = (text$: Observable<string>) => {
+    text$
+    .debounceTime(200)
+    .distinctUntilChanged()
+    .map(term => term.length < 2 ? []
+      : address.filter(v => v.toLowerCase().startsWith(term.toLocaleLowerCase())).splice(0, 10));
+    }
 
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+    ngOnInit() {
+      this.vehiculeService.getListVehicule().subscribe(l=>{this.vehicules=l})
+      this.annoncesCovoitService.getListAnnoncesCovoiturage(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne).subscribe(l=>this.annonces = l)
+    }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
+    open(content) {
+      this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+    openReservCovoit(content2){
+      console.log("Bouh"+JSON.stringify(annonce))
+      this.annonceSelected = annonce
+      this.modalService.open(content2)
+    }
+
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return  `with: ${reason}`;
+      }
+    }
+
+    displayCovoit(addDepart:HTMLInputElement,  addDestination:HTMLInputElement, dateDepart:HTMLInputElement){
+      if(addDepart.value.length > 0){
+        this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(addDepart.value.toLowerCase()))
+        if(addDestination.value.length>0){
+          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(addDestination.value.toLowerCase()))
+        }
+        if(dateDepart.value.length>0 && new Date(dateDepart.value) && new Date(dateDepart.value).getTime() > Date.now()){
+          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>{
+            let date = new JsontoDatePipe().transform(a.dateDepart)
+            return (date.getDay() == new Date(dateDepart.value).getDay() && date.getMonth() == new Date(dateDepart.value).getMonth() && date.getFullYear() == new Date(dateDepart.value).getFullYear())
+          })
+        }
+      }else{
+        this.annoncesOnDisplay = [];
+      }
+
     }
   }
-
-  
-
-}

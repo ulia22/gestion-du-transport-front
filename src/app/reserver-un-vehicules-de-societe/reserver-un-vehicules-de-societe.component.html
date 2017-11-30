@@ -1,148 +1,128 @@
 
 <div class="container">
-    <div class="row">
-      <div class="col-7 ">
-        <h1>Réserver un véhicule </h1>
-      </div>
-      
-    </div>
-  <br>
-    <div class="row">
-     
-          <button type="button" class="btn btn-outline-primary col-12" style="text-align:left"  (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-            Covoiturage
-          </button>
-     
-      <div class="card col-12">
-          <div class="container">
-           
-            <div class="container">
-              <div class="col-12">
-                  <div id="collapseExample" [ngbCollapse]="isCollapsed">
-
-                    <div class="row">
-                      <label for=""><b>Critères</b></label>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-2" style="text-align:right">
-                          <label>Adresse de départ* :</label>
-                      </div>
-                      <div class="col-3">
-                          <input type="text" id="adresseDepart" name="adresseDepart">
-                      </div>
-                      <div class="col-3" style="text-align:right">
-                          <label>Adresse de destination :</label>
-                      </div>
-                      <div class="col-2">
-                          <input type="text" id="destination" name="destination">
-                      </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-2" style="text-align:right">
-                            <label>Date de départ :</label>
-                        </div>
-                         <!--Calendar -->
-                        <div class="col-2">
-                        <form class="form-inline">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <input class="form-control" placeholder="yyyy-mm-dd"
-                                    name="dp" [(ngModel)]="datePickerDepart" ngbDatepicker #dateDepart="ngbDatepicker">
-                              <button class="input-group-addon" (click)="dateDepart.toggle()" type="button">
-                                <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                        </div>
-                        <!-- fin calendar -->
-                    </div>
-                  
-                  <!-- tableau covoiturage -->
-                  <label><b> Covoiturage </b></label>
-                    <div class="container">
-                      <div class="card">
-                        <div class="card-body">
-                            <table class="table">
-                                <thead class="thead-default">
-                                  <tr>
-                                    <th>Date / heure </th>
-                                    <th>Départ</th>
-                                    <th>Destination</th>
-                                    <th>Véhicule</th>
-                                    <th>chauffeur</th>
-                                    <th>Place disponibles</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td><button>test</button></td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td><button>test</button></td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td><button>test</button></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- fin tableau covoiturage -->
-                    </div>
-                  </div>
-              </div>
-            </div>
-        </div>
-  </div>
-  
   <div class="row">
-   
-        <button type="button" class="btn btn-outline-primary col-12" style="text-align:left" (click)="isCollapsed1 = !isCollapsed1"
-                [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
-          Véhicule de société
-        </button>
-  
+    <div class="col-7 ">
+      <h1>Réserver un véhicule </h1>
+    </div>
+
+  </div>
+  <br>
+  <div class="row">
+    <button type="button" class="btn btn-outline-primary col-12" style="text-align:left"  (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+    Covoiturage
+  </button>
+
   <div class="card col-12">
     <div class="container">
-  
 
-      <div class="col-12">
-        <div id="collapseExample" [ngbCollapse]="isCollapsed1">
-          <div class="row">
-              <label ><b>Date / heure de réservation</b></label>
+      <div class="container">
+        <div class="col-12">
+          <div id="collapseExample" [ngbCollapse]="isCollapsed">
+
+            <div class="row">
+              <label for=""><b>Critères</b></label>
+            </div>
+
+            <div class="row">
+              <div class="col-2" style="text-align:right">
+                <label>Adresse de départ* :</label>
+              </div>
+              <div class="col-3">
+                <input type="text" class="form-control" id="destination" name="destination" #addDepart (keyup)="displayCovoit(addDepart, addDestination, dateDepart)">
+                <!-- <input id="typeahead-config" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/> -->
+              </div>
+              <div class="col-3" style="text-align:right">
+                <label>Adresse de destination :</label>
+              </div>
+              <div class="col-2">
+                <input type="text" class="form-control" id="destination" #addDestination name="destination" (keyup)="displayCovoit(addDepart, addDestination, dateDepart)">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-2" style="text-align:right">
+                <label>Date de départ :</label>
+              </div>
+              <!--Calendar -->
+              <form class="form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                    name="dp" [(ngModel)]="model" #dateDepart ngbDatepicker #d="ngbDatepicker" (keyup)="displayCovoit(addDepart, addDestination, dateDepart)">
+                    <button class="input-group-addon" (click)="d.toggle()" type="button">
+                      <img src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <!-- fin calendar -->
+            </div>
+            <!-- tableau covoiturage -->
+            <label><b> Covoiturage </b></label>
+            <div class="container">
+              <div class="card">
+                <div class="card-body">
+                  <table class="table">
+                    <thead class="thead-default">
+                      <tr>
+                        <th>Date / heure </th>
+                        <th>Départ</th>
+                        <th>Destination</th>
+                        <th>Véhicule</th>
+                        <th>chauffeur</th>
+                        <th>Place disponibles</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let annonce of annoncesOnDisplay">
+                        <td scope="row">{{annonce.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</td>
+                        <td>{{annonce.addrDepart}}</td>
+                        <td>{{annonce.addrArrivee}}</td>
+                        <td>{{annonce.marque}} - {{annonce.modele}}</td>
+                        <td>{{annonce.prenomChauffeur}} {{annonce.nomChauffeur}}</td>
+                        <td>{{annonce.nbPlaceDisponnibles}}</td>
+                        <td><div *ngIf="annonce.nbPlaceDisponnibles != '0'"><button type="button" class="btn btn-primary" (click)="openReservCovoit(content2
+                          )">Reserver</button></div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- fin tableau covoiturage -->
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <button type="button" class="btn btn-outline-primary col-12" style="text-align:left" (click)="isCollapsed1 = !isCollapsed1"
+  [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
+  Véhicule de société
+</button>
+
+<div class="card col-12">
+  <div class="container">
+
+
+    <div class="col-12">
+      <div id="collapseExample" [ngbCollapse]="isCollapsed1">
         <div class="row">
-           
-         <!--Calendar -->
-         <form class="form-inline">
+          <label ><b>Date / heure de réservation</b></label>
+        </div>
+        <div class="row">
+
+          <!--Calendar -->
+          <form class="form-inline">
             <div class="form-group">
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp" [(ngModel)]="datePickerReservation"  ngbDatepicker #dtreservation="ngbDatepicker">
+                name="dp" [(ngModel)]="datePickerReservation"  ngbDatepicker #dtreservation="ngbDatepicker">
                 <button class="input-group-addon" (click)="dtreservation.toggle()" type="button">
                   <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                 </button>
@@ -150,10 +130,10 @@
             </div>
           </form>
           <div class="col-1"></div>
-      <!--time -->
+          <!--time -->
           <ngb-timepicker [(ngModel)]="timeReserve"
           [hourStep]="hourStepReserve" [minuteStep]="minuteStepReserve" ></ngb-timepicker>
-       <!-- -->
+          <!-- -->
         </div>
 
         <div class="row">
@@ -162,118 +142,159 @@
 
 
         <div class="row">
-            <label><b> Date / heure de retour </b></label>        
+          <label><b> Date / heure de retour </b></label>
         </div>
 
         <div class="row">
-         
+
           <!--Calendar -->
           <form class="form-inline">
-             <div class="form-group">
-               <div class="input-group">
-                 <input class="form-control" placeholder="yyyy-mm-dd"
-                        name="dp" [(ngModel)]="datePickerRetour" ngbDatepicker #dtretour="ngbDatepicker">
-                 <button class="input-group-addon" (click)="dtretour.toggle()" type="button">
-                   <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                 </button>
-               </div>
-             </div>
-           </form>
-           <div class="col-1"></div>
-       <!--time -->
-           <ngb-timepicker [(ngModel)]="timeRetour"
-           [hourStep]="hourStepRetour" [minuteStep]="minuteStepRetour" ></ngb-timepicker>
-        <!-- -->
-    
-         </div>
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                name="dp" [(ngModel)]="datePickerRetour" ngbDatepicker #dtretour="ngbDatepicker">
+                <button class="input-group-addon" (click)="dtretour.toggle()" type="button">
+                  <img  src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="col-1"></div>
+          <!--time -->
+          <ngb-timepicker [(ngModel)]="timeRetour"
+          [hourStep]="hourStepRetour" [minuteStep]="minuteStepRetour" ></ngb-timepicker>
+          <!-- -->
 
-         <br>
-        
-  
+        </div>
+
+        <br>
+
+
         <!-- Carrousel -->
-      <div class="container">
-        <ngb-carousel>
-          <div ngfor="let vehicule of vehicules">
-            <ng-template ngbSlide>
-              <img src="{{vehicule.photo}}" alt="Random first slide">
-              <div class="carousel-caption">
+        <div class="container">
+          <ngb-carousel>
+            <div ngfor="let vehicule of vehicules">
+              <ng-template ngbSlide>
+                <img src="{{vehicule.photo}}" alt="Random first slide">
+                <div class="carousel-caption">
                   <h3>{{vehicule.immatriculation}}</h3>
                   <p> {{vehicule.marque}} - {{vehicule.model}}</p>
                   <p> {{vehicule.categorie}}</p>
                   <button (click)="open(content)">réserver </button>
-              </div>
-            </ng-template>
-          </div>
-            
+                </div>
+              </ng-template>
+            </div>
+
           </ngb-carousel>
         </div>
         <br> <br>
         <!--fin carrousel -->
-      
-        </div>
+
       </div>
-    
+    </div>
+
+  </div>
+</div>
+</div>
+<!-- Reservation covoiturage -->
+<ng-template #content2 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Réservation d'un covoiturage</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-6" style="text-align:right">
+        <label>Départ :</label>
+      </div>
+      <div class="col-6">
+        <label>{{annonceSelected.addrDepart}}</label>
+      </div>
+      <div class="col-6" style="text-align:right">
+        <label>Destination :</label>
+      </div>
+      <div class="col-6">
+        <label>{{annonceSelected.addrArrivee}}</label>
+      </div>
+      <div class="col-6" style="text-align:right">
+        <label>Date/Heure :</label>
+      </div>
+      <div class="col-6">
+        <label>{{annonceSelected.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</label>
+      </div>
+      <div class="col-6" style="text-align:right">
+        <label>Véhicule :</label>
+      </div>
+      <div class="col-6">
+        <label>{{annonceSelected.marque}} - {{annonceSelected.modele}}</label>
+      </div>
+      <div class="col-6" style="text-align:right">
+        <label>Chauffeur :</label>
+      </div>
+      <div class="col-6">
+        <label>{{annonceSelected.prenomChauffeur}} {{annonceSelected.nomChauffeur}}</label>
       </div>
     </div>
   </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
 
-  <!-- Modal -->
 
-  <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Réservation d'un véhicule</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<!-- Modal Reservation véhicule-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Réservation d'un véhicule</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-6" style="text-align:right">
+        <label>Date/heure de réservation :</label>
       </div>
-      <div class="modal-body">
-        <div class="row">
-            <div class="col-6" style="text-align:right">
-                <label>Date/heure de réservation :</label>
-            </div>
-            <div class="col-6">
-                <label>{{dtretour}}</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6" style="text-align:right">
-                <label>Date/heure retour :</label>
-            </div>
-            <div class="col-6">
-                <label>toto</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6" style="text-align:right">
-                <label>Immatriculation :</label>
-            </div>
-            <div class="col-6">
-                <label>01244</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6" style="text-align:right">
-                <label>Marque :</label>
-            </div>
-            <div class="col-6">
-                <label>jap</label>
-            </div>
-        </div>
-         <div class="row">
-            <div class="col-6" style="text-align:right">
-                <label>Modèle :</label>
-            </div>
-            <div class="col-6">
-                <label>2008</label>
-            </div>
-        </div>
+      <div class="col-6">
+        <label>{{dtretour}}</label>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuler</button>
-        <button type="button" class="btn btn-outline-primary" >Confirmer</button>
+    </div>
+    <div class="row">
+      <div class="col-6" style="text-align:right">
+        <label>Date/heure retour :</label>
       </div>
-    </ng-template>
-    
-    
-    
-    
+      <div class="col-6">
+        <label>toto</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6" style="text-align:right">
+        <label>Immatriculation :</label>
+      </div>
+      <div class="col-6">
+        <label>01244</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6" style="text-align:right">
+        <label>Marque :</label>
+      </div>
+      <div class="col-6">
+        <label>jap</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6" style="text-align:right">
+        <label>Modèle :</label>
+      </div>
+      <div class="col-6">
+        <label>2008</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Annuler</button>
+    <button type="button" class="btn btn-outline-primary" >Confirmer</button>
+  </div>
+</ng-template>
