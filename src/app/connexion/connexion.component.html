@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col">
+    <header class="text">
+      <div class="mx-auto logo-container">
+        <img src="http://www.dta-ingenierie.fr/wp-content/uploads/2017/10/LOGO-DTA-vectorise%CC%81.png" alt="Logo application">
+      </div>
+      <h1>GDT</h1>
+      <h2>Gestion du transport</h2>
+    </header>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-10 offset-md-1">
+    <form>
+      <div class="form-group row mt-5">
+        <label for="email" class="col-sm-3 col-md-2 text-sm-left text-md-right" >Email</label>
+        <div class="col-sm-9 col-md-10">
+          <input type="email" class="form-control" id="email"#mail>
+        </div>
+      </div>
+      <div class="form-group row input-container mt-5">
+        <label class="col-sm-3 col-md-2 text-sm-left text-md-right" for="password" >Password</label>
+        <div class="col-sm-9 col-md-10">
+          <input type="password" class="form-control" id="password"#pass>
+        </div>
+      </div>
+      <ngb-alert class="col" type="danger" (close)="errorMessage=null" *ngIf="errorMessage">{{errorMessage}}</ngb-alert>
+      <button (click)="send(mail, pass)" class="btn btn-primary">Se connecter</button>
+    </form>
+  </div>
+</div>
+
+<!--Modal selection administrateur-->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Choisissez votre profil</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col" (click)="d('COLLABORATEUR')">
+        <div class="img-container"><img src="https://static.lexpress.fr/medias_11340/w_1702,h_1277,c_crop,x_150,y_85/w_640,h_358,c_fill,g_center/v1487934611/question-lentreprise_5806567.jpg" alt="Image collaborateur"></div>
+        <p class="text-center">Collaborateur</p>
+      </div>
+      <div class="col" *ngIf="objectJSONUser.role == 'CHAUFFEUR' || objectJSONUser.role == 'ADMINISTRATEUR'" (click)="d('CHAUFFEUR')">
+        <div class="img-container"><img src="http://www.ou-trouver.fr/images/uploads/5952897a04523.jpg" alt="Image chauffeur"></div>
+        <p class="text-center">Chauffeur</p>
+      </div>
+      <div class="col" *ngIf="objectJSONUser.role == 'ADMINISTRATEUR'" (click)="d('ADMINISTRATEUR')">
+        <div class="img-container">
+          <img src="https://static.comicvine.com/uploads/original/11113/111134171/4134793-neo+of+matrix.jpg" alt="Image administrateur"></div>
+          <p class="text-center">Administrateur</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </ng-template>

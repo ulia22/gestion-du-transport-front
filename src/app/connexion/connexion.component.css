@@ -1,0 +1,28 @@
+.logo-container{
+  width : 200px;
+  height : 200px;
+}
+
+.logo-container img{
+  width : 100%;
+}
+header{
+  text-align: center;
+}
+button{
+  float:right;
+  margin-top: 5em;
+}
+form{
+  margin-top: 10em;
+}
+.modal-body img
+{
+  width : 100%;
+  height : auto;
+}
+.img-container{
+  width : 100px;
+  height : 100px;
+  margin : auto;
+}
