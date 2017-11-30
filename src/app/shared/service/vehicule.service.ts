@@ -44,11 +44,12 @@ export class VehiculeService {
 
  sauvegarder(newVehicule:Vehicule):void {
    
-     this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).subscribe(v=>{
+    this.http.post<Vehicule>(environment.apiUrl + '/vehicules',newVehicule,httpOptions).subscribe(v=>{
        const tabVehicule= this.vehicules.getValue()
        tabVehicule.push(v)
        this.vehicules.next(tabVehicule)
     })
+    this.refresh()
  }
 
 }
