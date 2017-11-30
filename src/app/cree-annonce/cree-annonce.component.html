@@ -11,13 +11,13 @@
             <div class="form-group row">
                 <label for="inputAddrDepart" class="col-sm-2 col-form-label">Adresse de départ</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputAddrDepart" placeholder="Adresse de départ" #AddrDepart>
+                    <input type="text" class="form-control" id="inputAddrDepart" placeholder="Adresse de départ" #AddrDepart (keyup)="testRempli($event)">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputAddrDestination" class="col-sm-2 col-form-label">Adresse de destination</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputAddrDestination" placeholder="Adresse de destination" #AddrDestination>
+                    <input type="text" class="form-control" id="inputAddrDestination" placeholder="Adresse de destination" #AddrDestination (keyup)="testRempli($event)">
                 </div>
             </div>
             <div class="form-group row">
@@ -43,25 +43,26 @@
             <div class="form-group row">
                 <label for="inputImmatriculation" class="col-sm-2 col-form-label">Immatriculation</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputImmatriculation" placeholder="Immatriculation" #Immatriculation>
+                    <input type="text" class="form-control" id="inputImmatriculation" placeholder="Immatriculation" #Immatriculation (keyup)="testRempli($event)">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputMarque" class="col-sm-2 col-form-label">Marque</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputMarque" placeholder="Marque" #Marque>
+                    <input type="text" class="form-control" id="inputMarque" placeholder="Marque" #Marque (keyup)="testRempli($event)">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputModele" class="col-sm-2 col-form-label">Modèle</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputModele" placeholder="Modèle" #Modele>
+                    <input type="text" class="form-control" id="inputModele" placeholder="Modèle" #Modele (keyup)="testRempli($event)">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputNbPlace" class="col-sm-2 col-form-label">Nombre de place</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" id="inputNbPlace" min="1" max="20" placeholder="Nombre de place" #NbPlace>
+                    <input type="number" class="form-control" id="inputNbPlace" min="1" max="20" placeholder="Nombre de place" #NbPlace (keyup)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliNbPlace == false">Le nombre de places doit être compris entre 1 et 20</p>
                 </div>
             </div>
         </form>
@@ -75,7 +76,8 @@
             <div class="form-group row">
                 <label for="inputDate" class="col-sm-2 col-form-label">Date et horaire</label>
                 <div class="col-sm-5">
-                    <input type="date" class="form-control" id="inputDate" placeholder="Date" #Date>
+                    <input type="date" class="form-control" id="inputDate" placeholder="Date" #Date (keyup)="testRempli($event)" (change)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliDate == false">La date ne peut être antérieur à aujourd'hui</p>                    
                 </div>
                 <div>
                     <select class="custom-select" #Heure>
@@ -90,5 +92,27 @@
             </div>
         </form>
     </div>
-    <button type="button" class="btn btn-primary float-right col-2" (click)="add(AddrDepart, AddrDestination, Duree, Distance, Immatriculation, Marque, Modele, NbPlace, Date, Heure, Minute)">Publier</button>
+    <button type="button" class="btn btn-primary float-right col-2" (click)="open(content)" [disabled]="!allRempli">Publier</button>
 </div>
+
+<ng-template #content let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Confirmation de votre proposition</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body offset-1">
+      <div class="row"><p class="col-6">Départ : </p><label id="ModalAddrDepart">{{AddrDepart.value}}</label></div>
+      <div class="row"><p class="col-6">Destination : </p><label id="ModalAddrDepart">{{AddrDestination.value}}</label></div>
+      <div class="row"><p class="col-6">Immatriculation : </p><label id="ModalAddrDepart">{{Immatriculation.value}}</label></div>
+      <div class="row"><p class="col-6">Marque : </p><label id="ModalAddrDepart">{{Marque.value}}</label></div>
+      <div class="row"><p class="col-6">Modèle : </p><label id="ModalAddrDepart">{{Modele.value}}</label></div>
+      <div class="row"><p class="col-6">Nb. places disponibles : </p><label id="ModalAddrDepart">{{NbPlace.value}}</label></div>
+      <div class="row"><p class="col-6">Date/heure </p><label id="ModalAddrDepart">Le {{Date.value}} à {{Heure.value}} h {{Minute.value}}</label></div>
+      
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="add(AddrDepart, AddrDestination, Duree, Distance, Immatriculation, Marque, Modele, NbPlace, Date, Heure, Minute)" (click)="d()">Confirmer</button>
+    </div>
+  </ng-template>
