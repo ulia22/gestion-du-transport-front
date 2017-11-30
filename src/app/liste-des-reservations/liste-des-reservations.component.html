@@ -59,39 +59,39 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="row">
-      <div class="col-6">
-        <p class="text-right">Départ</p>
+    <div class="row offset-2">
+      <div class="col-4">
+        <p class="text-left">Départ</p>
       </div>
-      <div class="col-6">
+      <div class="col-8">
         <p class="text-left">{{detailCourant.addrDepart}}</p>
       </div>
 
-      <div class="col-6">
-        <p class="text-right">Destination</p>
+      <div class="col-4">
+        <p class="text-left">Destination</p>
       </div>
-      <div class="col-6">
+      <div class="col-8">
         <p class="text-left">{{detailCourant.addrArrivee}}</p>
       </div>
 
-      <div class="col-6">
-        <p class="text-right">Date/heure</p>
+      <div class="col-4">
+        <p class="text-left">Date/heure</p>
       </div>
-      <div class="col-6">
+      <div class="col-8">
         <p class="text-left">{{detailCourant.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</p>
       </div>
 
-      <div class="col-6">
-        <p class="text-right">Véhicule</p>
+      <div class="col-4">
+        <p class="text-left">Véhicule</p>
       </div>
-      <div class="col-6">
+      <div class="col-8">
         <p class="text-left">{{detailCourant.marque}}-{{detailCourant.modele}}-{{detailCourant.immatriculation}}</p>
       </div>
 
-      <div class="col-6">
-        <p class="text-right">Chauffeur</p>
+      <div class="col-4">
+        <p class="text-left">Chauffeur</p>
       </div>
-      <div class="col-6">
+      <div class="col-8">
         <p class="text-left">{{detailCourant.nomChauffeur}} {{detailCourant.prenomChauffeur}}</p>
       </div>
     </div>
