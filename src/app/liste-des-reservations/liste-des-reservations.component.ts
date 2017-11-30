@@ -3,6 +3,7 @@ import { ReservationService } from '../shared/service/reservation.service'
 import { JsontoDatePipe } from '../shared/pipe/jsonto-date.pipe'
 import { SlicePipe } from '@angular/common';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule, Routes, Router } from '@angular/router';
 
 @Component({
   selector: 'app-liste-des-reservations',
@@ -30,7 +31,7 @@ export class ListeDesReservationsComponent implements OnInit {
   //Détail courrant la reservation Covoiturage
   public detailCourant:any = null;
 
-  constructor(private reservationService:ReservationService, private modalService: NgbModal) {
+  constructor(private reservationService:ReservationService, private modalService: NgbModal, private router:Router) {
     this.nbHistoriqueDisplayed = 4
     this.currentPageHistorique = 1;
     this.previousPageHistorique = 1;
@@ -86,12 +87,10 @@ export class ListeDesReservationsComponent implements OnInit {
 
   openModalDetail(line){
       this.detailCourant = line;
-    this.modalService.open(this.content).result.then((result) => {
-    }, (reason) => {
-    });
+    this.modalService.open(this.content)
   }
 
-  private getDismissReason(reason: any): string {
-    return ""
+  reserverTransport(){
+    this.router.navigateByUrl('/collaborateur/propositions/creer')
   }
 }

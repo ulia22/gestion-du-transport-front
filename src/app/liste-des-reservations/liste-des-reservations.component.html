@@ -1,7 +1,7 @@
 <app-menu></app-menu>
 <div>
   <h1>Vos réservations</h1>
-  <button type="button" class="btn btn-primary float-right">Réserver un transport</button>
+  <button type="button" (click)="reserverTransport()" class="btn btn-primary float-right">Réserver un transport</button>
   <div class="btn btn-outline-primary col-12 text-left" (click)="isCollapsedListeReservation = !isCollapsedListeReservation" [attr.aria-expanded]="!isCollapsedListeReservation"  aria-controls="collapseItineraire" id="collapseButton">
     Covoiturage
   </div>
