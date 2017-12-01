@@ -65,7 +65,7 @@ export class ListeDesVehiculesComponent implements OnInit {
     , categorie:HTMLInputElement , nbp:HTMLInputElement,photo:HTMLInputElement ){
 
       const immatriculation = immatriculation1.value + immatriculation2.value+ immatriculation3.value
-      const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
+      const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value,null);
 
     
       this.vehiculeService.sauvegarder(voiture).subscribe(v =>{this.vehiculeService.getListVehicule()})
@@ -129,6 +129,17 @@ export class ListeDesVehiculesComponent implements OnInit {
       this.valideNbp=true
     else
       this.valideNbp=false
+  }
+
+  etatInitial(){
+    this.valideImmatriculation1=false
+    this.valideImmatriculation2=false
+    this.valideImmatriculation3=false
+  
+    this.valideMarque=false
+    this.validePhoto=false
+    this.valideModele=false
+    this.valideNbp=false
   }
 
 }
