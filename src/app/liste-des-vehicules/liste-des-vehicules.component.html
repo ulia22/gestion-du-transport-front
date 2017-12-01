@@ -1,5 +1,5 @@
 
-
+<app-menu></app-menu>
 
 <div class="container">
   <div class="row">
@@ -13,7 +13,7 @@
            <label for="">Immatriculation</label>
           </div>
           <div>
-            <input type="text" id="immatriculation" name="immatriculation" (keyup)="onKeyUpImmatriculation($event)">
+            <input  class="form-control" style="margin-bottom: 5px" type="text" id="immatriculation" name="immatriculation" (keyup)="onKeyUpImmatriculation($event)">
           </div>
         </div>
         <div class="row" >
@@ -21,7 +21,7 @@
           <label for="">Marque</label>
         </div>
         <div>
-          <input type="text" id="marque" name="marque" (keyup)="onKeyUpMarque($event)">
+          <input type="text"  class="form-control" id="marque" name="marque" (keyup)="onKeyUpMarque($event)">
         </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
       <div class="row">
     <div *ngFor="let vehicule of ((vehicules|marque:stringMarque)|immatriculation:stringImmatriculation) ">
      
-          <div class="card ">
+          <div class="card " style="margin-right: 20px">
               <div class="card-block">
             <div class="container">
               <div class="row">
@@ -80,10 +80,10 @@
                   <div class="col-4" style="text-align:right">
                     <label for="">Immatriculation</label>
                   </div>
-                  <div class="col-6">
-                    <input class="col-3" type="text" #immatriculation1 name="immatriculation1" (keyup)="onBoolImmatriculation1($event)" required maxlength="2"> -
-                    <input class="col-4" type="number" #immatriculation2 name="immatriculation2" (keyup)="onBoolImmatriculation2($event)" required maxlength="3"> -
-                    <input class="col-3" type="text" #immatriculation3 name="immatriculation3" (keyup)="onBoolImmatriculation3($event)" required maxlength="2">
+                  <div class="col-6 ">
+                    <input class="col-3 " type="text" #immatriculation1 name="immatriculation1" (keyup)="onBoolImmatriculation1($event)" required maxlength="2"> -
+                    <input class="col-4 " type="number" #immatriculation2 name="immatriculation2" (keyup)="onBoolImmatriculation2($event)" required maxlength="3"> -
+                    <input class="col-3 " type="text" #immatriculation3 name="immatriculation3" (keyup)="onBoolImmatriculation3($event)" required maxlength="2">
                   </div>
                 </div>
                 <div class="row ">
@@ -91,7 +91,7 @@
                     <label for="">Marque</label>
                   </div>
                   <div class="col-6">
-                    <input type="text" #marque name="marque" required (keyup)="onBoolMarque($event)">
+                    <input type="text" class="form-control"  style="margin-bottom: 5px" #marque name="marque" required (keyup)="onBoolMarque($event)">
                     
                   </div>
                 </div>
@@ -100,7 +100,7 @@
                     <label for="">Modèle</label>
                   </div>
                   <div class="col-6">
-                    <input type="text" #modele name="modele" required (keyup)="onBoolModele($event)">
+                    <input type="text" class="form-control"  style="margin-bottom: 5px" #modele name="modele" required (keyup)="onBoolModele($event)">
                     
                   </div>
                 </div>
@@ -109,7 +109,7 @@
                     <label for="">catégorie</label>
                   </div>
                   <div class="col-6" >
-                      <select class="col-11" name="select" #categorie requir>
+                      <select class="col-12 form-control"  style="margin-bottom: 5px" name="select" #categorie requir>
                           <option *ngFor="let categorie of categories " >
                            {{categorie}}
                           </option>
@@ -121,8 +121,8 @@
                   <div class="col-4" style="text-align:right">
                     <label for="">Nombre de place</label>
                   </div>
-                  <div class="col-8">
-                    <input type="number" #nbp name="nbp" required (keyup)="onBoolNbp($event)">
+                  <div class="col-6">
+                    <input type="number" class="form-control"  style="margin-bottom: 5px" #nbp name="nbp" required (keyup)="onBoolNbp($event)">
                   </div>
                 </div>
                 <div class="row ">
@@ -130,7 +130,7 @@
                     <label for="">Photo</label>
                   </div>
                   <div class="col-6">
-                    <input type="text" #photo name="photo" required (keyup)="onBoolPhoto($event)">
+                    <input type="text" class="form-control"  style="margin-bottom: 5px" #photo name="photo" required (keyup)="onBoolPhoto($event)">
                     
                   </div>
                 </div>
