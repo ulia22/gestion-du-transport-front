@@ -1,9 +1,14 @@
-export class Vehicule {
+import { Reservation } from "./reservation";
 
+export class Vehicule {
+    
         constructor( public immatriculation:string,
             public marque:string ,
             public nbp:string,
             public photo:string,
             public categorie:string,
-            public modele:string){}
+            public modele:string,
+            public reservations:Array<Reservation>
+        ){}
+    
 }
