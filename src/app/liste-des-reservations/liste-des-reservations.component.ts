@@ -56,7 +56,6 @@ export class ListeDesReservationsComponent implements OnInit {
       let value = r.dateDepart
       let d = new JsontoDatePipe().transform(value)
       if(d.getTime() > Date.now()){
-        console.log("Bouh"+r.dateDepart)
         return true
       }
       return false
@@ -91,6 +90,6 @@ export class ListeDesReservationsComponent implements OnInit {
   }
 
   reserverTransport(){
-    this.router.navigateByUrl('/collaborateur/propositions/creer')
+    this.router.navigateByUrl('/collaborateur/reservations/creer')
   }
 }

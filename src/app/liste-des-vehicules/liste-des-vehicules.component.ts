@@ -13,7 +13,6 @@ import { Modele } from '../shared/domain/modele';
 export class ListeDesVehiculesComponent implements OnInit {
 
 
-  
   closeResult: string;
   vehicules: Vehicule[]
   categories : string[]
@@ -38,9 +37,7 @@ export class ListeDesVehiculesComponent implements OnInit {
 
   ngOnInit() {
     this.vehiculeService.getListCtegorie().subscribe(l=>{ this.categories=l } )
-    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v
-      console.log("toto")
-    console.log(this.vehicules)} )
+    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v } )
   }
 
   open(content) {
@@ -70,10 +67,7 @@ export class ListeDesVehiculesComponent implements OnInit {
         const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
     //  const marques =  new  Marque(marque.value );
       //  const model = new Modele(categorie.value,modele.value,marque.value)
-
-    
         this.vehiculeService.sauvegarder(voiture)
-  
         return false
 
   }

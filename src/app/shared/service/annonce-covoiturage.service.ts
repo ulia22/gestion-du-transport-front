@@ -15,7 +15,14 @@ export class AnnonceCovoiturageService {
 
   public mesAnnoncesSubject: BehaviorSubject<Annonce[]> = new BehaviorSubject([])
 
+  //public toutesLesAnnonces:BehaviorSubject<Annonce[]> = new BehaviorSubject([])
+
   constructor(private http:HttpClient) { }
+
+  listeMesAnnonces(id):Observable<Annonce[]>{
+    this.http.get<Annonce[]>(`${environment.apiUrl}/annoncesCovoiturages/mesAnnonces?personneId=`+id, httpOptions).subscribe(annonceTab => this.mesAnnoncesSubject.next(annonceTab))
+    return this.mesAnnoncesSubject.asObservable()
+  }
 
  saveAnnonce(newAnnonce:Annonce):void{
   this.http.post<Annonce>(`${environment.apiUrl}/annoncesCovoiturages/creer`,newAnnonce, httpOptions).subscribe(annonce => {
@@ -24,5 +31,8 @@ export class AnnonceCovoiturageService {
   this.mesAnnoncesSubject.next(annonceTab)
   })
  }
-  
+
+ getListAnnoncesCovoiturage(personneId):Observable<any[]>{
+   return this.http.get<any[]>(`${environment.apiUrl}/annoncesCovoiturages?personneId=`+personneId, httpOptions)
+ }
 }
