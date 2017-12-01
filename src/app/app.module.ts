@@ -38,6 +38,7 @@ const appRoutes: Routes = [
 { path: 'admin/chauffeurs', component: AppComponent },
 { path: 'chauffeur/occupation', component: AppComponent },
 { path: 'chauffeur/planning', component: AppComponent },
+{ path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent},
 //Connexion
 { path: 'connexion', component: ConnexionComponent },
 
@@ -74,4 +75,5 @@ const appRoutes: Routes = [
   providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
