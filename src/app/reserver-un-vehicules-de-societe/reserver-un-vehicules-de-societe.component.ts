@@ -1,15 +1,15 @@
-import { Component, OnInit ,Input } from '@angular/core';
+import { Component, OnInit ,Input, ViewChild } from '@angular/core';
 import { bootstrap } from 'bootstrap';
-import {NgbTimeStruct ,NgbModal, ModalDismissReasons, NgbTypeaheadConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTimeStruct ,NgbModal, ModalDismissReasons, NgbTypeaheadConfig, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { AnnonceCovoiturageService } from '../shared/service//annonce-covoiturage.service'
-import {Observable} from 'rxjs/Observable';
+import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { JsontoDatePipe } from '../shared/pipe/jsonto-date.pipe';
 
-import {VehiculeService} from "../shared/service/vehicule.service"
-import {Vehicule} from "../shared/domain/vehicule"
+import { VehiculeService } from "../shared/service/vehicule.service"
+import { Vehicule } from "../shared/domain/vehicule"
 import { Reservation } from '../shared/domain/reservation';
 import { ReservationService } from '../shared/service/reservation.service';
 
@@ -23,8 +23,13 @@ const address = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', '
 export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
 
   //Partie reserver Covoiturage
-  public model: any;
-  public annonceSelected:any = null;
+  public model:any
+  public annonceSelected:any = null
+  public addDepart:string
+  public addDestination:string
+  public dateDepart:string
+
+  public modalRef:NgbModalRef
   //*********************///
 
   datePickerReservation;
@@ -57,14 +62,7 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   }
 
   open(content , immatriculation , marque , modele) {
-    this.modalService.open(content).result.then((result) => {
-      ;
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      ;
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-
+    this.modalRef = this.modalService.open(content)
     this.stringImmatriculation = immatriculation;
     this.stringMarque = marque;
     this.stringModele = modele;
@@ -86,21 +84,15 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   add(dateReservationDay,dateReservationMonth, dateReservationYear ,timeReserveHour ,timeReserveMinute,
     dateRetourDay,dateRetourMonth,dateRetourYear,timeRetourHour,timeRetourMinute,
     dateReservation,dateRetour,immatriculation,marque,modele){
-
      const depart = null ; //dateReservationDay+ "/" + dateReservationMonth + "/" + dateReservationYear ;
-
      const retour =null; // dateRetourDay+ "/" + dateRetourMonth + "/" + dateRetourYear;
-    console.log(immatriculation +"toto")
-    const reservation = new Reservation( marque ,immatriculation,modele ,depart, retour);
-
-    this.reservationService.sauvegarde(reservation)
-
+     const reservation = new Reservation( marque ,immatriculation,modele ,depart, retour);
+     this.reservationService.sauvegarde(reservation)
   }
 
     openReservCovoit(content2, annonce){
-      console.log("Bouh"+JSON.stringify(annonce))
       this.annonceSelected = annonce
-      this.modalService.open(content2)
+      this.modalRef = this.modalService.open(content2)
     }
 
     private getDismissReason(reason: any): string {
@@ -113,21 +105,67 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
       }
     }
 
-    displayCovoit(addDepart:HTMLInputElement,  addDestination:HTMLInputElement, dateDepart:HTMLInputElement){
+    filterCovoit(addDepart:HTMLInputElement,  addDestination:HTMLInputElement, dateDepart:HTMLInputElement){
       if(addDepart.value.length > 0){
-        this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(addDepart.value.toLowerCase()))
+        this.addDepart = addDepart.value
         if(addDestination.value.length>0){
-          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(addDestination.value.toLowerCase()))
+          this.addDestination = addDestination.value
+        }else{
+          this.addDestination = ""
         }
         if(dateDepart.value.length>0 && new Date(dateDepart.value) && new Date(dateDepart.value).getTime() > Date.now()){
+            this.dateDepart = dateDepart.value;
+        }else{
+          this.dateDepart = ""
+        }
+      }else{
+        this.addDepart = ""
+      }
+      this.displayCovoit()
+    }
+
+    displayCovoit(){
+      if(this.addDepart.length > 0 || !this.annoncesOnDisplay){
+        this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(this.addDepart.toLowerCase()))
+        if(this.addDestination.length > 0){
+          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(this.addDestination.toLowerCase()))
+        }
+        if(this.dateDepart.length > 0){
           this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>{
             let date = new JsontoDatePipe().transform(a.dateDepart)
-            return (date.getDay() == new Date(dateDepart.value).getDay() && date.getMonth() == new Date(dateDepart.value).getMonth() && date.getFullYear() == new Date(dateDepart.value).getFullYear())
+            return (date.getDay() == new Date(this.dateDepart).getDay() && date.getMonth() == new Date(this.dateDepart).getMonth() && date.getFullYear() == new Date(this.dateDepart).getFullYear())
           })
         }
+        //On enleve les annonces qui ont une date de départ avant aujourd'hui
+        this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>{
+          let date = new JsontoDatePipe().transform(a.dateDepart)
+          return (date.getTime() > Date.now())
+        })
       }else{
         this.annoncesOnDisplay = [];
       }
+    }
 
+    enregistrerCovoiturage():void{
+      this.reservationService.sauvegardeReservationCovoiturage(this.annonceSelected, localStorage.getItem('personneEtAccount'))
+      .subscribe(
+        (resp)=>{
+          this.annonces = resp;
+          this.displayCovoit();
+          this.modalRef.close()
+        },
+        (err)=>{
+          console.error(err)
+        }
+      )
+    }
+
+    isAPassenger(annonceJSON:any):boolean{
+      for(let i = 0; i < annonceJSON.passagerId.length; i++){
+        if(annonceJSON.passagerId[i] == JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne){
+          return true
+        }
+      }
+      return false;
     }
   }

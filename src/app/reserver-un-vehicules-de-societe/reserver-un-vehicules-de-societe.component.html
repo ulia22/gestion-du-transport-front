@@ -1,7 +1,8 @@
-
+<app-menu></app-menu>
 <div class="container">
   <div class="row">
     <div class="col-7 ">
+      <a routerLink="/collaborateur/reservations">Retour à la liste</a>
       <h1>Réserver un véhicule </h1>
     </div>
 
@@ -29,14 +30,14 @@
                 <label>Adresse de départ* :</label>
               </div>
               <div class="col-3">
-                <input type="text" class="form-control" id="destination" name="destination" #addDepart (keyup)="displayCovoit(addDepart, addDestination, dateDepart)">
+                <input type="text" class="form-control" id="destination" name="destination" #addDepart (keyup)="filterCovoit(addDepart, addDestination, dateDepart)">
                 <!-- <input id="typeahead-config" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search"/> -->
               </div>
               <div class="col-3" style="text-align:right">
                 <label>Adresse de destination :</label>
               </div>
               <div class="col-2">
-                <input type="text" class="form-control" id="destination" #addDestination name="destination" (keyup)="displayCovoit(addDepart, addDestination, dateDepart)">
+                <input type="text" class="form-control" id="destination" #addDestination name="destination" (keyup)="filterCovoit(addDepart, addDestination, dateDepart)">
               </div>
             </div>
             <br>
@@ -49,7 +50,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <input class="form-control" placeholder="yyyy-mm-dd"
-                    name="dp" [(ngModel)]="model" #dateDepart ngbDatepicker #d="ngbDatepicker" (keyup)="displayCovoit(addDepart, addDestination, dateDepart)">
+                    name="dp" [(ngModel)]="model" #dateDepart ngbDatepicker #d="ngbDatepicker" (keyup)="filterCovoit(addDepart, addDestination, dateDepart)">
                     <button class="input-group-addon" (click)="d.toggle()" type="button">
                       <img src="http://schoolweb.tdsb.on.ca/Portals/mckee/images/Newsletter/calendar.jpg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                     </button>
@@ -83,7 +84,17 @@
                         <td>{{annonce.marque}} - {{annonce.modele}}</td>
                         <td>{{annonce.prenomChauffeur}} {{annonce.nomChauffeur}}</td>
                         <td>{{annonce.nbPlaceDisponnibles}}</td>
-                        <td><div *ngIf="annonce.nbPlaceDisponnibles != '0'"><button type="button" class="btn btn-primary" (click)="openReservCovoit(content2,annonce)">Reserver</button></div></td>
+                        <td [ngSwitch]="annonce.nbPlaceDisponnibles">
+                          <div *ngSwitchCase="'0'"><button type="button" class="btn btn-faillure">Complet</button></div>
+                          <ng-container *ngSwitchDefault [ngSwitch]="isAPassenger(annonce)">
+                            <div *ngSwitchCase="true">
+                              <button type="button" class="btn btn-primary" (click)="openReservCovoit(content2,annonce)">Détails reservation</button>
+                            </div>
+                            <div *ngSwitchCase="false">
+                              <button type="button" class="btn btn-primary" (click)="openReservCovoit(content2,annonce)">Reserver</button>
+                            </div>
+                          </ng-container>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -235,7 +246,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary">Enregistrer</button>
+    <div *ngIf="!isAPassenger(annonceSelected)"><button type="button" class="btn btn-primary" (click)="enregistrerCovoiturage()">Enregistrer</button></div>
   </div>
 </ng-template>
 
