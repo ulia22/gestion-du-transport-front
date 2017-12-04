@@ -29,6 +29,8 @@ export class CreeAnnonceComponent implements OnInit {
   public rempliNbPlace: boolean;
   public rempliDate: boolean;
   public allRempli: boolean;
+  public duree:string
+  public distance:string
   constructor(public annonceServ: AnnonceCovoiturageService, private modalService: NgbModal, private router: Router, public apiGoogle: GoogleMapService) { }
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class CreeAnnonceComponent implements OnInit {
     this.modalService.open(content)
   }
 
-  testRempli($event) {
+  testRempliAddr($event){
     if ($event.target.value && $event.target.id == "inputAddrDepart") {
       if (this.myAddrDepart.place_id)
         this.rempliAddrDepart = true;
@@ -71,6 +73,22 @@ export class CreeAnnonceComponent implements OnInit {
         this.rempliAddrDestination = false;
       }
     }
+    if(this.rempliAddrDepart == true && this.rempliAddrDestination == true){
+      this.apiGoogle.dureeEtDistance(this.myAddrDepart.formatted_address, this.myAddrDestination.formatted_address).subscribe(tab=>{
+        this.duree = tab[0]
+        this.distance = tab[1]
+      })
+    }
+
+    if (this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
+      this.allRempli = true
+    } else {
+      this.allRempli = false
+    }
+    
+  }
+
+  testRempli($event) {
     if ($event.target.value && $event.target.id == "inputImmatriculation") {
       this.rempliImmatriculation = true;
     } else {

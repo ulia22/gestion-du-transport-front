@@ -18,16 +18,14 @@ export class GoogleMapService {
     }
   }
   
-  duree(depart:string, arrive:string){
+  dureeEtDistance(depart:string, arrive:string){
    
     let key = "AIzaSyCzPpFfGV25qZ7UULVVdz25aI-Rf06S6aQ"
     let url = "https://maps.googleapis.com/maps/api/directions/json?origin="+depart+"&destination="+arrive+"&key="+key
-    //if (depart && arrive){
     return this.http.get<any>(url).map(resp => {
       const distance = resp.routes[0][1].legs[0].distance.text
       const duree = resp.routes[0][1].legs[0].duration.text
       return [duree, distance]
     })
-//  }
   }
 }
