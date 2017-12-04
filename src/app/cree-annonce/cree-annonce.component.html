@@ -11,19 +11,21 @@
             <div class="form-group row">
                 <label for="inputAddrDepart" class="col-sm-2 col-form-label">Adresse de départ</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputAddrDepart" placeholder="Adresse de départ" #AddrDepart (keyup)="testRempli($event)">
+                    <input auto-complete [(ngModel)]="myAddrDepart" type="text" [source]="apiGoogle.observableSource.bind(this)" list-formatter="formatted_address" no-match-found-text="Aucun résultat trouvé" class="form-control" id="inputAddrDepart" placeholder="Adresse de départ" name="AddrDepart" #AddrDepart (blur)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliAddrDepart == false">L'adresse de départ est obligatoire.</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputAddrDestination" class="col-sm-2 col-form-label">Adresse de destination</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputAddrDestination" placeholder="Adresse de destination" #AddrDestination (keyup)="testRempli($event)">
+                    <input auto-complete [(ngModel)]="myAddrDestination" type="text" [source]="apiGoogle.observableSource.bind(this)" list-formatter="formatted_address" no-match-found-text="Aucun résultat trouvé" class="form-control" id="inputAddrDestination" placeholder="Adresse de destination" name="AddrDestination" #AddrDestination (blur)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliAddrDestination == false">L'adresse de destination est obligatoire.</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputDuree" class="col-sm-2 col-form-label">Durée de trajet</label>
                 <div class="col-sm-6">
-                    <input type="number" class="form-control" id="inputDuree" disabled="true" value="20" #Duree>
+                    <input type="number" class="form-control" id="inputDuree" disabled="true" [value]="apiGoogle.duree(myAddrDepart, myAddrDestination)[0] | async" #Duree>
                 </div>
             </div>
             <div class="form-group row">
@@ -44,25 +46,28 @@
                 <label for="inputImmatriculation" class="col-sm-2 col-form-label">Immatriculation</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="inputImmatriculation" placeholder="Immatriculation" #Immatriculation (keyup)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliImmatriculation == false">L'immatriculation est obligatoire.</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputMarque" class="col-sm-2 col-form-label">Marque</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="inputMarque" placeholder="Marque" #Marque (keyup)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliMarque == false">La marque est obligatoire.</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputModele" class="col-sm-2 col-form-label">Modèle</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="inputModele" placeholder="Modèle" #Modele (keyup)="testRempli($event)">
+                    <p class="text-danger" *ngIf="rempliModele == false">Le modèle est obligatoire.</p>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputNbPlace" class="col-sm-2 col-form-label">Nombre de place</label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" id="inputNbPlace" min="1" max="20" placeholder="Nombre de place" #NbPlace (keyup)="testRempli($event)">
-                    <p class="text-danger" *ngIf="rempliNbPlace == false">Le nombre de places doit être compris entre 1 et 20</p>
+                    <p class="text-danger" *ngIf="rempliNbPlace == false">Le nombre de places doit être compris entre 1 et 20 et est obligatoire</p>
                 </div>
             </div>
         </form>
@@ -102,13 +107,13 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body offset-1">
+    <div class="modal-body">
         <div class="row">
-            <p class="col-6">Départ : </p>
+            <p class="col-3">Départ : </p>
             <label id="ModalAddrDepart">{{AddrDepart.value}}</label>
         </div>
         <div class="row">
-            <p class="col-6">Destination : </p>
+            <p class="col-3">Destination : </p>
             <label id="ModalAddrDepart">{{AddrDestination.value}}</label>
         </div>
         <div class="row">

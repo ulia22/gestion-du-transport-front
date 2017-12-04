@@ -3,8 +3,10 @@ import { Annonce } from '../shared/domain/annonce';
 import { AnnonceCovoiturageService } from '../shared/service/annonce-covoiturage.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
 import { Router } from '@angular/router'
-import * as moment  from 'moment'
+import * as moment from 'moment'
 import { Personne } from '../shared/domain/personne';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { GoogleMapService } from '../shared/service/google-map.service';
 
 @Component({
   selector: 'app-cree-annonce',
@@ -15,17 +17,19 @@ export class CreeAnnonceComponent implements OnInit {
   public isCollapsedItineraire: boolean = false;
   public isCollapsedVehicule: boolean = false;
   public isCollapsedDate: boolean = false;
+  public myAddrDepart: any
+  public myAddrDestination: any
   public heures: number[] = []
   public minutes: string[] = ["00", "10", "20", "30", "40", "50"]
-  public rempliAddrDepart:boolean;
-  public rempliAddrDestination:boolean;
-  public rempliImmatriculation:boolean;
-  public rempliMarque:boolean;
-  public rempliModele:boolean;
-  public rempliNbPlace:boolean;
-  public rempliDate:boolean;
-  public allRempli:boolean
-  constructor(public annonceServ: AnnonceCovoiturageService, private modalService: NgbModal, private router:Router) { }
+  public rempliAddrDepart: boolean;
+  public rempliAddrDestination: boolean;
+  public rempliImmatriculation: boolean;
+  public rempliMarque: boolean;
+  public rempliModele: boolean;
+  public rempliNbPlace: boolean;
+  public rempliDate: boolean;
+  public allRempli: boolean;
+  constructor(public annonceServ: AnnonceCovoiturageService, private modalService: NgbModal, private router: Router, public apiGoogle: GoogleMapService) { }
 
   ngOnInit() {
     for (let i = 0; i < 24; i++) {
@@ -49,42 +53,71 @@ export class CreeAnnonceComponent implements OnInit {
     this.modalService.open(content)
   }
 
-  testRempli($event){
-    if($event.target.value && $event.target.id == "inputAddrDepart"){
-      this.rempliAddrDepart=true;
-    }
-    if($event.target.value && $event.target.id == "inputAddrDestination"){
-      this.rempliAddrDestination=true;
-    }
-    if($event.target.value && $event.target.id == "inputImmatriculation"){
-      this.rempliImmatriculation=true;
-    }
-    if($event.target.value && $event.target.id == "inputMarque"){
-      this.rempliMarque=true;
-    }
-    if($event.target.value && $event.target.id == "inputModele"){
-      this.rempliModele=true;
-    }
-    if($event.target.value && $event.target.id == "inputNbPlace"){
-      if(parseInt($event.target.value)>=1 && parseInt($event.target.value)<=20){
-        this.rempliNbPlace=true;
-      } else {
-        this.rempliNbPlace=false
-      }
-    }
-    if($event.target.value && $event.target.id == "inputDate"){
-      if(new Date($event.target.value) >= moment(new Date()).startOf("day").toDate()) {
-        this.rempliDate=true;
-      } else{
-        this.rempliDate=false
-      }
-
-    }
-    if (this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true){
-      this.allRempli=true
+  testRempli($event) {
+    if ($event.target.value && $event.target.id == "inputAddrDepart") {
+      if (this.myAddrDepart.place_id)
+        this.rempliAddrDepart = true;
     } else {
-      this.allRempli=false
+      if ($event.target.id == "inputAddrDepart") {
+        this.rempliAddrDepart = false;
+      }
     }
+    if ($event.target.value && $event.target.id == "inputAddrDestination") {
+      if (this.myAddrDestination.place_id) {
+        this.rempliAddrDestination = true;
+      }
+    } else {
+      if ($event.target.id == "inputAddrDestination") {
+        this.rempliAddrDestination = false;
+      }
+    }
+    if ($event.target.value && $event.target.id == "inputImmatriculation") {
+      this.rempliImmatriculation = true;
+    } else {
+      if ($event.target.id == "inputImmatriculation") {
+        this.rempliImmatriculation = false;
+      }
+    }
+    if ($event.target.value && $event.target.id == "inputMarque") {
+      this.rempliMarque = true;
+
+    } else {
+      if ($event.target.id == "inputMarque") {
+        this.rempliMarque = false;
+      }
+    }
+    if ($event.target.value && $event.target.id == "inputModele") {
+      this.rempliModele = true;
+    } else {
+      if ($event.target.id == "inputModele") {
+        this.rempliModele = false;
+      }
+    }
+    if ($event.target.value && $event.target.id == "inputNbPlace") {
+      if (parseInt($event.target.value) >= 1 && parseInt($event.target.value) <= 20) {
+        this.rempliNbPlace = true;
+      } else {
+        this.rempliNbPlace = false;
+      }
+    } else {
+      if ($event.target.id == "inputNbPlace") {
+        this.rempliNbPlace = false;
+      }
+    }
+    if ($event.target.value && $event.target.id == "inputDate") {
+      if (new Date($event.target.value) >= moment(new Date()).startOf("day").toDate()) {
+        this.rempliDate = true;
+      } else {
+        this.rempliDate = false;
+      }
+    }
+    if (this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
+      this.allRempli = true
+    } else {
+      this.allRempli = false
+    }
+
+
   }
 
 }
