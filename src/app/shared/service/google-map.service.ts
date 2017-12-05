@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 import 'rxjs/add/observable/of';
+
+const httpOptions = {
+  headers:new HttpHeaders({'Content-Type':'application/json'})
+}
 
 @Injectable()
 export class GoogleMapService {
@@ -9,23 +14,15 @@ export class GoogleMapService {
   constructor(public http:HttpClient) {}
 
   observableSource = (keyword: any): Observable<any[]> => {
-    let key:string = 'AIzaSyARXfeKJRH_yzGsWYykXiCRVv0x4bRCGxw'
-    let url:string = 'https://maps.googleapis.com/maps/api/geocode/json?region=fr&address='+keyword+'&key='+key
     if (keyword) {
-      return this.http.get<any[]>(url).map(donnees=>donnees['results'])
+      return this.http.post<any[]>(`${environment.apiUrl}/googleApi/lister`, keyword, httpOptions)
     } else {
       return Observable.of([]);
     }
   }
-  
-  dureeEtDistance(depart:string, arrive:string){
-   
-    let key = "AIzaSyCzPpFfGV25qZ7UULVVdz25aI-Rf06S6aQ"
-    let url = "https://maps.googleapis.com/maps/api/directions/json?origin="+depart+"&destination="+arrive+"&key="+key
-    return this.http.get<any>(url).map(resp => {
-      const distance = resp.routes[0][1].legs[0].distance.text
-      const duree = resp.routes[0][1].legs[0].duration.text
-      return [duree, distance]
-    })
-  }
+
+  dureeEtDistance(depart:string, arrive:string):Observable<any>{
+    
+     return this.http.post<Map<String, String>>(`${environment.apiUrl}/googleApi/dureeEtDistance`, {"villeDepart":depart, "villeArrive":arrive}, httpOptions)
+   }
 }

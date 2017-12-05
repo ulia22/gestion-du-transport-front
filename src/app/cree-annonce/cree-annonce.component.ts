@@ -22,15 +22,17 @@ export class CreeAnnonceComponent implements OnInit {
   public heures: number[] = []
   public minutes: string[] = ["00", "10", "20", "30", "40", "50"]
   public rempliAddrDepart: boolean;
+  public rempliAddrDepart2: boolean;
   public rempliAddrDestination: boolean;
+  public rempliAddrDestination2: boolean;
   public rempliImmatriculation: boolean;
   public rempliMarque: boolean;
   public rempliModele: boolean;
   public rempliNbPlace: boolean;
   public rempliDate: boolean;
   public allRempli: boolean;
-  public duree:string
-  public distance:string
+  public duree: string = ""
+  public distance: string = ""
   constructor(public annonceServ: AnnonceCovoiturageService, private modalService: NgbModal, private router: Router, public apiGoogle: GoogleMapService) { }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class CreeAnnonceComponent implements OnInit {
     dateDeDepart.setMinutes(parseInt(minute.value))
     if (addrDepart.value && addrDestination.value && duree.value && distance.value && immatriculation.value && marque.value && modele.value && nbPlace.value && date.value && heure.value && minute.value) {
       let id = JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne
-      this.annonceServ.saveAnnonce(new Annonce(addrDepart.value, addrDestination.value, parseInt(duree.value), parseInt(distance.value), immatriculation.value, marque.value, modele.value, parseInt(nbPlace.value), dateDeDepart, new Personne(parseInt(id))))
+      this.annonceServ.saveAnnonce(new Annonce(addrDepart.value, addrDestination.value, duree.value, distance.value, immatriculation.value, marque.value, modele.value, parseInt(nbPlace.value), dateDeDepart, new Personne(parseInt(id))))
       this.router.navigateByUrl("collaborateur/annonces")
     }
     return false
@@ -55,37 +57,48 @@ export class CreeAnnonceComponent implements OnInit {
     this.modalService.open(content)
   }
 
-  testRempliAddr($event){
+  testRempliItineraire($event) {
     if ($event.target.value && $event.target.id == "inputAddrDepart") {
-      if (this.myAddrDepart.place_id)
+      if (this.myAddrDepart.place_id) {
         this.rempliAddrDepart = true;
+        this.rempliAddrDepart2 = true
+      } else {
+        this.rempliAddrDepart2 = false;
+        this.rempliAddrDepart = true
+      }
     } else {
       if ($event.target.id == "inputAddrDepart") {
         this.rempliAddrDepart = false;
+        this.rempliAddrDepart2 = true
       }
     }
     if ($event.target.value && $event.target.id == "inputAddrDestination") {
       if (this.myAddrDestination.place_id) {
         this.rempliAddrDestination = true;
+        this.rempliAddrDestination2 = true;
+      } else {
+        this.rempliAddrDestination = true;
+        this.rempliAddrDestination2 = false;
       }
     } else {
       if ($event.target.id == "inputAddrDestination") {
         this.rempliAddrDestination = false;
+        this.rempliAddrDestination2 = true;
       }
     }
-    if(this.rempliAddrDepart == true && this.rempliAddrDestination == true){
-      this.apiGoogle.dureeEtDistance(this.myAddrDepart.formatted_address, this.myAddrDestination.formatted_address).subscribe(tab=>{
-        this.duree = tab[0]
-        this.distance = tab[1]
+    if (this.rempliAddrDepart == true && this.rempliAddrDepart2 == true && this.rempliAddrDestination == true && this.rempliAddrDestination2 == true) {
+      this.apiGoogle.dureeEtDistance(this.myAddrDepart.formatted_address, this.myAddrDestination.formatted_address).subscribe(map => {
+        this.duree = map["duree"]
+        this.distance = map["distance"]
       })
     }
 
-    if (this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
+    if (this.rempliAddrDepart == true && this.rempliAddrDepart2 == true && this.rempliAddrDestination == true && this.rempliAddrDestination2 == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
       this.allRempli = true
     } else {
       this.allRempli = false
     }
-    
+
   }
 
   testRempli($event) {
