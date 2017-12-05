@@ -26,6 +26,8 @@ import { ReserverUnVehiculesDeSocieteComponent } from './reserver-un-vehicules-d
 import { VehiculeService } from './shared/service/vehicule.service';
 import { ImmatriculationPipe } from './shared/pipe/immatriculation.pipe';
 import { MarquePipe } from './shared/pipe/marque.pipe';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { GoogleMapService } from './shared/service/google-map.service';
 
 const appRoutes: Routes = [
 //Application
@@ -71,9 +73,10 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    JsonpModule
+    JsonpModule,
+    NguiAutoCompleteModule
   ],
-  providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService],
+  providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService, GoogleMapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
