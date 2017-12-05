@@ -5,7 +5,7 @@
   <div class="btn btn-outline-primary col-12 text-left" (click)="isCollapsedListeReservation = !isCollapsedListeReservation" [attr.aria-expanded]="!isCollapsedListeReservation"  aria-controls="collapseItineraire" id="collapseButton">
     Covoiturage
   </div>
-  <div id="collapseListeReservation" class="border border-primary rounded pr-2 pl-2" [ngbCollapse]="isCollapsedListeReservation">
+  <div id="collapseListeReservation" class="border border-primary rounded pr-2 pl-2" [ngbCollapse]="!isCollapsedListeReservation">
     <h5 class=" ml-3" >Réservations en cours</h5>
     <table class="table table-striped table-bordered">
       <thead>
@@ -48,6 +48,8 @@
     </div>
   </div>
 </div>
+
+<app-liste-des-reservations-vehicules></app-liste-des-reservations-vehicules>
 
 
 <!--Modal selection administrateur-->

@@ -1,3 +1,5 @@
+import { Reservation } from "./reservation";
+
 export class Vehicule {
 
         constructor( public immatriculation:string,

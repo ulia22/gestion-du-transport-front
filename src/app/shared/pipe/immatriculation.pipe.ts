@@ -7,7 +7,7 @@ import { Vehicule } from '../domain/vehicule';
 export class ImmatriculationPipe implements PipeTransform {
 
   transform(value:Array<Vehicule>, args?: any): any {
-    return value.filter(c => c.immatriculation.startsWith(args))
+    return value.filter(c => c.immatriculation.startsWith(args.toUpperCase()))
   }
 
 }

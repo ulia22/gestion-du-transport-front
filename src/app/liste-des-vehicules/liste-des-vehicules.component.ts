@@ -50,6 +50,7 @@ export class ListeDesVehiculesComponent implements OnInit {
   }
 
   private getDismissReason(reason: any): string {
+
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -62,13 +63,12 @@ export class ListeDesVehiculesComponent implements OnInit {
   add(immatriculation1:HTMLInputElement,immatriculation2:HTMLInputElement,immatriculation3:HTMLInputElement, marque: HTMLInputElement , modele:HTMLInputElement
     , categorie:HTMLInputElement , nbp:HTMLInputElement,photo:HTMLInputElement ){
 
-      let immatriculation = immatriculation1.value +"-" + immatriculation2.value +"-"+ immatriculation3.value
-      console.log(immatriculation)
-        const voiture = new  Vehicule( immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
-    //  const marques =  new  Marque(marque.value );
-      //  const model = new Modele(categorie.value,modele.value,marque.value)
-        this.vehiculeService.sauvegarder(voiture)
-        return false
+      const immatriculation = immatriculation1.value + immatriculation2.value+ immatriculation3.value
+      const voiture = new  Vehicule(immatriculation ,marque.value ,nbp.value ,photo.value,categorie.value,modele.value);
+
+
+      this.vehiculeService.sauvegarder(voiture).subscribe(v =>{this.vehiculeService.getListVehicule()})
+      return false
 
   }
 
@@ -84,36 +84,61 @@ export class ListeDesVehiculesComponent implements OnInit {
   onBoolPhoto($event){
     if($event.target.value!="")
       this.validePhoto=true
+    else
+      this.validePhoto=false
   }
 
   onBoolMarque($event){
     if($event.target.value!="")
       this.valideMarque=true
+    else
+      this.valideMarque=false
   }
 
   onBoolImmatriculation1($event){
     if($event.target.value!="" && $event.target.value.length >=2)
       this.valideImmatriculation1=true
+    else
+      this.valideImmatriculation1=false
   }
 
   onBoolImmatriculation2($event){
-    if($event.target.value!="" && $event.target.value >= 100)
+    if($event.target.value!="" && $event.target.value.length >= 3)
       this.valideImmatriculation2=true
+    else
+      this.valideImmatriculation2=false
   }
 
   onBoolImmatriculation3($event){
     if($event.target.value!="" && $event.target.value.length >=2)
       this.valideImmatriculation3=true
+    else
+      this.valideImmatriculation3=false
   }
 
   onBoolModele($event){
     if($event.target.value!="")
       this.valideModele=true
+    else
+      this.valideModele=false
   }
 
   onBoolNbp($event){
     if($event.target.value!="")
       this.valideNbp=true
+    else
+      this.valideNbp=false
+  }
+
+  etatInitial(){
+    this.valideImmatriculation1=false
+    this.valideImmatriculation2=false
+    this.valideImmatriculation3=false
+
+    this.valideMarque=false
+    this.validePhoto=false
+    this.valideModele=false
+    this.valideNbp=false
   }
 
 }

@@ -81,15 +81,6 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
       this.annoncesCovoitService.getListAnnoncesCovoiturage(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne).subscribe(l=>this.annonces = l)
     }
 
-  add(dateReservationDay,dateReservationMonth, dateReservationYear ,timeReserveHour ,timeReserveMinute,
-    dateRetourDay,dateRetourMonth,dateRetourYear,timeRetourHour,timeRetourMinute,
-    dateReservation,dateRetour,immatriculation,marque,modele){
-     const depart = null ; //dateReservationDay+ "/" + dateReservationMonth + "/" + dateReservationYear ;
-     const retour =null; // dateRetourDay+ "/" + dateRetourMonth + "/" + dateRetourYear;
-     const reservation = new Reservation( marque ,immatriculation,modele ,depart, retour);
-     this.reservationService.sauvegarde(reservation)
-  }
-
     openReservCovoit(content2, annonce){
       this.annonceSelected = annonce
       this.modalRef = this.modalService.open(content2)

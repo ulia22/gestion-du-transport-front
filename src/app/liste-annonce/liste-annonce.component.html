@@ -1,30 +1,47 @@
 <app-menu></app-menu>
 <div>
-<h1>Vos annonces</h1>
-<button type="button" class="btn btn-primary float-right" (click)="creerAnnonce()">Créer une nouvelle annonce</button>
-<h5>Annonces en cours</h5>
-<table class="table table-striped">
-  <thead>
-    <th>Date / heure de départ</th>
-    <th>Lieu de départ</th>
-    <th>Lieu de destination</th>
-    <th>Nombres de voyageurs</th>
-  </thead>
-  <tbody>
-    <td class="row"></td>
-  </tbody>
-</table>
+  <h1>Vos annonces</h1>
+  <button type="button" class="btn btn-primary float-right" (click)="creerAnnonce()">Créer une nouvelle annonce</button>
+  <div class="rounded pr-2 pl-2">
+    <h5 class=" ml-3" >Annonces en cours</h5>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <th>Date / heure de départ</th>
+        <th>Départ</th>
+        <th>Destination</th>
+        <th>Nombre de voyageurs</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let line of mesAnnoncesCourrantesJSON">
+          <td>{{line.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</td>
+          <td>{{line.addrDepart}}</td>
+          <td>{{line.addrArrivee}}</td>
+          <td>{{line.nbPlaceDisponnibles}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-<h5>Historique</h5>
-<table class="table table-striped">
-    <thead>
-      <th>Date / heure de départ</th>
-      <th>Lieu de départ</th>
-      <th>Lieu de destination</th>
-      <th>Nombres de voyageurs</th>
-    </thead>
-</table>
-<tbody>
-    <td class="row"></td>
-  </tbody>
+    <h5 class=" ml-3">Historique</h5>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Date / heure de départ</th>
+          <th>Départ</th>
+          <th>Destination</th>
+          <th>Nombre de voyageurs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let line of mesAnnoncesOnDisplay">
+          <td scope="row">{{line.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</td>
+          <td>{{line.addrDepart}}</td>
+          <td>{{line.addrArrivee}}</td>
+          <td>{{line.nbPlaceDisponnibles}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="mesAnnoncesHistoriquesJSON.length > nbHistoriqueDisplayed">
+      <ngb-pagination [collectionSize]="totalItemsHistorique" [(page)]="currentPageHistorique" [pageSize]="nbHistoriqueDisplayed" (pageChange)="loadHistorique($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+  </div>
 </div>

@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class VehiculeService {
 
-  newVehicule : Subject<Vehicule> = new BehaviorSubject(null)
+  newVehicule : BehaviorSubject<Vehicule> = new BehaviorSubject(null)
   vehicules:BehaviorSubject<Vehicule[]>=new BehaviorSubject([])
   categories:Subject<string[]> = new BehaviorSubject([])
   vehicule : Vehicule[]
@@ -25,29 +25,20 @@ export class VehiculeService {
 
 
   getListCtegorie(){
-    this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {this.categories.next(l)}
-  )
-  return this.categories
-}
+    this.http.get<string[]>(`${environment.apiUrl}/vehicules/categories`).toPromise().then(l => {
+      this.categories.next(l)})
+	  return this.categories
+  }
 
-getListVehicule():Observable<Vehicule[]>{
-  this.refresh()
-  return this.vehicules.asObservable();
-}
+  getListVehicule():BehaviorSubject<Vehicule[]>{
+    this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`).toPromise().then(l => {
+      l.forEach(v => {v.marque = v.marque.toUpperCase()})
+      l.forEach(v => {v.immatriculation = v.immatriculation.toUpperCase()})
+      this.vehicules.next(l)})
+      return this.vehicules;
+  }
 
-refresh():void{
-  this.http.get<Vehicule[]>(`${environment.apiUrl}/vehicules`)
-  .subscribe(col => this.vehicules.next(col))
-}
-
-sauvegarder(newVehicule:Vehicule):void {
-  const vehiculeCreatedObservable : Observable<Vehicule> = this.http.post<Vehicule>(environment.apiUrl + '/vehicules', newVehicule,httpOptions)
-
-  vehiculeCreatedObservable.subscribe(v=> {
-    const tabVehicule:Vehicule[] = this.vehicules.getValue()
-    tabVehicule.push(v)
-    this.vehicules.next(tabVehicule)
-  })
-//  return this.vehicules;
-}
+  sauvegarder(newVehicule:Vehicule):Observable<Vehicule> {
+    return this.http.post<Vehicule>(environment.apiUrl + '/vehicules', newVehicule,httpOptions)
+  }
 }

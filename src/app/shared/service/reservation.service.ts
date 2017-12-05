@@ -38,4 +38,8 @@ export class ReservationService {
     let idMap = {'idAnnonce':annonceViewJSON.id, 'idPersonne':JSON.parse(personneEtAccountViewJSON).idPersonne}
     return this.http.post<any[]>(environment.apiUrl+"/reservations/annoncesCovoiturages", idMap, httpOptions)
   }
+
+  getListeReservationsVehicules(id):Observable<any[]>{
+    return this.http.get<any[]>(environment.apiUrl+"/reservations/vehiculesCovoiturages?personneId="+id, httpOptions)
+  }
 }
