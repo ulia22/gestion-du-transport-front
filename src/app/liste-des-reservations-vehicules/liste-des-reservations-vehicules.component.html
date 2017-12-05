@@ -1,12 +1,10 @@
+<div class="mt-2" >
  
-<br>
-<div >
- 
-      <button type="button" class="btn btn-outline-primary col-12" style="text-align:left" (click)="isCollapsed1 = !isCollapsed1"
+      <div type="button" class="btn btn-outline-primary col-12" style="text-align:left" (click)="isCollapsed1 = !isCollapsed1"
               [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
         Véhicule de société
-      </button>
-<div id="collapseExample" class="border border-primary rounded pr-2 pl-2" [ngbCollapse]="isCollapsed1">
+      </div>
+<div id="collapseExample" class="border border-primary rounded pr-2 pl-2 mt-2" [ngbCollapse]="!isCollapsed1">
 
  
 
