@@ -42,9 +42,8 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.vehiculeService.getListVehicule().subscribe(v=>{ console.log('titi') ; console.log(v[0]) ;this.vehicules= v; console.log(this.vehicules[0]) } )
-    console.log("toto")
-    console.log(this.vehicules[0])
+    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v;  } )
+    
   }
 
   open(content , immatriculation , marque , modele) {

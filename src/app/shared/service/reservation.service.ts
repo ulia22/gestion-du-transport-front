@@ -20,9 +20,9 @@ export class ReservationService {
   constructor(private http:HttpClient) { }
 
   sauvegarde(newReservation:Reservation){
-    console.log("bibi")
+   
     this.http.post<Reservation>(environment.apiUrl + '/reservations',newReservation,httpOptions).subscribe(v=>{
-      console.log("bijours")
+     
       const tabReservation= this.reservations.getValue()
       tabReservation.push(v)
       this.reservations.next(tabReservation)
@@ -31,5 +31,9 @@ export class ReservationService {
 
   getListeReservations(id):Observable<any[]>{
     return this.http.get<any[]>(environment.apiUrl+"/reservations/annoncesCovoiturages?covoitureurId="+id, httpOptions)
+  }
+  getListeReservationsVehicules(id):Observable<any[]>{
+ 
+    return this.http.get<any[]>(environment.apiUrl+"/reservations/vehiculesCovoiturages?personneId="+id, httpOptions)
   }
 }
