@@ -42,7 +42,7 @@ const appRoutes: Routes = [
 { path: 'admin/chauffeurs', component: AppComponent, canActivate : [AuthGuardService] },
 { path: 'chauffeur/occupation', component: AppComponent, canActivate : [AuthGuardService] },
 { path: 'chauffeur/planning', component: AppComponent, canActivate : [AuthGuardService] },
-{ path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent, canActivate : [AuthGuardService]},
+{ path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent, canActivate : [AuthGuardService] },
 //Connexion
 { path: 'connexion', component: ConnexionComponent },
 
