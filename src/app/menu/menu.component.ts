@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
   }
 
   deconnexion():void{
-    localStorage.clear
+    localStorage.clear()
     this.router.navigateByUrl('connexion')
   }
 }
