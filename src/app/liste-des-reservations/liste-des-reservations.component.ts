@@ -13,6 +13,7 @@ import { RouterModule, Routes, Router } from '@angular/router';
 export class ListeDesReservationsComponent implements OnInit {
 
   @ViewChild('content') content;
+  @ViewChild('content2') content2;
 
   public listeReservationsJSON:any[] = []
   public listeReservationsAnnoncesCourrantesJSON:any[] = []
@@ -30,6 +31,9 @@ export class ListeDesReservationsComponent implements OnInit {
 
   //Détail courrant la reservation Covoiturage
   public detailCourant:any = null;
+
+  //Modal annulation
+  public modalAnnuller:any;
 
   constructor(private reservationService:ReservationService, private modalService: NgbModal, private router:Router) {
     this.nbHistoriqueDisplayed = 4
@@ -86,7 +90,28 @@ export class ListeDesReservationsComponent implements OnInit {
 
   openModalDetail(line){
       this.detailCourant = line;
-    this.modalService.open(this.content)
+      this.modalService.open(this.content)
+  }
+
+  openModalAnnuler(line){
+      this.detailCourant = line;
+      this.modalAnnuller = this.modalService.open(this.content2)
+  }
+  anulerReservation(){
+    this.reservationService.anulerReservation(this.detailCourant.id ,JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
+    .subscribe(
+      resp=>{
+        this.listeReservationsJSON = resp
+        this.setListeCourrantEtHistorique()
+      },
+      err=>{
+        this.listeReservationsJSON = []
+        this.setListeCourrantEtHistorique()
+      }
+    )
+    this.modalAnnuller.close()
+    this.modalAnnuller = null
+    this.detailCourant = null
   }
 
   reserverTransport(){

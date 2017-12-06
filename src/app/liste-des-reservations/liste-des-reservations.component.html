@@ -19,7 +19,10 @@
           <td>{{line.dateDepart | jsontoDate | date:"dd/MM/yyyy HH:mm"}}</td>
           <td>{{line.addrDepart}}</td>
           <td>{{line.addrArrivee}}</td>
-          <td class="text-center"><button (click)="openModalDetail(line)" type="button" class="btn btn-primary">Détail</button></td>
+          <td class="text-center">
+            <button (click)="openModalDetail(line)" type="button" class="btn btn-primary">Détail</button>
+            <button (click)="openModalAnnuler(line)" type="button" class="btn btn-danger">Annuler</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -100,5 +103,16 @@
   </div>
   <div class="modal-footer">
     <button (click)="d('Btn Fermer')" type="button" class="btn btn-primary">Fermer</button>
+  </div>
+</ng-template>
+
+<!-- Modal confirmation suppression reservation -->
+<ng-template #content2 let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <p>Etes-vous sur de vouloir annuler cette reservation ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="c('Close click')">Annuler</button>
+    <button type="button" class="btn btn-primary" (click)="anulerReservation()">Confirmer</button>
   </div>
 </ng-template>
