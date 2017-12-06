@@ -1,50 +1,61 @@
-<nav class="navbar navbar-light navbar-fixed-top navbar-expand-lg">
+<div class="row">
+  <div class="col-10">
+    <nav class="navbar navbar-light navbar-fixed-top navbar-expand-lg align-top">
+      <a class="navbar-brand" [routerLink]="['/menu']" (click)="navbarCollapsed = true">
+        <img src="http://www.dta-ingenierie.fr/wp-content/uploads/2017/10/LOGO-DTA-vectorise%CC%81.png" width="30" height="30" class="d-inline-block align-top"
+        alt=""> Gestion des transport</a>
 
-  <a class="navbar-brand" [routerLink]="['/menu']" (click)="navbarCollapsed = true">
-    <img src="http://www.dta-ingenierie.fr/wp-content/uploads/2017/10/LOGO-DTA-vectorise%CC%81.png" width="30" height="30" class="d-inline-block align-top"
-      alt=""> Gestion des transport</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed" [attr.aria-expanded]="!navbarCollapsed"
-    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent" [ngSwitch]="rolesUser">
-    <ul class="navbar-nav mr-auto" *ngSwitchCase="'COLLABORATEUR'">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/collaborateur/reservations/" routerLinkActive="active" (click)="navbarCollapsed = true">Vos réservations</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/collaborateur/annonces/" routerLinkActive="active" (click)="navbarCollapsed = true">Vos annonces</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/collaborateur/statistiques" routerLinkActive="active" (click)="navbarCollapsed = true">Vos statistiques</a>
-      </li>
-      <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
-        <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" *ngSwitchCase="'ADMINISTRATEUR'">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/vehicules/" routerLinkActive="active" (click)="navbarCollapsed = true">Véhicules</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/chauffeurs/" routerLinkActive="active" (click)="navbarCollapsed = true">Chauffeurs</a>
-      </li>
-      <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
-        <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" *ngSwitchCase="'CHAUFFEUR'">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="chauffeur/occupation" routerLinkActive="active" (click)="navbarCollapsed = true">Occupations</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="chauffeur/planning" routerLinkActive="active" (click)="navbarCollapsed = true">Planning</a>
-      </li>
-      <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
-        <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
-      </li>
-    </ul>
+      <div class="navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent" [ngSwitch]="rolesUser">
+        <ul class="navbar-nav mr-auto" *ngSwitchCase="'COLLABORATEUR'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/collaborateur/reservations/" routerLinkActive="active" (click)="navbarCollapsed = true">Vos réservations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/collaborateur/annonces/" routerLinkActive="active" (click)="navbarCollapsed = true">Vos annonces</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/collaborateur/statistiques" routerLinkActive="active" (click)="navbarCollapsed = true">Vos statistiques</a>
+          </li>
+          <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" *ngSwitchCase="'ADMINISTRATEUR'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/vehicules/" routerLinkActive="active" (click)="navbarCollapsed = true">Véhicules</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/chauffeurs/" routerLinkActive="active" (click)="navbarCollapsed = true">Chauffeurs</a>
+          </li>
+          <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" *ngSwitchCase="'CHAUFFEUR'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="chauffeur/occupation" routerLinkActive="active" (click)="navbarCollapsed = true">Occupations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="chauffeur/planning" routerLinkActive="active" (click)="navbarCollapsed = true">Planning</a>
+          </li>
+          <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
-</nav>
+  <div class="col-sm-2 col-md-1 text-center">
+    <p>Bonjour {{userNom}} {{userPrenom}}</p>
+    <p><a id="lienDeco" role="button" (click)="deconnexion()">Se déconnecter</a></p>
+  </div>
+  <div class="col-md-1">
+    <!-- <img id="photoProfil" src="{{srcPhotos}}" alt="Photo de profil" class="img-thumbnail"> -->
+    <img id="photoProfil" src="http://www.aussitot.fr/wp-content/uploads/2012/07/gplus-photoprofil-199x223.png" alt="Photo de profil" class="img-thumbnail">
+  </div>
+</div>
