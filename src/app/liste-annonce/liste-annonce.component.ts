@@ -11,29 +11,33 @@ import { AnnonceCovoiturageService } from '../shared/service/annonce-covoiturage
   styleUrls: ['./liste-annonce.component.css']
 })
 export class ListeAnnonceComponent implements OnInit {
-  
+
   @ViewChild('content') content;
-  
+  @ViewChild('content2') content2;
+
     public mesAnnoncesJSON:any[] = []
     public mesAnnoncesCourrantesJSON:any[] = []
     public mesAnnoncesHistoriquesJSON:any[] = []
     public mesAnnoncesOnDisplay:any[] = []
-  
+
     //pagination
     public totalItemsHistorique:number;
     public nbHistoriqueDisplayed:number;
     public currentPageHistorique:number;
     public previousPageHistorique:number;
-  
+
     //Détail courrant la reservation Covoiturage
     public detailCourant:any = null;
-  
+
+    //Modal annulation
+    public modalAnnuller:any;
+
     constructor(private annonceCovoitService:AnnonceCovoiturageService, private modalService: NgbModal, private router:Router) {
       this.nbHistoriqueDisplayed = 4
       this.currentPageHistorique = 1;
       this.previousPageHistorique = 1;
     }
-  
+
     ngOnInit() {
       this.annonceCovoitService.listeMesAnnonces(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
       .subscribe(
@@ -48,7 +52,7 @@ export class ListeAnnonceComponent implements OnInit {
         }
       )
     }
-  
+
     private setListeCourrantEtHistorique():void{
       this.mesAnnoncesCourrantesJSON = this.mesAnnoncesJSON.filter(a=>{
         let value = a.dateDepart
@@ -58,7 +62,7 @@ export class ListeAnnonceComponent implements OnInit {
         }
         return false
       })
-  
+
       this.mesAnnoncesHistoriquesJSON = this.mesAnnoncesJSON.filter(a=>{
         let value = a.dateDepart
         let d = new JsontoDatePipe().transform(value)
@@ -71,7 +75,7 @@ export class ListeAnnonceComponent implements OnInit {
       this.totalItemsHistorique = this.mesAnnoncesHistoriquesJSON.length
       this.changerDisplayHistorique();
     }
-  
+
     loadHistorique(page:number){
       if (page !== this.previousPageHistorique) {
         this.previousPageHistorique = page;
@@ -84,6 +88,29 @@ export class ListeAnnonceComponent implements OnInit {
   creerAnnonce(){
     this.router.navigateByUrl("collaborateur/annonces/creer")
   }
+
+  openModalAnnuler(line){
+      this.detailCourant = line;
+      this.modalAnnuller = this.modalService.open(this.content2)
+  }
+
+  annulerAnnonce(){
+    this.annonceCovoitService.annulerAnnonce(this.detailCourant.id ,JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
+    .subscribe(
+      annonces=>{
+        this.mesAnnoncesJSON = annonces
+        this.setListeCourrantEtHistorique()
+      },
+      err=>{
+        this.mesAnnoncesJSON = []
+        this.setListeCourrantEtHistorique()
+      }
+    )
+    this.modalAnnuller.close()
+    this.modalAnnuller = null
+    this.detailCourant = null
+  }
+
   compare(a, b) {
     let dateA:Date = new JsontoDatePipe().transform(a.dateDepart)
     let dateB:Date = new JsontoDatePipe().transform(b.dateDepart)
