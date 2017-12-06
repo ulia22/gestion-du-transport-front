@@ -28,10 +28,11 @@ import { ImmatriculationPipe } from './shared/pipe/immatriculation.pipe';
 import { MarquePipe } from './shared/pipe/marque.pipe';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { GoogleMapService } from './shared/service/google-map.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
 //Application
-{ path: 'app', component: AppComponent },
+{ path: 'menu', component: MenuComponent },
 { path: 'collaborateur/reservations', component: ListeDesReservationsComponent },
 { path: 'collaborateur/annonces', component: ListeAnnonceComponent },
 { path: 'collaborateur/annonces/creer', component: CreeAnnonceComponent},
@@ -46,7 +47,7 @@ const appRoutes: Routes = [
 { path: 'connexion', component: ConnexionComponent },
 
 //Default
-{ path: '**', redirectTo: 'app'} // redirige vers la route app par défaut
+{ path: '**', component: PageNotFoundComponent} // redirige vers PageNotFound par défaut
 ];
 
 @NgModule({
@@ -64,7 +65,8 @@ const appRoutes: Routes = [
     ReserverUnVehiculesDeSocieteComponent,
     ListeDesVehiculesComponent,
     ImmatriculationPipe,
-    MarquePipe
+    MarquePipe,
+    PageNotFoundComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
