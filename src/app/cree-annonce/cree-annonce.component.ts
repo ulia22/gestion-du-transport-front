@@ -30,6 +30,7 @@ export class CreeAnnonceComponent implements OnInit {
   public rempliModele: boolean;
   public rempliNbPlace: boolean;
   public rempliDate: boolean;
+  public rempliDureeEtDistance: boolean;
   public allRempli: boolean;
   public duree: string = ""
   public distance: string = ""
@@ -90,15 +91,16 @@ export class CreeAnnonceComponent implements OnInit {
       this.apiGoogle.dureeEtDistance(this.myAddrDepart.formatted_address, this.myAddrDestination.formatted_address).subscribe(map => {
         this.duree = map["duree"]
         this.distance = map["distance"]
+        this.rempliDureeEtDistance=true
+        this.formulaireValide()
+      }, err =>{
+        this.duree = err.error.message
+        this.distance = err.error.message
+        this.rempliDureeEtDistance=false
+        this.formulaireValide()
       })
     }
-
-    if (this.rempliAddrDepart == true && this.rempliAddrDepart2 == true && this.rempliAddrDestination == true && this.rempliAddrDestination2 == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
-      this.allRempli = true
-    } else {
-      this.allRempli = false
-    }
-
+    this.formulaireValide()
   }
 
   testRempli($event) {
@@ -142,13 +144,14 @@ export class CreeAnnonceComponent implements OnInit {
         this.rempliDate = false;
       }
     }
-    if (this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
+    this.formulaireValide()
+  }
+
+  formulaireValide(){
+    if (this.rempliDureeEtDistance == true && this.rempliAddrDepart == true && this.rempliAddrDestination == true && this.rempliDate == true && this.rempliImmatriculation == true && this.rempliMarque == true && this.rempliModele == true && this.rempliNbPlace == true) {
       this.allRempli = true
     } else {
       this.allRempli = false
     }
-
-
   }
-
 }
