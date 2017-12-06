@@ -12,6 +12,8 @@ import { VehiculeService } from "../shared/service/vehicule.service"
 import { Vehicule } from "../shared/domain/vehicule"
 import { Reservation } from '../shared/domain/reservation';
 import { ReservationService } from '../shared/service/reservation.service';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { GoogleMapService } from '../shared/service/google-map.service';
 
 const address = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado']
 @Component({
@@ -25,9 +27,14 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   //Partie reserver Covoiturage
   public model:any
   public annonceSelected:any = null
-  public addDepart:string
-  public addDestination:string
-  public dateDepart:string
+  public addDepart:string = ""
+  public addDestination:string = ""
+  public dateDepart:string = ""
+  public duree:string = "--"
+  public distance:string = "--"
+
+  public listAddrDepart:string[]=[]
+  public listAddrDestination:string[]=[]
 
   public modalRef:NgbModalRef
   //*********************///
@@ -57,7 +64,12 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   public annonces:any[]
   public annoncesOnDisplay:any[]
 
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService , config: NgbTypeaheadConfig, public reservationService:ReservationService, public annoncesCovoitService:AnnonceCovoiturageService) {
+  constructor(private modalService: NgbModal,
+    public vehiculeService:VehiculeService ,
+    config: NgbTypeaheadConfig,
+    public reservationService:ReservationService,
+    public annoncesCovoitService:AnnonceCovoiturageService,
+    public googleService:GoogleMapService) {
     config.showHint = true;
   }
 
@@ -78,7 +90,16 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
 
     ngOnInit() {
       this.vehiculeService.getListVehicule().subscribe(l=>{this.vehicules=l})
-      this.annoncesCovoitService.getListAnnoncesCovoiturage(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne).subscribe(l=>this.annonces = l)
+      this.annoncesCovoitService.getListAnnoncesCovoiturage(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
+      .subscribe(l=>{
+        this.annonces = l
+          .filter(a=>{
+           let date = new JsontoDatePipe().transform(a.dateDepart)
+           return (date.getTime() > Date.now())
+          })
+         this.listAddrDepart=this.annonces.map(a=>a.addrDepart)
+         this.listAddrDestination = this.annonces.map(a=>a.addrArrivee)
+       })
     }
 
     openReservCovoit(content2, annonce){
@@ -103,6 +124,8 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
           this.addDestination = addDestination.value
         }else{
           this.addDestination = ""
+          this.duree="--"
+          this.addDestination="--"
         }
         if(dateDepart.value.length>0 && new Date(dateDepart.value) && new Date(dateDepart.value).getTime() > Date.now()){
             this.dateDepart = dateDepart.value;
@@ -111,6 +134,8 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
         }
       }else{
         this.addDepart = ""
+        this.duree="--"
+        this.addDestination="--"
       }
       this.displayCovoit()
     }
@@ -120,6 +145,17 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
         this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(this.addDepart.toLowerCase()))
         if(this.addDestination.length > 0){
           this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(this.addDestination.toLowerCase()))
+          this.googleService.dureeEtDistance(this.addDepart, this.addDestination)
+          .subscribe(
+            resp=>{
+              this.duree = resp['duree']
+              this.distance = resp['distance']
+            },
+            err=>{
+              this.duree = "--"
+              this.distance = "--"
+            }
+          )
         }
         if(this.dateDepart.length > 0){
           this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>{
@@ -127,13 +163,9 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
             return (date.getDay() == new Date(this.dateDepart).getDay() && date.getMonth() == new Date(this.dateDepart).getMonth() && date.getFullYear() == new Date(this.dateDepart).getFullYear())
           })
         }
-        //On enleve les annonces qui ont une date de départ avant aujourd'hui
-        this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>{
-          let date = new JsontoDatePipe().transform(a.dateDepart)
-          return (date.getTime() > Date.now())
-        })
       }else{
         this.annoncesOnDisplay = [];
+        this.listAddrDestination = this.annonces.map(a=>a.addrDestination)
       }
     }
 
@@ -157,6 +189,6 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
           return true
         }
       }
-      return false;
+      return false
     }
   }
