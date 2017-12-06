@@ -29,24 +29,26 @@ import { MarquePipe } from './shared/pipe/marque.pipe';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { GoogleMapService } from './shared/service/google-map.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuardService } from './shared/service/auth-guard.service';
 
 const appRoutes: Routes = [
 //Application
-{ path: 'menu', component: MenuComponent },
-{ path: 'collaborateur/reservations', component: ListeDesReservationsComponent },
-{ path: 'collaborateur/annonces', component: ListeAnnonceComponent },
-{ path: 'collaborateur/annonces/creer', component: CreeAnnonceComponent},
-{ path: 'collaborateur/statistiques', component: AppComponent },
-{ path: 'admin/vehicules', component: ListeDesVehiculesComponent },
-{ path: 'admin/chauffeurs', component: AppComponent },
-{ path: 'chauffeur/occupation', component: AppComponent },
-{ path: 'chauffeur/planning', component: AppComponent },
-{ path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent},
+{ path: 'menu', component: MenuComponent, canActivate : [AuthGuardService] },
+{ path: 'collaborateur/reservations', component: ListeDesReservationsComponent, canActivate : [AuthGuardService] },
+{ path: 'collaborateur/annonces', component: ListeAnnonceComponent, canActivate : [AuthGuardService] },
+{ path: 'collaborateur/annonces/creer', component: CreeAnnonceComponent, canActivate : [AuthGuardService]},
+{ path: 'collaborateur/statistiques', component: AppComponent, canActivate : [AuthGuardService] },
+{ path: 'admin/vehicules', component: ListeDesVehiculesComponent, canActivate : [AuthGuardService] },
+{ path: 'admin/chauffeurs', component: AppComponent, canActivate : [AuthGuardService] },
+{ path: 'chauffeur/occupation', component: AppComponent, canActivate : [AuthGuardService] },
+{ path: 'chauffeur/planning', component: AppComponent, canActivate : [AuthGuardService] },
+{ path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent, canActivate : [AuthGuardService]},
 //Connexion
 { path: 'connexion', component: ConnexionComponent },
 
+
 //Default
-{ path: '**', component: PageNotFoundComponent} // redirige vers PageNotFound par défaut
+{ path: '**', component: PageNotFoundComponent, canActivate : [AuthGuardService]} // redirige vers PageNotFound par défaut
 ];
 
 @NgModule({
@@ -77,7 +79,7 @@ const appRoutes: Routes = [
     JsonpModule,
     NguiAutoCompleteModule
   ],
-  providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService, GoogleMapService],
+  providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService, GoogleMapService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
