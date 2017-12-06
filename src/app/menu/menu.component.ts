@@ -9,6 +9,7 @@ import { UserRolesService } from '../shared/service/user-roles.service'
 export class MenuComponent implements OnInit {
 
   public rolesUser:string
+  public navbarCollapsed:boolean = false;
 
   constructor( private userRolesService:UserRolesService) { }
 

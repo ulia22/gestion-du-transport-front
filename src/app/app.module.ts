@@ -41,7 +41,6 @@ const appRoutes: Routes = [
 { path: 'chauffeur/occupation', component: AppComponent },
 { path: 'chauffeur/planning', component: AppComponent },
 { path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent},
-{ path: 'test', component: ListeDesReservationsVehiculesComponent},
 //Connexion
 { path: 'connexion', component: ConnexionComponent },
 
