@@ -30,7 +30,8 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { GoogleMapService } from './shared/service/google-map.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuardService } from './shared/service/auth-guard.service';
-
+import { GererLesChauffeursComponent } from './gerer-les-chauffeurs/gerer-les-chauffeurs.component';
+import {ChauffeurService} from './shared/service/chauffeur.service'
 const appRoutes: Routes = [
 //Application
 { path: 'menu', component: MenuComponent, canActivate : [AuthGuardService] },
@@ -39,7 +40,7 @@ const appRoutes: Routes = [
 { path: 'collaborateur/annonces/creer', component: CreeAnnonceComponent, canActivate : [AuthGuardService]},
 { path: 'collaborateur/statistiques', component: AppComponent, canActivate : [AuthGuardService] },
 { path: 'admin/vehicules', component: ListeDesVehiculesComponent, canActivate : [AuthGuardService] },
-{ path: 'admin/chauffeurs', component: AppComponent, canActivate : [AuthGuardService] },
+{ path: 'admin/chauffeurs', component: GererLesChauffeursComponent, canActivate : [AuthGuardService] },
 { path: 'chauffeur/occupation', component: AppComponent, canActivate : [AuthGuardService] },
 { path: 'chauffeur/planning', component: AppComponent, canActivate : [AuthGuardService] },
 { path: 'collaborateur/reservations/creer', component: ReserverUnVehiculesDeSocieteComponent, canActivate : [AuthGuardService] },
@@ -67,7 +68,8 @@ const appRoutes: Routes = [
     ListeDesVehiculesComponent,
     ImmatriculationPipe,
     MarquePipe,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    GererLesChauffeursComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -79,7 +81,7 @@ const appRoutes: Routes = [
     JsonpModule,
     NguiAutoCompleteModule
   ],
-  providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService, GoogleMapService, AuthGuardService],
+  providers: [ConnexionService, UserRolesService, ReservationService, AnnonceCovoiturageService,VehiculeService, GoogleMapService, AuthGuardService, ChauffeurService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
