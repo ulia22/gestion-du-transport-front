@@ -52,7 +52,7 @@
   </div>
   <div class="col-sm-2 col-md-1 text-center">
     <p>Bonjour {{userNom}} {{userPrenom}}</p>
-    <p><a id="lienDeco" role="button" (click)="deconnexion()">Se déconnecter</a></p>
+    <a id="lienDeco" role="button" (click)="deconnexion()" [routerLink]="['/connexion']">Se déconnecter</a>
   </div>
   <div class="col-md-1">
     <!-- <img id="photoProfil" src="{{srcPhotos}}" alt="Photo de profil" class="img-thumbnail"> -->
