@@ -32,6 +32,9 @@ export class ReservationService {
     return this.http.get<any[]>(environment.apiUrl+"/reservations/annoncesCovoiturages?covoitureurId="+id, httpOptions)
   }
 
+  anulerReservation(idReservation, idCovoitureur){
+    return this.http.delete<any[]>(environment.apiUrl+"/reservations/annoncesCovoiturages?covoitureurId="+idCovoitureur+"&reservationId="+idReservation, httpOptions)
+  }
   //Reserver une annonce de covoiturage avec l'id de covoitureur id
   //Retourne la liste des annonces
   sauvegardeReservationCovoiturage(annonceViewJSON:any, personneEtAccountViewJSON:any):Observable<any[]>{

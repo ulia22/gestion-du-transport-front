@@ -27,8 +27,8 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   //Partie reserver Covoiturage
   public model:any
   public annonceSelected:any = null
-  public addDepart:string = ""
-  public addDestination:string = ""
+  public addressDepart:string = ""
+  public addressDestination:string = ""
   public dateDepart:string = ""
   public duree:string = "--"
   public distance:string = "--"
@@ -119,13 +119,13 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
 
     filterCovoit(addDepart:HTMLInputElement,  addDestination:HTMLInputElement, dateDepart:HTMLInputElement){
       if(addDepart.value.length > 0){
-        this.addDepart = addDepart.value
+        this.addressDepart = addDepart.value
         if(addDestination.value.length>0){
-          this.addDestination = addDestination.value
+          this.addressDestination = addDestination.value
         }else{
-          this.addDestination = ""
+          this.addressDestination = ""
           this.duree="--"
-          this.addDestination="--"
+          this.distance="--"
         }
         if(dateDepart.value.length>0 && new Date(dateDepart.value) && new Date(dateDepart.value).getTime() > Date.now()){
             this.dateDepart = dateDepart.value;
@@ -133,19 +133,19 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
           this.dateDepart = ""
         }
       }else{
-        this.addDepart = ""
+        this.addressDepart = ""
         this.duree="--"
-        this.addDestination="--"
+        this.distance="--"
       }
       this.displayCovoit()
     }
 
     displayCovoit(){
-      if(this.addDepart.length > 0 || !this.annoncesOnDisplay){
-        this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(this.addDepart.toLowerCase()))
-        if(this.addDestination.length > 0){
-          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(this.addDestination.toLowerCase()))
-          this.googleService.dureeEtDistance(this.addDepart, this.addDestination)
+      if(this.addressDepart.length > 0 || !this.annoncesOnDisplay){
+        this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(this.addressDepart.toLowerCase()))
+        if(this.addressDestination.length > 0){
+          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(this.addressDestination.toLowerCase()))
+          this.googleService.dureeEtDistance(this.addressDepart, this.addressDestination)
           .subscribe(
             resp=>{
               this.duree = resp['duree']
@@ -174,11 +174,15 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
       .subscribe(
         (resp)=>{
           this.annonces = resp;
+          this.annoncesOnDisplay = [];
           this.displayCovoit();
           this.modalRef.close()
         },
         (err)=>{
           console.error(err)
+          this.annoncesOnDisplay = [];
+          this.displayCovoit();
+          this.modalRef.close()
         }
       )
     }

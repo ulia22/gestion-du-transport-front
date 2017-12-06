@@ -32,6 +32,10 @@ export class AnnonceCovoiturageService {
   })
  }
 
+ annulerAnnonce(idAnnonce, idCreateur):Observable<any[]>{
+   return this.http.delete<any[]>(`${environment.apiUrl}/annoncesCovoiturages?personneId=`+idCreateur+'&annonceId='+idAnnonce, httpOptions)
+ }
+
  getListAnnoncesCovoiturage(personneId):Observable<any[]>{
    return this.http.get<any[]>(`${environment.apiUrl}/annoncesCovoiturages?personneId=`+personneId, httpOptions)
  }

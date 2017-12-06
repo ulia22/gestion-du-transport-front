@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
   public userPrenom:string
   public srcPhotos:string
 
-  constructor( private userRolesService:UserRolesService) { }
+  constructor( private userRolesService:UserRolesService, private router:Router) { }
 
   ngOnInit() {
     this.rolesUser = localStorage.getItem('role')
@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit {
   }
 
   deconnexion():void{
-    localStorage.clear()
+    localStorage.clear
+    this.router.navigateByUrl('connexion')
   }
 }
