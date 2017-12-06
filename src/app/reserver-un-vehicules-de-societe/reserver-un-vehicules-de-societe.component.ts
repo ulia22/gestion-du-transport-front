@@ -1,17 +1,43 @@
-import { Component, OnInit ,Input } from '@angular/core';
-import {NgbTimeStruct ,NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit ,Input, ViewChild } from '@angular/core';
 import { bootstrap } from 'bootstrap';
-import {VehiculeService} from "../shared/service/vehicule.service"
-import {Vehicule} from "../shared/domain/vehicule"
+import { NgbTimeStruct ,NgbModal, ModalDismissReasons, NgbTypeaheadConfig, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { AnnonceCovoiturageService } from '../shared/service//annonce-covoiturage.service'
+import { Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import { JsontoDatePipe } from '../shared/pipe/jsonto-date.pipe';
+
+import { VehiculeService } from "../shared/service/vehicule.service"
+import { Vehicule } from "../shared/domain/vehicule"
 import { Reservation } from '../shared/domain/reservation';
 import { ReservationService } from '../shared/service/reservation.service';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { GoogleMapService } from '../shared/service/google-map.service';
 
+const address = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado']
 @Component({
   selector: 'app-reserver-un-vehicules-de-societe',
   templateUrl: './reserver-un-vehicules-de-societe.component.html',
-  styleUrls: ['./reserver-un-vehicules-de-societe.component.css']
+  styleUrls: ['./reserver-un-vehicules-de-societe.component.css'],
+  providers:[NgbTypeaheadConfig]
 })
 export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
+
+  //Partie reserver Covoiturage
+  public model:any
+  public annonceSelected:any = null
+  public addDepart:string = ""
+  public addDestination:string = ""
+  public dateDepart:string = ""
+  public duree:string = "--"
+  public distance:string = "--"
+
+  public listAddrDepart:string[]=[]
+  public listAddrDestination:string[]=[]
+
+  public modalRef:NgbModalRef
+  //*********************///
 
   datePickerReservation;
   datePickerRetour;
@@ -35,50 +61,134 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
   closeResult: string;
 
   @Input()  vehicules:Vehicule[]
-  
-  
-  constructor(private modalService: NgbModal,public vehiculeService:VehiculeService , public reservationService:ReservationService) { 
-    
-  }
+  public annonces:any[]
+  public annoncesOnDisplay:any[]
 
-  ngOnInit() {
-    this.vehiculeService.getListVehicule().subscribe(v=>{ this.vehicules= v;  } )
-    
+  constructor(private modalService: NgbModal,
+    public vehiculeService:VehiculeService ,
+    config: NgbTypeaheadConfig,
+    public reservationService:ReservationService,
+    public annoncesCovoitService:AnnonceCovoiturageService,
+    public googleService:GoogleMapService) {
+    config.showHint = true;
   }
 
   open(content , immatriculation , marque , modele) {
-    this.modalService.open(content).result.then((result) => {
-      ;
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      ;
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-console.log(immatriculation)
-console.log(immatriculation.value)
-
+    this.modalRef = this.modalService.open(content)
     this.stringImmatriculation = immatriculation;
     this.stringMarque = marque;
     this.stringModele = modele;
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
+  search = (text$: Observable<string>) => {
+    text$
+    .debounceTime(200)
+    .distinctUntilChanged()
+    .map(term => term.length < 2 ? []
+      : address.filter(v => v.toLowerCase().startsWith(term.toLocaleLowerCase())).splice(0, 10));
+    }
+
+    ngOnInit() {
+      this.vehiculeService.getListVehicule().subscribe(l=>{this.vehicules=l})
+      this.annoncesCovoitService.getListAnnoncesCovoiturage(JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne)
+      .subscribe(l=>{
+        this.annonces = l
+          .filter(a=>{
+           let date = new JsontoDatePipe().transform(a.dateDepart)
+           return (date.getTime() > Date.now())
+          })
+         this.listAddrDepart=this.annonces.map(a=>a.addrDepart)
+         this.listAddrDestination = this.annonces.map(a=>a.addrArrivee)
+       })
+    }
+
+    openReservCovoit(content2, annonce){
+      this.annonceSelected = annonce
+      this.modalRef = this.modalService.open(content2)
+    }
+
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return  `with: ${reason}`;
+      }
+    }
+
+    filterCovoit(addDepart:HTMLInputElement,  addDestination:HTMLInputElement, dateDepart:HTMLInputElement){
+      if(addDepart.value.length > 0){
+        this.addDepart = addDepart.value
+        if(addDestination.value.length>0){
+          this.addDestination = addDestination.value
+        }else{
+          this.addDestination = ""
+          this.duree="--"
+          this.addDestination="--"
+        }
+        if(dateDepart.value.length>0 && new Date(dateDepart.value) && new Date(dateDepart.value).getTime() > Date.now()){
+            this.dateDepart = dateDepart.value;
+        }else{
+          this.dateDepart = ""
+        }
+      }else{
+        this.addDepart = ""
+        this.duree="--"
+        this.addDestination="--"
+      }
+      this.displayCovoit()
+    }
+
+    displayCovoit(){
+      if(this.addDepart.length > 0 || !this.annoncesOnDisplay){
+        this.annoncesOnDisplay = this.annonces.filter(a=>a.addrDepart.toLowerCase().includes(this.addDepart.toLowerCase()))
+        if(this.addDestination.length > 0){
+          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>a.addrArrivee.toLowerCase().includes(this.addDestination.toLowerCase()))
+          this.googleService.dureeEtDistance(this.addDepart, this.addDestination)
+          .subscribe(
+            resp=>{
+              this.duree = resp['duree']
+              this.distance = resp['distance']
+            },
+            err=>{
+              this.duree = "--"
+              this.distance = "--"
+            }
+          )
+        }
+        if(this.dateDepart.length > 0){
+          this.annoncesOnDisplay = this.annoncesOnDisplay.filter(a=>{
+            let date = new JsontoDatePipe().transform(a.dateDepart)
+            return (date.getDay() == new Date(this.dateDepart).getDay() && date.getMonth() == new Date(this.dateDepart).getMonth() && date.getFullYear() == new Date(this.dateDepart).getFullYear())
+          })
+        }
+      }else{
+        this.annoncesOnDisplay = [];
+        this.listAddrDestination = this.annonces.map(a=>a.addrDestination)
+      }
+    }
+
+    enregistrerCovoiturage():void{
+      this.reservationService.sauvegardeReservationCovoiturage(this.annonceSelected, localStorage.getItem('personneEtAccount'))
+      .subscribe(
+        (resp)=>{
+          this.annonces = resp;
+          this.displayCovoit();
+          this.modalRef.close()
+        },
+        (err)=>{
+          console.error(err)
+        }
+      )
+    }
+
+    isAPassenger(annonceJSON:any):boolean{
+      for(let i = 0; i < annonceJSON.passagerId.length; i++){
+        if(annonceJSON.passagerId[i] == JSON.parse(localStorage.getItem('personneEtAccount')).idPersonne){
+          return true
+        }
+      }
+      return false
     }
   }
-  add(dateReservation,dateRetour,immatriculation,marque,modele){
-
-    //const reservation = new Reservation( marque ,immatriculation,modele ,dateReservation, dateRetour);
-
-    //this.reservationService.sauvegarde(reservation)
-  
-  }
-
-  
-
-}
