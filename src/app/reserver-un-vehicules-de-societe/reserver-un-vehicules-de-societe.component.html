@@ -19,13 +19,13 @@
           <label class="float-right" for="addrDepart">Adresse de départ* :</label>
         </div>
         <div class="col-2">
-          <input auto-complete [source]="listAddrDepart" type="text" class="form-control" id="addrDepart" name="addDepart" #addDepart (keyup)="filterCovoit(addDepart, addDestination, dateDepart)">
+          <input auto-complete [source]="listAddrDepart" type="text" class="form-control" id="addrDepart" name="addDepart" #addDepart (blur)="filterCovoit(addDepart, addDestination, dateDepart)">
         </div>
         <div class="col-2">
           <label class="float-right" for="destination">Adresse de destination :</label>
         </div>
         <div class="col-2">
-          <input auto-complete [source]="listAddrDestination" type="text" class="form-control" id="destination" name="addDestination" #addDestination (keyup)="filterCovoit(addDepart, addDestination, dateDepart)">
+          <input auto-complete [source]="listAddrDestination" type="text" class="form-control" id="destination" name="addDestination" #addDestination (blur)="filterCovoit(addDepart, addDestination, dateDepart)">
         </div>
         <div class="col-2 offset-2">
           <p>Durée du trajet : {{duree}}</p>
@@ -36,7 +36,7 @@
           <label class="float-right" for="datePicker">Date de départ :</label>
         </div>
         <div class="col-2">
-          <input type="date" class="form-control" id="datePicker" placeholder="Date" #dateDepart (keyup)="filterCovoit(addDepart, addDestination, dateDepart)">
+          <input type="date" class="form-control" id="datePicker" placeholder="Date" #dateDepart (change)="filterCovoit(addDepart, addDestination, dateDepart)">
         </div>
         <div class="col-2 offset-6">
           <p>Distance : {{distance}}</p>
@@ -87,7 +87,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row pr-2 pl-2 mb-2">
 
     <button type="button" class="btn btn-outline-primary col-12" style="text-align:left" (click)="isCollapsed1 = !isCollapsed1"
     [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
@@ -162,7 +162,7 @@
           <div class="container">
             <ngb-carousel>
               <ng-template ngbSlide *ngFor="let vehicule of vehicules">
-                <img src="{{vehicule.photo}}"  class="rounded mx-auto d-block" alt="Photo du collegue" height="500rem" width="600rem" alt="Random first slide">
+                <img src="{{vehicule.photo}}"  class="rounded mx-auto d-block" alt="Photo du collegue" height="600rem" width="1100rem" alt="Random first slide">
                 <div class="carousel-caption">
                   <h3 #immatriculation>{{vehicule.immatriculation}}</h3>
                   <p #marque> {{vehicule.marque}}</p> - <p #modele> {{vehicule.modele}}</p>

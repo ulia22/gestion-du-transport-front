@@ -127,7 +127,7 @@ export class ReserverUnVehiculesDeSocieteComponent implements OnInit {
           this.duree="--"
           this.distance="--"
         }
-        if(dateDepart.value.length>0 && new Date(dateDepart.value) && new Date(dateDepart.value).getTime() > Date.now()){
+        if(dateDepart.value.length>0 && new Date(dateDepart.value)){
             this.dateDepart = dateDepart.value;
         }else{
           this.dateDepart = ""

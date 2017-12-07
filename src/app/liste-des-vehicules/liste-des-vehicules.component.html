@@ -38,7 +38,7 @@
           <div class="container">
             <div class="row">
               <a routerLink="" RouterLinkActive="active-link">
-                <img class="img-responsive mx-auto d-block round" src="{{vehicule.photo}}" alt="" height="355rem" width="340rem">
+                <img class="img-responsive mx-auto d-block round" src="{{vehicule.photo}}" alt="" height="355rem" width="500rem">
               </a>
             </div>
           </div>
@@ -132,7 +132,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')" (click)="etatInitial()">Annuller</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')" (click)="etatInitial()">Annuler</button>
         <button type="button" class="btn btn-outline-primary" (click)="add(immatriculation1,immatriculation2,immatriculation3 , marque, modele  , categorie , nbp , photo)"
         [disabled]="!( valideImmatriculation1 && valideImmatriculation2 && valideImmatriculation3
         && valideMarque && validePhoto && valideModele && valideNbp)" (click)="etatInitial()" (click)="c('Close click')">Ajouter</button>
